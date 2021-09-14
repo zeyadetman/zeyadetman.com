@@ -5,6 +5,7 @@ import LoginForm from '../components/Admin/LoginForm';
 import { useSession, signIn, signOut, getSession } from 'next-auth/client';
 import { google } from 'googleapis';
 import { NextPageContext } from 'next';
+import Layout from '../components/Layout';
 
 interface Props {}
 
@@ -24,28 +25,29 @@ function Admin(props: Props) {
 	const { google } = props;
 	console.log({ google });
 
-	if (loading) return 'Loading...';
+	if (loading) return null;
 	if (session) {
 		return (
-			<>
+			<Layout>
 				{console.log(session)}
 				Signed in as {session.user?.email} <br />
 				<button onClick={() => signOut()}>Sign out</button>
-			</>
+			</Layout>
 		);
 	}
 
 	return (
-		<Container
-			maxW="100%"
-			height="100vh"
-			position="relative"
-			centerContent
-			bg={useColorModeValue('gray.50', 'gray.800')}
-		>
+		<Layout>
 			<LoginForm onSignInWithGoogle={() => signIn('google')} />
-			<button onClick={async () => {}}>Click</button>
-		</Container>
+		</Layout>
+		// <Container
+		// 	maxW="100%"
+		// 	height="100vh"
+		// 	position="relative"
+		// 	centerContent
+		// 	bg={useColorModeValue('gray.50', 'gray.800')}
+		// >
+		// </Container>
 	);
 }
 
