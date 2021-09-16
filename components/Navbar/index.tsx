@@ -12,13 +12,14 @@ import {
 	MenuButton,
 	MenuList,
 	MenuItem,
-	MenuDivider,
 	useDisclosure,
 	useColorModeValue,
 	Stack,
+	Image,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
 import { signOut } from 'next-auth/client';
+import ColorModeIcon from '../ColorModeIcon';
 
 const authLinks = [
 	{ name: 'Dashboard', url: '/dashboard' },
@@ -62,7 +63,9 @@ export default function Navbar({ user }: any) {
 						onClick={isOpen ? onClose : onOpen}
 					/>
 					<HStack spacing={8} alignItems={'center'}>
-						<Box>Logo</Box>
+						<Box>
+							<Image src="/static/images/logo.jpeg" boxSize="50px" />
+						</Box>
 						<HStack
 							as={'nav'}
 							spacing={4}
@@ -75,39 +78,43 @@ export default function Navbar({ user }: any) {
 							))}
 						</HStack>
 					</HStack>
-					{user ? (
-						<Flex alignItems={'center'}>
-							<Button
-								variant={'solid'}
-								colorScheme={'teal'}
-								size={'sm'}
-								mr={4}
-								leftIcon={<AddIcon />}
-							>
-								Action
-							</Button>
-							<Menu>
-								<MenuButton
-									as={Button}
-									rounded={'full'}
-									variant={'link'}
-									cursor={'pointer'}
-									minW={0}
+					<Flex alignItems={'center'}>
+						<ColorModeIcon />
+						{user ? (
+							<>
+								<Button
+									variant={'solid'}
+									colorScheme={'teal'}
+									size={'sm'}
+									mr={4}
+									ml={4}
+									leftIcon={<AddIcon />}
 								>
-									<Avatar size={'sm'} src={user?.image} />
-								</MenuButton>
-								<MenuList>
-									<MenuItem
-										onClick={() => {
-											signOut();
-										}}
+									Action
+								</Button>
+								<Menu>
+									<MenuButton
+										as={Button}
+										rounded={'full'}
+										variant={'link'}
+										cursor={'pointer'}
+										minW={0}
 									>
-										Logout
-									</MenuItem>
-								</MenuList>
-							</Menu>
-						</Flex>
-					) : null}
+										<Avatar size={'sm'} src={user?.image} />
+									</MenuButton>
+									<MenuList>
+										<MenuItem
+											onClick={() => {
+												signOut();
+											}}
+										>
+											Logout
+										</MenuItem>
+									</MenuList>
+								</Menu>
+							</>
+						) : null}
+					</Flex>
 				</Flex>
 
 				{isOpen ? (
