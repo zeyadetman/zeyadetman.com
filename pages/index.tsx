@@ -5,6 +5,8 @@ import { getSession, useSession } from 'next-auth/client';
 import Layout from '../components/Layout';
 import { AiFillSound } from 'react-icons/ai';
 import { Icon } from '@chakra-ui/react';
+import { careers } from '../utils/career';
+import CareerStack from '../components/CareerStack';
 
 export async function getServerSideProps(ctx: NextPageContext) {
 	const session = await getSession(ctx);
@@ -51,6 +53,10 @@ export default function Home({ user }: any) {
 			<Heading as="h2" size="xl">
 				Career
 			</Heading>
+
+			{careers.map((career) => (
+				<CareerStack career={career} />
+			))}
 		</Layout>
 	);
 }
