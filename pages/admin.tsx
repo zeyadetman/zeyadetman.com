@@ -20,7 +20,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
 	};
 }
 
-function Admin(props: Props) {
+function Admin(props: { google: string }) {
 	const [session, loading] = useSession();
 	const { google } = props;
 	console.log({ google });

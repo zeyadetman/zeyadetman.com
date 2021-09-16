@@ -20,6 +20,7 @@ import {
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
 import { signOut } from 'next-auth/client';
 import ColorModeIcon from '../ColorModeIcon';
+import { useRouter } from 'next/router';
 
 const authLinks = [
 	{ name: 'Dashboard', url: '/dashboard' },
@@ -32,20 +33,26 @@ const visitorLinks = [
 	{ name: 'Gallery', url: '/gallery' },
 ];
 
-const NavLink = ({ children, url }: { children: ReactNode }) => (
-	<Link
-		px={2}
-		py={1}
-		rounded={'md'}
-		_hover={{
-			textDecoration: 'none',
-			bg: useColorModeValue('gray.200', 'gray.700'),
-		}}
-		href={url}
-	>
-		{children}
-	</Link>
-);
+const NavLink = ({ children, url }: { children: ReactNode; url: string }) => {
+	const router = useRouter();
+
+	return (
+		<Link
+			px={2}
+			py={1}
+			rounded={'md'}
+			_hover={{
+				textDecoration: 'none',
+				bg: useColorModeValue('gray.200', 'gray.700'),
+			}}
+			href={url}
+			onClick={() => router.push(url)}
+			as="button"
+		>
+			{children}
+		</Link>
+	);
+};
 
 export default function Navbar({ user }: any) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
