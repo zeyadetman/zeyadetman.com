@@ -16,6 +16,9 @@ const nextConfig = {
 		});
 		return config;
 	},
+	serverRuntimeConfig: {
+		PROJECT_ROOT: __dirname,
+	},
 };
 
 module.exports = withPlugins([], nextConfig);
