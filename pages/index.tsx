@@ -6,7 +6,6 @@ import { AiFillSound } from 'react-icons/ai';
 import { Icon } from '@chakra-ui/react';
 import { careers } from '../utils/career';
 import CareerStack from '../components/CareerStack';
-import { useRouter } from 'next/router';
 
 export async function getServerSideProps(ctx: NextPageContext) {
 	const session = await getSession(ctx);
@@ -20,21 +19,6 @@ export async function getServerSideProps(ctx: NextPageContext) {
 }
 
 export default function Home({ user }: any) {
-	console.log({ user });
-	const router = useRouter();
-	//remove this
-	if (typeof window === 'undefined') return <div>hello</div>;
-	if (localStorage.getItem('zoz') === 'hacker') {
-	} else {
-		if (router.asPath === '/') {
-			return (
-				<Center bg="#ffc700" height="100vh" color="black">
-					In Progress... https://twitter.com/zeyadetman
-				</Center>
-			);
-		}
-	}
-
 	return (
 		<Layout>
 			<Stack>
