@@ -15,13 +15,16 @@
 		"@types/next-auth": "^3.15.0",
 		"framer-motion": "^4.1.17",
 		"googleapis": "^85.0.0",
+		"gray-matter": "^4.0.3",
 		"next": "11.1.2",
 		"next-auth": "^3.29.0",
-		"next-compose": "^0.0.2",
+		"next-compose-plugins": "^2.2.1",
 		"next-connect": "^0.10.2",
+		"next-mdx-remote": "^3.0.4",
 		"react": "17.0.2",
 		"react-dom": "17.0.2",
-		"react-icons": "^4.2.0"
+		"react-icons": "^4.2.0",
+		"reading-time": "^1.5.0"
 	},
 	"devDependencies": {
 		"@types/react": "^17.0.21",
