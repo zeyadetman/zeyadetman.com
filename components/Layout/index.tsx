@@ -11,21 +11,12 @@ interface Props {
 
 function Layout(props: Props) {
 	const [session, loading] = useSession();
-	const [disable, setEnabled] = useState(true);
 	const { children } = props;
 	const router = useRouter();
 
-	//remove this
 	if (loading) return null;
-	if (localStorage.getItem('zoz') === 'hacker') {
-		setEnabled(false);
-	} else {
-		if (router.asPath !== '/') {
-			router.push('/');
-		}
-	}
 
-	return disable ? null : (
+	return (
 		<Container maxW={'80ch'} px={4} py={6}>
 			<Navbar user={session?.user} />
 			<Box px={10} py={10}>
