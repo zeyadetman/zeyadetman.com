@@ -15,7 +15,9 @@ import { SearchIcon } from '@chakra-ui/icons';
 import { getPosts } from '../../libs/posts';
 import { useRouter } from 'next/router';
 
-interface Props {}
+interface Props {
+	posts: [any];
+}
 
 export async function getServerSideProps() {
 	const posts = await getPosts();
@@ -28,8 +30,8 @@ function Blog(props: Props) {
 	console.log(posts);
 
 	const renderPosts = () => {
-		const renderTags = (tags) => {
-			return tags.map((tag) => (
+		const renderTags = (tags: [string]) => {
+			return tags.map((tag: string) => (
 				<Badge size="xs" variant="tag">
 					{tag}
 				</Badge>
@@ -41,7 +43,6 @@ function Blog(props: Props) {
 				<Stack as="article" key={fileName}>
 					<Box as="header">
 						<Link
-							as="h2"
 							fontSize="xl"
 							fontWeight="bold"
 							onClick={() => router.push(`/blog/${fileName}`)}
@@ -54,7 +55,7 @@ function Blog(props: Props) {
 							color={useColorModeValue('gray.500', 'gray.500')}
 						>
 							<Text>
-								<Text as="date">{`${data.date}  •  `}</Text>
+								<Text>{`${data.date}  •  `}</Text>
 								{readingTime.text}
 							</Text>
 							{data.tags.length ? (

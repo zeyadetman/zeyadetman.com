@@ -11,7 +11,7 @@ async function getPosts() {
 		const filePath = path.join(postsDirectory, filename);
 		const fileContents = fs.readFileSync(filePath, 'utf8');
 		const { content, data, excerpt } = matter(fileContents, {
-			excerpt: (file) => {
+			excerpt: (file: any): any => {
 				file.excerpt = file.content.split('\n').slice(0, 4).join(' ');
 			},
 		});
@@ -25,7 +25,7 @@ async function getPosts() {
 	});
 
 	const postsSortedByDate = posts.sort(
-		(a, b) => new Date(b.data.date) - new Date(a.data.date)
+		(a, b) => +new Date(b.data.date) - +new Date(a.data.date)
 	);
 	return postsSortedByDate;
 }
