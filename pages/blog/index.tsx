@@ -27,7 +27,6 @@ export async function getServerSideProps() {
 function Blog(props: Props) {
 	const router = useRouter();
 	const { posts } = props;
-	console.log(posts);
 
 	const renderPosts = () => {
 		const renderTags = (tags: [string]) => {
@@ -55,7 +54,7 @@ function Blog(props: Props) {
 							color={useColorModeValue('gray.500', 'gray.500')}
 						>
 							<Text>
-								<Text>{`${data.date}  •  `}</Text>
+								<Text display="inline">{`${data.date}  •  `}</Text>
 								{readingTime.text}
 							</Text>
 							{data.tags.length ? (

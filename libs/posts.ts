@@ -2,9 +2,11 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
 import readingTime from 'reading-time';
+import getConfig from 'next/config';
 
 async function getPosts() {
-	const postsDirectory = path.join(process.cwd(), 'blogs');
+	const { serverRuntimeConfig } = getConfig();
+	const postsDirectory = path.join(serverRuntimeConfig.PROJECT_ROOT, 'blogs');
 	const filenames = fs.readdirSync(postsDirectory);
 
 	const posts = filenames.map((filename: any) => {
