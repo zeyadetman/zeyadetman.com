@@ -62,4 +62,22 @@ export const components = {
 		},
 		defaultProps: {},
 	},
+	Badge: {
+		variants: {
+			tag: {
+				backgroundColor: '#ffc700',
+				color: 'black',
+			},
+		},
+		sizes: {
+			sm: {
+				fontSize: 'sm',
+			},
+			xs: {
+				fontSize: '0.7rem',
+				fontWeight: 'normal',
+				textTransform: 'none',
+			},
+		},
+	},
 };

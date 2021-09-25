@@ -1,13 +1,15 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 import Layout from '../../components/Layout';
 
 interface Props {}
 
 function BlogIndex(props: Props) {
-	const {} = props;
+	const router = useRouter();
+	console.log(router);
 	console.log({ props });
 
-	return <Layout>hello</Layout>;
+	return <Layout>dasd</Layout>;
 }
 
 export default BlogIndex;

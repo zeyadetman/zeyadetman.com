@@ -1,12 +1,12 @@
-import { Alert } from '@chakra-ui/alert';
-import { Text, Heading, Link, Stack } from '@chakra-ui/layout';
+import { Text, Heading, Link, Stack, Center } from '@chakra-ui/layout';
 import { NextPageContext } from 'next';
-import { getSession, useSession } from 'next-auth/client';
+import { getSession } from 'next-auth/client';
 import Layout from '../components/Layout';
 import { AiFillSound } from 'react-icons/ai';
 import { Icon } from '@chakra-ui/react';
 import { careers } from '../utils/career';
 import CareerStack from '../components/CareerStack';
+import { useRouter } from 'next/router';
 
 export async function getServerSideProps(ctx: NextPageContext) {
 	const session = await getSession(ctx);
@@ -21,42 +21,60 @@ export async function getServerSideProps(ctx: NextPageContext) {
 
 export default function Home({ user }: any) {
 	console.log({ user });
+	const router = useRouter();
+	//remove this
+	if (typeof window === 'undefined') return <div>hello</div>;
+	if (localStorage.getItem('zoz') === 'hacker') {
+	} else {
+		if (router.asPath === '/') {
+			return (
+				<Center bg="#ffc700" height="100vh" color="black">
+					In Progress... https://twitter.com/zeyadetman
+				</Center>
+			);
+		}
+	}
+
 	return (
 		<Layout>
-			<Heading>
-				Hi, I'm Zeyad{' '}
-				<Icon
-					as={AiFillSound}
-					boxSize="8"
-					onClick={() => {
-						var audio = new Audio('/static/sounds/zeyad_ar.mp3');
-						audio.play();
-					}}
-				/>
-			</Heading>
-			<Text fontSize="sm" marginTop="4">
-				I am a software engineer, working as a fullstack developer (frontend
-				heavily){' '}
-				<Link href="https://www.crystalknows.com/personality-type/intj">
-					INTJ
-				</Link>{' '}
-				is my type.
-			</Text>
+			<Stack>
+				<Heading>
+					Hi, I'm Zeyad{' '}
+					<Icon
+						as={AiFillSound}
+						boxSize="8"
+						onClick={() => {
+							var audio = new Audio('/static/sounds/zeyad_ar.mp3');
+							audio.play();
+						}}
+					/>
+				</Heading>
+				<Text fontSize="sm" marginTop="4">
+					I am a software engineer, working as a fullstack developer (frontend
+					heavily){' '}
+					<Link href="https://www.crystalknows.com/personality-type/intj">
+						INTJ
+					</Link>{' '}
+					is my type.
+				</Text>
 
-			<Text fontSize="sm" marginTop="8">
-				This is my space on internet, I write technical posts here, also may
-				share some technical tuturials, But if you're looking for my thoughts
-				about life, so let me welcome you here. Also I like take photos, hurry
-				up and open my online gallery.
-			</Text>
+				<Text fontSize="sm" marginTop="8">
+					This is my space on internet, I write technical posts here, also may
+					share some technical tuturials, But if you're looking for my thoughts
+					about life, so let me welcome you here. Also I like take photos, hurry
+					up and open my online gallery.
+				</Text>
+			</Stack>
 
-			<Heading as="h2" size="xl">
-				Career
-			</Heading>
+			<Stack marginTop="8" spacing="4">
+				<Heading as="h2" size="xl">
+					Career
+				</Heading>
 
-			{careers.map((career) => (
-				<CareerStack career={career} />
-			))}
+				{careers.map((career: any) => (
+					<CareerStack career={career} />
+				))}
+			</Stack>
 		</Layout>
 	);
 }
