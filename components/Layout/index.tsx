@@ -1,7 +1,6 @@
 import { Box, Container } from '@chakra-ui/layout';
 import { useSession } from 'next-auth/client';
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React from 'react';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
 
@@ -12,7 +11,6 @@ interface Props {
 function Layout(props: Props) {
 	const [session, loading] = useSession();
 	const { children } = props;
-	const router = useRouter();
 
 	if (loading) return null;
 
