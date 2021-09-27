@@ -7,7 +7,6 @@ import { useColorModeValue } from '@chakra-ui/color-mode';
 import MarkdownWrapper from '../../components/MarkdownRender';
 import { IPost } from '../../interfaces/post';
 import { useRouter } from 'next/router';
-import { GetStaticPaths } from 'next';
 
 interface Props {
 	post: IPost;
@@ -35,8 +34,7 @@ export async function getStaticProps(props: any) {
 	return {};
 }
 
-function BlogIndex(props: any) {
-	console.log(props);
+function BlogIndex(props: Props) {
 	const { post } = props;
 	const router = useRouter();
 
