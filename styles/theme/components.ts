@@ -1,3 +1,5 @@
+import { useColorModeValue } from '@chakra-ui/color-mode';
+
 export const components = {
 	Checkbox: {
 		baseStyle: (props: any) => ({
@@ -14,6 +16,22 @@ export const components = {
 				},
 			},
 		}),
+	},
+	Link: {
+		variants: (props: any) => ({
+			default: {
+				color: props.colorMode === 'dark' ? 'grey.500' : '#1a85ff',
+			},
+			nav: {
+				color: 'black',
+			},
+			title: {
+				color: 'black',
+			},
+		}),
+		defaultProps: {
+			variant: 'default',
+		},
 	},
 	Button: {
 		variants: {
@@ -56,6 +74,13 @@ export const components = {
 					_focus: {
 						borderColor: 'black',
 						boxShadow: 'none',
+					},
+				},
+			},
+			inset: {
+				field: {
+					_hover: {
+						bg: 'transparent',
 					},
 				},
 			},

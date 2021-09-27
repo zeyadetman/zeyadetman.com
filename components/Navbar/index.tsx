@@ -29,7 +29,7 @@ const authLinks = [
 
 const visitorLinks = [
 	{ name: 'About', url: '/' },
-	{ name: 'Blog', url: '/blog' },
+	{ name: 'Blog', url: '/posts' },
 	{ name: 'Gallery', url: '/gallery' },
 ];
 
@@ -38,6 +38,7 @@ const NavLink = ({ children, url }: { children: ReactNode; url: string }) => {
 
 	return (
 		<Link
+			variant="nav"
 			px={2}
 			py={1}
 			rounded={'md'}
@@ -46,8 +47,11 @@ const NavLink = ({ children, url }: { children: ReactNode; url: string }) => {
 				bg: useColorModeValue('gray.200', 'gray.700'),
 			}}
 			href={url}
-			onClick={() => router.push(url)}
-			as="button"
+			onClick={(e) => {
+				e.preventDefault();
+				router.push(url);
+			}}
+			as="a"
 		>
 			{children}
 		</Link>
@@ -71,7 +75,11 @@ export default function Navbar({ user }: any) {
 					/>
 					<HStack spacing={8} alignItems={'center'}>
 						<Box>
-							<Image src="/static/images/logo.jpeg" boxSize="50px" />
+							<Image
+								borderRadius="full"
+								src="/static/images/logo.jpeg"
+								boxSize="50px"
+							/>
 						</Box>
 						<HStack
 							as={'nav'}

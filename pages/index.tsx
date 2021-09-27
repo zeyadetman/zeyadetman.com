@@ -1,7 +1,6 @@
 import { Text, Heading, Link, Stack, Center } from '@chakra-ui/layout';
 import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/client';
-import Layout from '../components/Layout';
 import { AiFillSound } from 'react-icons/ai';
 import { Icon } from '@chakra-ui/react';
 import { careers } from '../utils/career';
@@ -20,7 +19,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
 
 export default function Home({ user }: any) {
 	return (
-		<Layout>
+		<>
 			<Stack>
 				<Heading>
 					Hi, I'm Zeyad{' '}
@@ -59,6 +58,6 @@ export default function Home({ user }: any) {
 					<CareerStack career={career} />
 				))}
 			</Stack>
-		</Layout>
+		</>
 	);
 }

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Layout from '../components/Layout';
 import {
 	Stack,
 	Text,
@@ -20,19 +19,19 @@ interface Props {}
 
 const pictures = [
 	{
-		src: '/static/gallery/sea-and-boat.jpg',
+		src: '/static/gallery/sea-and-boat-min.jpg',
 		description: 'Boat in the sea',
 	},
 	{
-		src: '/static/gallery/plants.jpg',
+		src: '/static/gallery/plants-min.jpg',
 		description: 'Plant',
 	},
 	{
-		src: '/static/gallery/laptop.jpg',
+		src: '/static/gallery/laptop-min.jpg',
 		description: 'Laptop',
 	},
 	{
-		src: '/static/gallery/sea in night.jpg',
+		src: '/static/gallery/sea-in-night-min.jpg',
 		description: 'sea in night',
 	},
 ];
@@ -42,7 +41,7 @@ function Gallery(props: { google: string }) {
 	const [selectedImage, selectImage] = useState(0);
 
 	return (
-		<Layout>
+		<>
 			<Stack>
 				<Heading>
 					Gallery
@@ -109,7 +108,7 @@ function Gallery(props: { google: string }) {
 					</ModalBody>
 				</ModalContent>
 			</Modal>
-		</Layout>
+		</>
 	);
 }
 

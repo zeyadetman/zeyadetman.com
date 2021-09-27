@@ -15,9 +15,9 @@ function Layout(props: Props) {
 	if (loading) return null;
 
 	return (
-		<Container maxW={'80ch'} px={4} py={6}>
+		<Container maxW={'80ch'} px={{ lg: 4, sm: 1 }} py={6}>
 			<Navbar user={session?.user} />
-			<Box px={10} py={10}>
+			<Box px={{ lg: 10, sm: 1, md: 4 }} py={10}>
 				{children}
 			</Box>
 			<Footer />
