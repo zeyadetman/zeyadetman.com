@@ -11,18 +11,21 @@ comments: true
 
 Hi all, in this post I'll share with you some frontend code, that we can write it in another way,
 And everything is working well, doesn't break the rules or putting smells in code, is cool.
+<br />
 
-##1. Generate an array of sequential numbers `[1, 2, 3, ...., n]`
+## 1. Generate an array of sequential numbers `[1, 2, 3, ...., n]`
 
 If we want to generate an array like this `[1, 2, 3, 4, 5, 6, ...., n]`, We can write code using `new Array()` with
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/fill">`Array.fill()`</a> so it'll be
 
-```js
+```javascript
 const N = 10;
 new Array(N).fill().map((_, indx) => indx + 1); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 ```
 
-<a href="https://docs.google.com/document/d/1FBxDuUJmUt_udO9ofJGXF4GAM2ZoiWI-PTEeq9Gbf1w/edit#heading=h.yf7gjfvrq7gx">_**Why `new Array(N).map()` doesn't work?**_</a>
+<a style="margin-bottom: 20px;" href="https://docs.google.com/document/d/1FBxDuUJmUt_udO9ofJGXF4GAM2ZoiWI-PTEeq9Gbf1w/edit#heading=h.yf7gjfvrq7gx">
+Why `new Array(N).map()` doesn't work?
+</a>
 
 Cool, But if we're working on a large array of sequential numbers, Is this method will be the best?
 Mmmm, No! because `new Array()` creates <a href="https://v8.dev/blog/elements-kinds">a holey array</a>
@@ -30,7 +33,7 @@ which is slow compared to <a href="https://v8.dev/blog/elements-kinds">packed ar
 using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from">`Array.from()`</a>
 So the code will be
 
-```js
+```javascript
 const N = 10;
 Array.from({ length: N }, (_, indx) => indx + 1); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 ```
@@ -49,12 +52,12 @@ More Resources:
 1. https://v8.dev/blog/elements-kinds
 2. https://stackoverflow.com/questions/3746725/how-to-create-an-array-containing-1-n
 
-##2. Number formatting
+## 2. Number formatting
 
 Sometimes you want to write a money with specific currency `EGP 1000` or a size of something `50 kB` one of the ways to write it,
 simply `const money = '1000 EGP'`. But there's a nicer way to write formatted numbers using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat">`Intl.NumberFormat`</a>. So this strings will be
 
-```js
+```javascript
 const money = new Intl.NumberFormat("en", {
   style: "currency",
   currency: "EGP",
@@ -70,11 +73,12 @@ const storage = new Intl.NumberFormat("en", {
 // "50 kB"
 ```
 
-_Note: style `units` works on chrome 77+, so you can use babel to compile it._ <br />
+_Note: style `units` works on chrome 77+, so you can use babel to compile it._
+
 This is so cool, if you're working on multiple locale and want to switch between them in a better and fully customized way.
 More info from <a href="https://v8.dev/features/intl-numberformat">V8 Blog: Intl.NumberFormat</a>
 
-##3. Styling NonInteracitve elements on focus
+## 3. Styling NonInteracitve elements on focus
 You can't do this using css/html without `tabindex` and according to [MDN][1]:
 
 > Avoid using the `tabindex` attribute in conjunction with non-interactive content to make something intended to be interactive focusable by keyboard input. An example of this would be using an `<div>` element to describe a button, instead of the `<button>` element.

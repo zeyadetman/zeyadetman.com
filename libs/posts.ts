@@ -32,4 +32,10 @@ async function getPosts() {
 	return postsSortedByDate;
 }
 
-export { getPosts };
+async function getPostBySlug(slug: string) {
+	const posts = await getPosts();
+	const post = posts.find(({ fileName }) => slug === fileName);
+	return post || null;
+}
+
+export { getPosts, getPostBySlug };

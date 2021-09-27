@@ -1,5 +1,4 @@
-import React from 'react';
-import Layout from '../../components/Layout';
+import React, { useEffect, useState } from 'react';
 import {
 	Stack,
 	Text,
@@ -14,9 +13,11 @@ import { Badge, Box, HStack, Link } from '@chakra-ui/layout';
 import { SearchIcon } from '@chakra-ui/icons';
 import { getPosts } from '../../libs/posts';
 import { useRouter } from 'next/router';
+import MarkdownWrapper from '../../components/MarkdownRender';
+import { IPost } from '../../interfaces/post';
 
 interface Props {
-	posts: [any];
+	posts: IPost[];
 }
 
 export async function getStaticProps() {
@@ -27,8 +28,25 @@ export async function getStaticProps() {
 function Blog(props: Props) {
 	const router = useRouter();
 	const { posts } = props;
+	const [listedPosts, setListedPosts] = useState<IPost[]>(posts);
+	const [searchPostsInputText, setSearchPostsInput] = useState('');
+
+	useEffect(() => {
+		const filteredPosts: IPost[] = posts.filter(({ content }) =>
+			content.includes(searchPostsInputText)
+		);
+
+		setListedPosts(filteredPosts);
+	}, [searchPostsInputText]);
 
 	const renderPosts = () => {
+		if (listedPosts.length === 0) {
+			return (
+				<Text fontSize="sm" color="gray.400" textAlign="center">
+					No posts found. If you think it should exist, send me a message.
+				</Text>
+			);
+		}
 		const renderTags = (tags: [string]) => {
 			return tags.map((tag: string) => (
 				<Badge size="xs" variant="tag">
@@ -37,39 +55,51 @@ function Blog(props: Props) {
 			));
 		};
 
-		return posts.map(({ data, fileName, readingTime }) => {
+		return listedPosts.map(({ data, fileName, readingTime, excerpt }) => {
 			return (
-				<Stack as="article" key={fileName}>
+				<Stack as="article" key={fileName} py={4}>
 					<Box as="header">
 						<Link
+							textAlign="start"
 							fontSize="xl"
 							fontWeight="bold"
-							onClick={() => router.push(`/blog/${fileName}`)}
+							onClick={() => router.push(`/posts/${fileName}`)}
 							as="button"
+							variant="title"
 						>
 							{data.title}
 						</Link>
 						<Flex
 							fontSize="xs"
-							color={useColorModeValue('gray.500', 'gray.500')}
+							color="gray.500"
+							flexWrap="wrap"
+							css={{ gap: '0.3rem 1rem' }}
 						>
 							<Text>
 								<Text display="inline">{`${data.date}  •  `}</Text>
 								{readingTime.text}
 							</Text>
 							{data.tags.length ? (
-								<HStack ms="4">{renderTags(data.tags)}</HStack>
+								<HStack>{renderTags(data.tags)}</HStack>
 							) : null}
 						</Flex>
 					</Box>
-					<Box as="div"></Box>
+					<Box as="div">
+						<Text
+							fontSize="sm"
+							noOfLines={3}
+							color={useColorModeValue('gray.600', 'gray.300')}
+						>
+							<MarkdownWrapper content={excerpt || ''} />
+						</Text>
+					</Box>
 				</Stack>
 			);
 		});
 	};
 
 	return (
-		<Layout>
+		<>
 			<Stack>
 				<Heading>
 					Articles
@@ -90,11 +120,23 @@ function Blog(props: Props) {
 						pointerEvents="none"
 						children={<SearchIcon color="gray.300" />}
 					/>
-					<Input placeholder="Search articles" borderRadius="5" />
+					<Input
+						_hover={{
+							bg: 'transparent',
+						}}
+						_focus={{
+							borderColor: useColorModeValue('black', 'gray.300'),
+						}}
+						placeholder="Search articles..."
+						borderRadius="5"
+						onChange={(e) => {
+							setSearchPostsInput(e.target.value);
+						}}
+					/>
 				</InputGroup>
 			</Stack>
 			<Stack mt="8">{renderPosts()}</Stack>
-		</Layout>
+		</>
 	);
 }
 
