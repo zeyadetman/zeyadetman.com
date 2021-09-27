@@ -18,17 +18,17 @@ export const components = {
 		}),
 	},
 	Link: {
-		variants: (props: any) => ({
-			default: {
-				color: props.colorMode === 'dark' ? 'grey.500' : '#1a85ff',
-			},
-			nav: {
-				color: 'black',
-			},
-			title: {
-				color: 'black',
-			},
-		}),
+		variants: {
+			default: (props: any) => ({
+				color: props.colorMode === 'dark' ? '#1a85ff' : '#1a85ff',
+			}),
+			nav: (props: any) => ({
+				color: props.colorMode === 'dark' ? 'grey.500' : 'black',
+			}),
+			title: (props: any) => ({
+				color: props.colorMode === 'dark' ? 'grey.500' : 'black',
+			}),
+		},
 		defaultProps: {
 			variant: 'default',
 		},
