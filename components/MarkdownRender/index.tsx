@@ -11,8 +11,6 @@ import {
 import rehypeRaw from 'rehype-raw';
 import { Code, Heading, Link, Text } from '@chakra-ui/layout';
 import { Img } from '@chakra-ui/image';
-import rehypeSlug from 'rehype-slug';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 interface Props {
 	content: string;
@@ -31,8 +29,9 @@ function MarkdownWrapper(props: Props) {
 					const match = /language-(\w+)/.exec(className || '');
 					const lang = match?.[1] === 'js' ? 'javascript' : match?.[1];
 					return !inline && match ? (
+						//@ts-ignore
 						<SyntaxHighlighter
-							children={String(children).replace(/\n$/, '')}
+							children={String(children).replace(/\n$/, '') || ''}
 							style={vscDarkPlus}
 							PreTag="div"
 							showLineNumbers
@@ -65,6 +64,7 @@ function MarkdownWrapper(props: Props) {
 				li({ node, children, ...props }) {
 					const child = children.filter((item) => item !== '\n');
 					return (
+						//@ts-ignore
 						<Text as="li" mb="2" {...props}>
 							{child}
 						</Text>
