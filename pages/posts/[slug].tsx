@@ -1,21 +1,32 @@
 import { Badge, Flex, Heading, HStack, Stack, Text } from '@chakra-ui/layout';
 import React from 'react';
 
-import { getPostBySlug } from '../../libs/posts';
+import { getPostBySlug, getPosts } from '../../libs/posts';
 
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import MarkdownWrapper from '../../components/MarkdownRender';
 import { IPost } from '../../interfaces/post';
 import { useRouter } from 'next/router';
+import { GetStaticPaths } from 'next';
 
 interface Props {
 	post: IPost;
 }
 
-export async function getServerSideProps(context: any) {
+export async function getStaticPaths() {
+	const postsSlugs = await getPosts();
+	const slugs = postsSlugs.map((post) => ({ params: { slug: post.fileName } }));
+
+	return {
+		paths: slugs,
+		fallback: true,
+	};
+}
+
+export async function getStaticProps(props: any) {
 	const {
-		query: { slug },
-	} = context;
+		params: { slug },
+	} = props;
 	if (slug) {
 		const post = await getPostBySlug(slug);
 		return { props: { post } };
@@ -25,6 +36,7 @@ export async function getServerSideProps(context: any) {
 }
 
 function BlogIndex(props: any) {
+	console.log(props);
 	const { post } = props;
 	const router = useRouter();
 
