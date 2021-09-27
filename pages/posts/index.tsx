@@ -49,7 +49,7 @@ function Blog(props: Props) {
 		}
 		const renderTags = (tags: [string]) => {
 			return tags.map((tag: string) => (
-				<Badge size="xs" variant="tag">
+				<Badge size="xs" variant="tag" key={tag}>
 					{tag}
 				</Badge>
 			));
