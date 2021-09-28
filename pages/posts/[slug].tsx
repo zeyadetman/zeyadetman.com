@@ -133,7 +133,7 @@ function BlogIndex(props: Props) {
 					css={{ gap: '0.3rem 1rem' }}
 				>
 					<Text>
-						<Text display="inline">{`${post.data.date}  •  ${pageVisits}  •  `}</Text>
+						<Text display="inline">{`${post.data.date}  •  ${pageVisits} Views  •  `}</Text>
 						{post.readingTime.text}
 					</Text>
 					{post.data.tags.length ? (
