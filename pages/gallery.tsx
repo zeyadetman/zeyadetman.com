@@ -14,25 +14,31 @@ import {
 } from '@chakra-ui/react';
 import { Img } from '@chakra-ui/react';
 import { useDisclosure } from '@chakra-ui/hooks';
+import { NextSeo } from 'next-seo';
+import { IPic } from '../interfaces/picture';
 
 interface Props {}
 
-const pictures = [
+const pictures: IPic[] = [
 	{
 		src: '/static/gallery/sea-and-boat-min.jpg',
 		description: 'Boat in the sea',
+		alt: 'Boat in the sea',
 	},
 	{
 		src: '/static/gallery/plants-min.jpg',
 		description: 'Plant',
+		alt: 'Plant',
 	},
 	{
 		src: '/static/gallery/laptop-min.jpg',
 		description: 'Laptop',
+		alt: 'Laptop',
 	},
 	{
 		src: '/static/gallery/sea-in-night-min.jpg',
 		description: 'sea in night',
+		alt: 'sea in night',
 	},
 ];
 
@@ -42,6 +48,7 @@ function Gallery(props: { google: string }) {
 
 	return (
 		<>
+			<NextSeo title={'Gallery'} description={"Photos I've taken"} />
 			<Stack>
 				<Heading>
 					Gallery
@@ -56,7 +63,7 @@ function Gallery(props: { google: string }) {
 			</Stack>
 
 			<Wrap mt="12" spacing={2} justify="center">
-				{pictures.map((pic, index) => (
+				{pictures.map((pic: IPic, index) => (
 					<WrapItem
 						key={pic.src}
 						boxShadow="base"
@@ -75,7 +82,7 @@ function Gallery(props: { google: string }) {
 					>
 						<Img
 							src={pic.src}
-							alt={pic.description}
+							alt={pic.alt}
 							fit="contain"
 							maxWidth="sm"
 							maxHeight="sm"

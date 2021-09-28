@@ -5,6 +5,7 @@ import { AiFillSound } from 'react-icons/ai';
 import { Icon } from '@chakra-ui/react';
 import { careers } from '../utils/career';
 import CareerStack from '../components/CareerStack';
+import Report from '../libs/report';
 
 export async function getServerSideProps(ctx: NextPageContext) {
 	const session = await getSession(ctx);
@@ -20,8 +21,9 @@ export async function getServerSideProps(ctx: NextPageContext) {
 export default function Home({ user }: any) {
 	return (
 		<>
-			<Stack>
-				<Heading>
+			<Report />
+			<Stack mb="8">
+				<Heading mb="4">
 					Hi, I'm Zeyad{' '}
 					<Icon
 						as={AiFillSound}
@@ -32,7 +34,7 @@ export default function Home({ user }: any) {
 						}}
 					/>
 				</Heading>
-				<Text fontSize="sm" marginTop="4">
+				<Text fontSize="sm">
 					I am a software engineer, working as a fullstack developer (frontend
 					heavily){' '}
 					<Link href="https://www.crystalknows.com/personality-type/intj">
@@ -41,7 +43,7 @@ export default function Home({ user }: any) {
 					is my type.
 				</Text>
 
-				<Text fontSize="sm" marginTop="8">
+				<Text fontSize="sm">
 					This is my space on internet, I write technical posts here, also may
 					share some technical tuturials, But if you're looking for my thoughts
 					about life, so let me welcome you here. Also I like take photos, hurry
@@ -49,8 +51,8 @@ export default function Home({ user }: any) {
 				</Text>
 			</Stack>
 
-			<Stack marginTop="8" spacing="4">
-				<Heading as="h2" size="xl">
+			<Stack mb="8">
+				<Heading as="h2" size="xl" mb="4">
 					Career
 				</Heading>
 
