@@ -8,8 +8,10 @@ import { shadows } from '../styles/theme/shadows';
 import Layout from '../components/Layout';
 import { breakpoints } from '../styles/theme/breakpoints';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as gtag from '../libs/gtag';
+import { DefaultSeo, LogoJsonLd } from 'next-seo';
+import Script from 'next/script';
 
 const theme = extendTheme({
 	shadows,
@@ -20,6 +22,7 @@ const theme = extendTheme({
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 	const router = useRouter();
+	const [pageViews, setPageViews] = useState([]);
 
 	useEffect(() => {
 		const handleRouteChange = (url: URL) => {
@@ -39,9 +42,51 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 					clientMaxAge: 0,
 					keepAlive: 0,
 				}}
-				session={session}
+				session={{ ...session, pageViews }}
 			>
+				<Script>
+					{`window.twttr = (function(d, s, id) {
+						var js, fjs = d.getElementsByTagName(s)[0],
+							t = window.twttr || {};
+						if (d.getElementById(id)) return t;
+						js = d.createElement(s);
+						js.id = id;
+						js.src = "https://platform.twitter.com/widgets.js";
+						fjs.parentNode.insertBefore(js, fjs);
+
+						t._e = [];
+						t.ready = function(f) {
+							t._e.push(f);
+						};
+
+						return t;
+						}(document, "script", "twitter-wjs"));
+					`}
+				</Script>
+				<Script
+					strategy="afterInteractive"
+					src="https://apis.google.com/js/api.js"
+				/>
 				<Layout>
+					<LogoJsonLd
+						logo="/static/images/logo.jpeg"
+						url="https://zeyadetman.vercel.app/"
+					/>
+					<DefaultSeo
+						openGraph={{
+							type: 'blog',
+							locale: 'en_IE',
+							url: 'https://zeyadetman.vercel.app/',
+							site_name: "Zeyad Etman's Blog",
+						}}
+						titleTemplate="%s | Zeyad Etman"
+						defaultTitle="Zeyad Etman"
+						twitter={{
+							handle: '@zeyadetman',
+							site: '@zeyadetman',
+							cardType: 'summary_large_image',
+						}}
+					/>
 					<Component {...pageProps} />
 				</Layout>
 			</Provider>

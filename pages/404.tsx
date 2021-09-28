@@ -1,3 +1,4 @@
+import { NextSeo } from 'next-seo';
 import React from 'react';
 
 interface Props {}
@@ -5,7 +6,12 @@ interface Props {}
 function NotFound(props: Props) {
 	const {} = props;
 
-	return <>Not found</>;
+	return (
+		<>
+			<NextSeo title={'404'} description={'404'} />
+			Not found
+		</>
+	);
 }
 
 export default NotFound;
