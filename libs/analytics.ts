@@ -1,19 +1,24 @@
-import { google } from 'googleapis';
+import countapi from 'countapi-js';
+import { site } from '../configs/site';
 
-const oauth2Client = new google.auth.OAuth2(
-	process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_CLIENT_ID,
-	process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_SECRET_KEY,
-	'http://localhost:3001/oauth2callback'
-);
+export const getViews = async (slug: string): Promise<number> => {
+	const { value: views } = await countapi.get(site.namespace, slug);
+	return views;
+};
 
-const scopes = 'https://www.googleapis.com/auth/analytics';
+export const hitPath = async (slug: string): Promise<number> => {
+	const { value: views } = await countapi.hit(site.namespace, slug);
+	return views;
+};
 
-const url = oauth2Client.generateAuthUrl({
-	// 'online' (default) or 'offline' (gets refresh_token)
-	access_type: 'offline',
-
-	// If you only need one scope you can pass it as a string
-	scope: scopes,
-});
-
-console.log(url);
+const createKey = () => {
+	countapi
+		.create({
+			namespace: site.namespace,
+			key: '',
+			value: 0,
+		})
+		.then((result) => {
+			console.log({ result });
+		});
+};
