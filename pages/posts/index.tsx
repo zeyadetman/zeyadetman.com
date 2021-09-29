@@ -15,7 +15,6 @@ import { getPosts } from '../../libs/posts';
 import { useRouter } from 'next/router';
 import MarkdownWrapper from '../../components/MarkdownRender';
 import { IPost } from '../../interfaces/post';
-import { NextSeo } from 'next-seo';
 
 interface Props {
 	posts: IPost[];
@@ -101,10 +100,6 @@ function Blog(props: Props) {
 
 	return (
 		<>
-			<NextSeo
-				title={'Blog'}
-				description={'I write about software engineering, and frontend.'}
-			/>
 			<Stack>
 				<Heading>
 					Articles

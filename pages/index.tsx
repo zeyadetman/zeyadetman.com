@@ -5,7 +5,6 @@ import { AiFillSound } from 'react-icons/ai';
 import { Icon } from '@chakra-ui/react';
 import { careers } from '../utils/career';
 import CareerStack from '../components/CareerStack';
-import Report from '../libs/report';
 
 export async function getServerSideProps(ctx: NextPageContext) {
 	const session = await getSession(ctx);
@@ -21,7 +20,6 @@ export async function getServerSideProps(ctx: NextPageContext) {
 export default function Home({ user }: any) {
 	return (
 		<>
-			<Report />
 			<Stack mb="8">
 				<Heading mb="4">
 					Hi, I'm Zeyad{' '}

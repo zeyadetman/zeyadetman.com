@@ -14,46 +14,14 @@ import { useColorModeValue } from '@chakra-ui/color-mode';
 import MarkdownWrapper from '../../components/MarkdownRender';
 import { IPost } from '../../interfaces/post';
 import { useRouter } from 'next/router';
-import { google } from 'googleapis';
+import { getViews, hitPath } from '../../libs/analytics';
 const handle: string = 'zeyadetman';
 interface Props {
 	post: IPost;
+	isProduction: boolean;
 }
 
 export async function getStaticPaths() {
-	console.log(
-		process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_CLIENT_ID,
-		process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_SECRET_KEY
-	);
-	const oauth2Client = new google.auth.OAuth2(
-		process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_CLIENT_ID,
-		process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_SECRET_KEY,
-		'http://localhost:3000/oauth2callback'
-	);
-
-	const scopes = 'https://www.googleapis.com/auth/analytics';
-
-	// const data = await oauth2Client.generateAuthUrl({
-	// 	client_id: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_CLIENT_ID,
-	// 	scope: scopes,
-	// 	prompt: 'consent',
-	// 	access_type: 'offline',
-	// });
-
-	// const tokens = {
-	// 	access_token:
-	// 		'ya29.a0ARrdaM9yKQSAUIUHOwCo3QQnc5Ob9J3G-6lnRYlzfNmqVG5MdSkyGhhjQylx9rUHToQvyq4aU5o6K4BlJYscaMVBGKbTIga1cv3lyXClArS0KNvS_QyGf9E1AvQ-FKhhG8Et76abm6XOx51vHBlcbSsWWpQo',
-	// 	scope: 'https://www.googleapis.com/auth/analytics',
-	// 	token_type: 'Bearer',
-	// 	expiry_date: 1632846438889,
-	// };
-
-	// const aa = await oauth2Client.getRequestHeaders();
-	// console.log(aa);
-	// const data = await oauth2Client.getAccessToken();
-
-	// console.log({ data });
-
 	const postsSlugs = await getPosts();
 	const slugs = postsSlugs.map((post) => ({ params: { slug: post.fileName } }));
 
@@ -64,42 +32,47 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(props: any) {
-	console.log({ props });
-
+	const isProduction = process.env.NODE_ENV === 'production';
 	const {
 		params: { slug },
 	} = props;
 	if (slug) {
 		const post = await getPostBySlug(slug);
-		return { props: { post } };
+		return { props: { post, isProduction } };
 	}
 
 	return {};
 }
 
 function BlogIndex(props: Props) {
-	const at =
-		'ya29.a0ARrdaM9yKQSAUIUHOwCo3QQnc5Ob9J3G-6lnRYlzfNmqVG5MdSkyGhhjQylx9rUHToQvyq4aU5o6K4BlJYscaMVBGKbTIga1cv3lyXClArS0KNvS_QyGf9E1AvQ-FKhhG8Et76abm6XOx51vHBlcbSsWWpQo';
-	const { post } = props;
+	const { post, isProduction } = props;
 	const router = useRouter();
-	const [pageVisits, setPageVisits] = useState(null);
+	const [pageVisits, setPageVisits] = useState<number>(0);
+
+	useEffect(() => {
+		const updatePathViews = async () => {
+			const views: number = await hitPath(post.fileName);
+			setPageVisits(views);
+		};
+
+		const getPathViews = async () => {
+			const views: number = await getViews(post.fileName);
+			setPageVisits(views);
+		};
+
+		if (post.fileName) {
+			if (isProduction) {
+				updatePathViews();
+			} else {
+				getPathViews();
+			}
+		}
+	}, []);
+
 	if (!post) {
 		router.push('/404');
 		return <></>;
 	}
-
-	useEffect(() => {
-		const getPagesVisits = async () => {
-			const url = `https://www.googleapis.com/analytics/v3/data/ga?access_token=${at}&ids=ga%3A193840106&dimensions=ga%3ApagePath&metrics=ga%3Apageviews&start-date=2018-01-01&end-date=2021-09-29`;
-			const { rows } = await (await fetch(url)).json();
-			const visitsNumber = rows.reduce((a: number, c: string[]) => {
-				return c[0].includes(post.fileName) ? a + Number(c[1]) : +a;
-			}, 0);
-			setPageVisits(visitsNumber);
-		};
-
-		getPagesVisits();
-	}, []);
 
 	const renderTags = (tags: [string]) => {
 		return tags.map((tag: string) => (
@@ -133,7 +106,9 @@ function BlogIndex(props: Props) {
 					css={{ gap: '0.3rem 1rem' }}
 				>
 					<Text>
-						<Text display="inline">{`${post.data.date}  •  ${pageVisits} Views  •  `}</Text>
+						<Text display="inline">{`${post.data.date}  •  ${
+							pageVisits ? `${pageVisits} Views  •  ` : ''
+						}`}</Text>
 						{post.readingTime.text}
 					</Text>
 					{post.data.tags.length ? (
