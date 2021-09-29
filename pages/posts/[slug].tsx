@@ -70,7 +70,7 @@ function BlogIndex(props: Props) {
 	}, []);
 
 
-if(typeof window !== 'undefined') {
+if(typeof window !== undefined) {
 
 if (!post) {
 		router.push('/404');
