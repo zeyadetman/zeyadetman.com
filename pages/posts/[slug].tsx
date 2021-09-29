@@ -50,11 +50,6 @@ function BlogIndex(props: Props) {
 	const [pageVisits, setPageVisits] = useState<number>(0);
 
 	useEffect(() => {
-
-if (!post) {
-		router.push('/404');
-	}
-
 		const updatePathViews = async () => {
 			const views: number = await hitPath(post.fileName);
 			setPageVisits(views);
@@ -73,6 +68,15 @@ if (!post) {
 			}
 		}
 	}, []);
+
+
+if(typeof window !== 'undefined') {
+
+if (!post) {
+		router.push('/404');
+	}
+
+}
 
 	const renderTags = (tags: [string]) => {
 		return tags.map((tag: string) => (
