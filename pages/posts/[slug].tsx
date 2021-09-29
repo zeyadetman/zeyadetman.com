@@ -74,6 +74,7 @@ if(typeof window !== 'undefined') {
 
 if (!post) {
 		router.push('/404');
+return <></>;
 	}
 
 }
