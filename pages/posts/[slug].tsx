@@ -84,47 +84,51 @@ function BlogIndex(props: Props) {
 
 	return (
 		<>
-			<NextSeo title={post.data.title} description={post.excerpt} />
-			<ArticleJsonLd
-				url={pagePath}
-				title={post.data.title}
-				images={[]}
-				datePublished={post.data.date}
-				authorName={['Zeyad Etman']}
-				publisherName="Zeyad Etman"
-				publisherLogo=""
-				description={post.excerpt || ''}
-			/>
-			<Stack mb="8">
-				<Heading as="h1" fontSize="4xl">
-					{post.data.title}
-				</Heading>
-				<Flex
-					fontSize="xs"
-					color={useColorModeValue('gray.500', 'gray.500')}
-					flexWrap="wrap"
-					css={{ gap: '0.3rem 1rem' }}
-				>
-					<Text>
-						<Text display="inline">{`${post.data.date}  •  ${
-							pageVisits ? `${pageVisits} Views  •  ` : ''
-						}`}</Text>
-						{post.readingTime.text}
-					</Text>
-					{post.data.tags.length ? (
-						<HStack>{renderTags(post.data.tags)}</HStack>
-					) : null}
-				</Flex>
-			</Stack>
-			<MarkdownWrapper content={post.content} />
-			<Flex justify="center">
-				<a
-					className="twitter-share-button"
-					href={`https://twitter.com/intent/tweet?text=${post.data.title}&via=${handle}`}
-				>
-					Tweet
-				</a>
-			</Flex>
+			{post && (
+				<>
+					<NextSeo title={post.data.title} description={post.excerpt} />
+					<ArticleJsonLd
+						url={pagePath}
+						title={post.data.title}
+						images={[]}
+						datePublished={post.data.date}
+						authorName={['Zeyad Etman']}
+						publisherName="Zeyad Etman"
+						publisherLogo=""
+						description={post.excerpt || ''}
+					/>
+					<Stack mb="8">
+						<Heading as="h1" fontSize="4xl">
+							{post.data.title}
+						</Heading>
+						<Flex
+							fontSize="xs"
+							color={useColorModeValue('gray.500', 'gray.500')}
+							flexWrap="wrap"
+							css={{ gap: '0.3rem 1rem' }}
+						>
+							<Text>
+								<Text display="inline">{`${post.data.date}  •  ${
+									pageVisits ? `${pageVisits} Views  •  ` : ''
+								}`}</Text>
+								{post.readingTime.text}
+							</Text>
+							{post.data.tags.length ? (
+								<HStack>{renderTags(post.data.tags)}</HStack>
+							) : null}
+						</Flex>
+					</Stack>
+					<MarkdownWrapper content={post.content} />
+					<Flex justify="center">
+						<a
+							className="twitter-share-button"
+							href={`https://twitter.com/intent/tweet?text=${post.data.title}&via=${handle}`}
+						>
+							Tweet
+						</a>
+					</Flex>
+				</>
+			)}
 		</>
 	);
 }
