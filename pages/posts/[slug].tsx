@@ -61,15 +61,12 @@ function BlogIndex(props: Props) {
 		}
 	}, []);
 
-
-if(typeof window !== undefined) {
-
-if (!post) {
-		router.push('/404');
-return <></>;
+	if (typeof window !== undefined) {
+		if (!post) {
+			window.location.href = '/404';
+			return <></>;
+		}
 	}
-
-}
 
 	const renderTags = (tags: [string]) => {
 		return tags.map((tag: string) => (
