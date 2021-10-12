@@ -41,7 +41,7 @@ export default function Home({ user }: any) {
 	return (
 		<>
 			<Stack mb="32px !important">
-				<Heading mb="-60px !important">
+				<Heading mb="-60px !important" zIndex={10000}>
 					Hi, I'm Zeyad{' '}
 					<Icon
 						as={AiFillSound}
