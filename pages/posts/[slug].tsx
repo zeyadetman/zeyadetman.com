@@ -30,10 +30,14 @@ export async function getStaticProps(props: any) {
 	} = props;
 	if (slug) {
 		const post = await getPostBySlug(slug);
-		return { props: { post, isProduction } };
+		if (post) {
+			return { props: { post, isProduction } };
+		}
 	}
 
-	return {};
+	return {
+		notFound: true,
+	};
 }
 
 function BlogIndex(props: Props) {
