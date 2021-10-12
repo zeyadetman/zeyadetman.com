@@ -61,10 +61,15 @@ function BlogIndex(props: Props) {
 		}
 	}, []);
 
-	if (!post) {
+
+if(typeof window !== undefined) {
+
+if (!post) {
 		router.push('/404');
-		return <></>;
+return <></>;
 	}
+
+}
 
 	const renderTags = (tags: [string]) => {
 		return tags.map((tag: string) => (
