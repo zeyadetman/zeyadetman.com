@@ -63,15 +63,12 @@ function BlogIndex(props: Props) {
 	}, []);
 
 	useEffect(() => {
+		if (!post) {
+			router.push('/404');
+		}
+
 		setPagePath(router.asPath);
 	}, []);
-
-	if (typeof window !== undefined) {
-		if (!post) {
-			window.location.href = '/404';
-			return <></>;
-		}
-	}
 
 	const renderTags = (tags: [string]) => {
 		return tags.map((tag: string) => (
