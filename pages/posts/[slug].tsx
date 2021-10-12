@@ -1,12 +1,4 @@
-import {
-	Badge,
-	Flex,
-	Heading,
-	HStack,
-	Stack,
-	Text,
-	Divider,
-} from '@chakra-ui/layout';
+import { Badge, Flex, Heading, HStack, Stack, Text } from '@chakra-ui/layout';
 import React, { useState, useEffect } from 'react';
 import { getPostBySlug, getPosts } from '../../libs/posts';
 import { ArticleJsonLd, NextSeo } from 'next-seo';
@@ -117,7 +109,6 @@ function BlogIndex(props: Props) {
 				</Flex>
 			</Stack>
 			<MarkdownWrapper content={post.content} />
-			<Divider my="8" />
 			<Flex justify="center">
 				<a
 					className="twitter-share-button"

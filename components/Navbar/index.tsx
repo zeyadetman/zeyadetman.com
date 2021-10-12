@@ -46,6 +46,12 @@ const NavLink = ({ children, url }: { children: ReactNode; url: string }) => {
 				textDecoration: 'none',
 				bg: useColorModeValue('gray.200', 'gray.700'),
 			}}
+			textDecoration={
+				(router?.pathname === '/' && url === '/') ||
+				(router?.pathname?.includes(url) && url !== '/')
+					? 'underline'
+					: ''
+			}
 			href={url}
 			onClick={(e) => {
 				e.preventDefault();
