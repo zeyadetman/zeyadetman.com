@@ -8,11 +8,15 @@ function CareerStack(props: {
 }) {
 	const { company, date, techStack } = props.career;
 	const renderJobStack = () => {
-		return techStack.map((tech) => <Badge size="xs">{tech}</Badge>);
+		return techStack.map((tech) => (
+			<Badge ms="0 !important" size="xs">
+				{tech}
+			</Badge>
+		));
 	};
 
 	return (
-		<Stack key={company}>
+		<Stack key={company} mb="12px !important">
 			<HStack justify="space-between">
 				<Text fontWeight="bold" fontSize="lg">
 					{company}
@@ -21,7 +25,9 @@ function CareerStack(props: {
 					{date}
 				</Text>
 			</HStack>
-			<HStack>{renderJobStack()}</HStack>
+			<HStack flexWrap="wrap" style={{ gap: '8px 8px' }}>
+				{renderJobStack()}
+			</HStack>
 		</Stack>
 	);
 }

@@ -1,4 +1,4 @@
-import { Box, Container } from '@chakra-ui/layout';
+import { Box, Container, Divider } from '@chakra-ui/layout';
 import { useSession } from 'next-auth/client';
 import React from 'react';
 import Footer from '../Footer';
@@ -15,11 +15,13 @@ function Layout(props: Props) {
 	if (loading) return null;
 
 	return (
-		<Container maxW={'80ch'} px={{ lg: 4, sm: 1 }} py={6}>
+		<Container maxW={'80ch'} px={{ lg: 4, sm: 1 }} pt={6}>
 			<Navbar user={session?.user} />
 			<Box px={{ lg: 10, sm: 1, md: 4 }} py={10} maxW="2xl" margin="0 auto">
 				{children}
 			</Box>
+
+			<Divider maxW="2xl" margin="0 auto" mt="8" />
 			<Footer />
 		</Container>
 	);
