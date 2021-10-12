@@ -39,6 +39,7 @@ export async function getStaticProps(props: any) {
 function BlogIndex(props: Props) {
 	const { post, isProduction } = props;
 	const router = useRouter();
+	const [pagePath, setPagePath] = useState('');
 	const [pageVisits, setPageVisits] = useState<number>(0);
 
 	useEffect(() => {
@@ -61,6 +62,10 @@ function BlogIndex(props: Props) {
 		}
 	}, []);
 
+	useEffect(() => {
+		setPagePath(router.asPath);
+	}, []);
+
 	if (typeof window !== undefined) {
 		if (!post) {
 			window.location.href = '/404';
@@ -80,7 +85,7 @@ function BlogIndex(props: Props) {
 		<>
 			<NextSeo title={post.data.title} description={post.excerpt} />
 			<ArticleJsonLd
-				url={router.asPath}
+				url={pagePath}
 				title={post.data.title}
 				images={[]}
 				datePublished={post.data.date}
