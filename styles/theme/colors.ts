@@ -1,9 +1,15 @@
 export const colors = {
 	transparent: 'transparent',
-	black: '#000',
-	backgroundHoverColor: '#F7FAFC',
+	black: '#111',
+	blackMid: '#222',
+	blackLight: '#444',
 	white: '#fff',
+	whiteMid: '#f9fafb',
+	whiteDark: '#ccc',
+	backgroundHoverColor: '#F7FAFC',
+	orange: '#ffc700',
+	blue: '#1a85ff',
 	gray: {
-		900: '#171923',
+		800: '#111',
 	},
 };

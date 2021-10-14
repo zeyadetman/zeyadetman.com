@@ -66,6 +66,7 @@ function Blog(props: Props) {
 							onClick={() => router.push(`/posts/${fileName}`)}
 							as="button"
 							variant="title"
+							color={useColorModeValue('blackMid', 'whiteMid')}
 						>
 							{data.title}
 						</Link>
@@ -101,13 +102,10 @@ function Blog(props: Props) {
 	return (
 		<>
 			<Stack>
-				<Heading>
+				<Heading color={useColorModeValue('black', 'white')}>
 					Articles
 					<Text fontSize="sm" marginTop="4" fontWeight="normal">
-						I write about software engineering, and frontend.{' '}
-						<Text fontSize="xs" display="inline">
-							Also I write thoughts about life and living.
-						</Text>
+						I write about software engineering, and frontend.
 					</Text>
 				</Heading>
 			</Stack>

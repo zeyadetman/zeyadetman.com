@@ -1,3 +1,4 @@
+import { useColorModeValue } from '@chakra-ui/color-mode';
 import { HStack, Stack, Text, Badge } from '@chakra-ui/layout';
 import React from 'react';
 
@@ -18,7 +19,11 @@ function CareerStack(props: {
 	return (
 		<Stack key={company} mb="12px !important">
 			<HStack justify="space-between">
-				<Text fontWeight="bold" fontSize="lg">
+				<Text
+					fontWeight="bold"
+					fontSize="lg"
+					color={useColorModeValue('blackMid', 'whiteMid')}
+				>
 					{company}
 				</Text>
 				<Text color="gray.500" fontSize="sm">

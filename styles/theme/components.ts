@@ -10,8 +10,8 @@ export const components = {
 					bg: props.colorMode === 'dark' ? 'white' : 'black',
 					border: 'none',
 					_hover: {
-						bg: props.colorMode === 'dark' ? 'gray.100' : 'gray.800',
-						color: props.colorMode === 'dark' ? 'gray.800' : 'gray.100',
+						bg: props.colorMode === 'dark' ? 'white' : 'black',
+						color: props.colorMode === 'dark' ? 'black' : 'white',
 					},
 				},
 			},
@@ -20,13 +20,13 @@ export const components = {
 	Link: {
 		variants: {
 			default: (props: any) => ({
-				color: props.colorMode === 'dark' ? '#1a85ff' : '#1a85ff',
+				color: props.colorMode === 'dark' ? 'orange' : 'blue',
 			}),
 			nav: (props: any) => ({
-				color: props.colorMode === 'dark' ? 'grey.500' : 'black',
+				color: props.colorMode === 'dark' ? 'whiteDark' : 'black',
 			}),
 			title: (props: any) => ({
-				color: props.colorMode === 'dark' ? 'grey.500' : 'black',
+				color: props.colorMode === 'dark' ? 'whiteDark' : 'black',
 			}),
 		},
 		defaultProps: {
@@ -40,12 +40,12 @@ export const components = {
 				color: props.colorMode === 'dark' ? 'black' : 'white',
 				borderRadius: 0,
 				_hover: {
-					bg: props.colorMode === 'dark' ? 'gray.100' : 'gray.800',
-					color: props.colorMode === 'dark' ? 'gray.800' : 'gray.100',
+					bg: props.colorMode === 'dark' ? 'white' : 'black',
+					color: props.colorMode === 'dark' ? 'black' : 'white',
 				},
 				_active: {
-					bg: props.colorMode === 'dark' ? 'gray.100' : 'gray.800',
-					color: props.colorMode === 'dark' ? 'gray.800' : 'gray.100',
+					bg: props.colorMode === 'dark' ? 'white' : 'black',
+					color: props.colorMode === 'dark' ? 'black' : 'white',
 				},
 			}),
 			outline: {

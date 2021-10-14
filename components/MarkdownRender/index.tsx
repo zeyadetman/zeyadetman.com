@@ -11,6 +11,7 @@ import {
 import rehypeRaw from 'rehype-raw';
 import { Code, Heading, Link, Text } from '@chakra-ui/layout';
 import { Img } from '@chakra-ui/image';
+import { useColorModeValue } from '@chakra-ui/color-mode';
 
 interface Props {
 	content: string;
@@ -53,7 +54,13 @@ function MarkdownWrapper(props: Props) {
 				},
 				h2({ node, children }) {
 					return (
-						<Heading as="h2" fontSize="xl" mt="8" mb="6">
+						<Heading
+							as="h2"
+							fontSize="xl"
+							mt="8"
+							mb="6"
+							color={useColorModeValue('black', 'white')}
+						>
 							{children}
 						</Heading>
 					);
