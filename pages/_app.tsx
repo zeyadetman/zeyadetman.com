@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 				}}
 				session={{ ...session, pageViews }}
 			>
-				<Script>
+				<Script strategy="lazyOnload">
 					{`window.twttr = (function(d, s, id) {
 						var js, fjs = d.getElementsByTagName(s)[0],
 							t = window.twttr || {};

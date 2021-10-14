@@ -1,5 +1,3 @@
-import { useColorModeValue } from '@chakra-ui/color-mode';
-
 export const components = {
 	Checkbox: {
 		baseStyle: (props: any) => ({
