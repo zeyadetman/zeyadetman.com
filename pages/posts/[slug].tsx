@@ -76,7 +76,7 @@ function BlogIndex(props: Props) {
 
 	const renderTags = (tags: [string]) => {
 		return tags.map((tag: string) => (
-			<Badge size="xs" variant="tag">
+			<Badge size="xs" variant="tag" key={tag}>
 				{tag}
 			</Badge>
 		));
@@ -123,7 +123,7 @@ function BlogIndex(props: Props) {
 						</Flex>
 					</Stack>
 					<MarkdownWrapper content={post.content} />
-					<Flex justify="center">
+					<Flex justify="center" mt={16} mb={-8}>
 						<a
 							className="twitter-share-button"
 							href={`https://twitter.com/intent/tweet?text=${post.data.title}&via=${handle}`}
