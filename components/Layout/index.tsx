@@ -1,3 +1,4 @@
+import { useColorModeValue } from '@chakra-ui/color-mode';
 import { Box, Container, Divider } from '@chakra-ui/layout';
 import { useSession } from 'next-auth/client';
 import React from 'react';
@@ -15,7 +16,12 @@ function Layout(props: Props) {
 	if (loading) return null;
 
 	return (
-		<Container maxW={'80ch'} px={{ lg: 4, sm: 1 }} pt={6}>
+		<Container
+			maxW={'80ch'}
+			px={{ lg: 4, sm: 1 }}
+			pt={6}
+			color={useColorModeValue('blackLight', 'whiteDark')}
+		>
 			<Navbar user={session?.user} />
 			<Box px={{ lg: 10, sm: 1, md: 4 }} py={10} maxW="2xl" margin="0 auto">
 				{children}

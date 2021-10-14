@@ -16,8 +16,7 @@ import { Img } from '@chakra-ui/react';
 import { useDisclosure } from '@chakra-ui/hooks';
 import { NextSeo } from 'next-seo';
 import { IPic } from '../interfaces/picture';
-
-interface Props {}
+import { useColorModeValue } from '@chakra-ui/color-mode';
 
 const pictures: IPic[] = [
 	{
@@ -50,7 +49,7 @@ function Gallery(props: { google: string }) {
 		<>
 			<NextSeo title={'Gallery'} description={"Photos I've taken"} />
 			<Stack>
-				<Heading>
+				<Heading color={useColorModeValue('black', 'white')}>
 					Gallery
 					<Text fontSize="sm" marginTop="4" fontWeight="normal">
 						Photos I've taken, all of them{' '}

@@ -98,7 +98,11 @@ function BlogIndex(props: Props) {
 						description={post.excerpt || ''}
 					/>
 					<Stack mb="8">
-						<Heading as="h1" fontSize="4xl">
+						<Heading
+							as="h1"
+							fontSize="4xl"
+							color={useColorModeValue('black', 'white')}
+						>
 							{post.data.title}
 						</Heading>
 						<Flex

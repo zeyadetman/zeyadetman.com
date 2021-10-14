@@ -29,7 +29,9 @@ function LoginForm(props: Props) {
 		<Flex minH={'100vh'} align={'center'} justify={'center'}>
 			<Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
 				<Stack align={'center'}>
-					<Heading fontSize={'4xl'}>Sign in to your account</Heading>
+					<Heading fontSize={'4xl'} color={useColorModeValue('black', 'white')}>
+						Sign in to your account
+					</Heading>
 					<Text fontSize={'lg'} color={'gray.600'}>
 						to access your awesome blog ✌️
 					</Text>

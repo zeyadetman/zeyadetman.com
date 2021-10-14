@@ -41,7 +41,11 @@ export default function Home({ user }: any) {
 	return (
 		<>
 			<Stack mb="32px !important">
-				<Heading mb="-60px !important" zIndex={10000}>
+				<Heading
+					color={useColorModeValue('black', 'white')}
+					mb="-60px !important"
+					zIndex={10000}
+				>
 					Hi, I'm Zeyad{' '}
 					<Icon
 						as={AiFillSound}
@@ -74,7 +78,7 @@ export default function Home({ user }: any) {
 					<Box visibility={sayHello ? 'visible' : 'hidden'}>
 						<Icon
 							as={Arrow}
-							color={useColorModeValue('gray.800', 'gray.300')}
+							color={useColorModeValue('black', 'gray.300')}
 							w={71}
 							position={'absolute'}
 							right={{ xs: 50, sm: 70 }}
@@ -108,7 +112,12 @@ export default function Home({ user }: any) {
 			</Stack>
 
 			<Stack mb="-32px !important">
-				<Heading as="h2" size="xl" mb="4px !important">
+				<Heading
+					as="h2"
+					size="xl"
+					mb="4px !important"
+					color={useColorModeValue('black', 'white')}
+				>
 					Career
 				</Heading>
 
