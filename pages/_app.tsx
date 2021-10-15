@@ -8,7 +8,7 @@ import { shadows } from '../styles/theme/shadows';
 import Layout from '../components/Layout';
 import { breakpoints } from '../styles/theme/breakpoints';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import * as gtag from '../libs/gtag';
 import { DefaultSeo, LogoJsonLd } from 'next-seo';
 import Script from 'next/script';
@@ -25,7 +25,6 @@ const theme = extendTheme({
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 	const router = useRouter();
-	const [pageViews, setPageViews] = useState([]);
 
 	useEffect(() => {
 		const handleRouteChange = (url: URL) => {
@@ -45,7 +44,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 					clientMaxAge: 0,
 					keepAlive: 0,
 				}}
-				session={{ ...session, pageViews }}
+				session={{ ...session }}
 			>
 				<Script strategy="lazyOnload">
 					{`window.twttr = (function(d, s, id) {
