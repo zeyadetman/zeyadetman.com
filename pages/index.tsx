@@ -1,4 +1,4 @@
-import { Text, Heading, Link, Stack, Box } from '@chakra-ui/layout';
+import { Text, Heading, Link, Stack, Box, Badge } from '@chakra-ui/layout';
 import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/client';
 import { AiFillSound } from 'react-icons/ai';
@@ -8,6 +8,8 @@ import CareerStack from '../components/CareerStack';
 import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode';
 import Image from 'next/image';
 import { useState } from 'react';
+import { EmailIcon } from '@chakra-ui/icons';
+import dynamic from 'next/dynamic';
 
 const Arrow = createIcon({
 	displayName: 'Arrow',
@@ -20,6 +22,10 @@ const Arrow = createIcon({
 			fill="currentColor"
 		/>
 	),
+});
+
+const ReactGitHubCalendar = dynamic(() => import('react-ts-github-calendar'), {
+	ssr: false,
 });
 
 export async function getServerSideProps(ctx: NextPageContext) {
@@ -111,6 +117,33 @@ export default function Home({ user }: any) {
 				</Text>
 			</Stack>
 
+			<Stack mb="32px !important">
+				<Heading
+					as="h2"
+					size="xl"
+					mb="4px !important"
+					color={useColorModeValue('black', 'white')}
+				>
+					Stats
+				</Heading>
+
+				<Box mb="12px !important">
+					<a href="https://stackoverflow.com/users/5721245/zeyad-etman">
+						<img
+							src={`https://stackoverflow.com/users/flair/5721245.png?theme=${
+								colorMode === 'dark' ? '' : 'dark'
+							}`}
+							width="208"
+							height="58"
+							alt="profile for Zeyad Etman at Stack Overflow, Q&amp;A for professional and enthusiast programmers"
+							title="profile for Zeyad Etman at Stack Overflow, Q&amp;A for professional and enthusiast programmers"
+						/>
+					</a>
+				</Box>
+
+				<ReactGitHubCalendar userName="zeyadetman" tooltips responsive />
+			</Stack>
+
 			<Stack mb="-32px !important">
 				<Heading
 					as="h2"
@@ -119,7 +152,53 @@ export default function Home({ user }: any) {
 					color={useColorModeValue('black', 'white')}
 				>
 					Career
+					<Text
+						fontSize="xs"
+						ms={1}
+						fontWeight={300}
+						fontStyle="italic"
+						display="inline"
+					>
+						freelance/part-time includes
+					</Text>
 				</Heading>
+
+				<Text fontSize="sm" mb="12px !important">
+					<Badge background="green" me="1" color="blackLight">
+						Hire me!
+					</Badge>
+					I build web apps for startups, businesses as a freelance frontend
+					developer. Let's discuss your needs and what solutions I can bring.
+					<Text
+						fontStyle="italic"
+						fontWeight="700"
+						background="red"
+						p="2px 10px"
+						mt="2"
+						w="fit-content"
+						color="whiteDark"
+						as="span"
+						display="inline-block"
+					>
+						Note: unavailable in the current time.
+					</Text>
+				</Text>
+
+				<Text fontSize="sm">
+					If you're a beginner or need advice from me, don't hesitate, Mail me
+					and i'll send you some advices how to start learning frontend or
+					programming.
+				</Text>
+
+				<Link
+					fontSize="sm"
+					href="mailto:zeyad.etman@gmail.com"
+					fontStyle="italic"
+					mb="24px !important"
+				>
+					<EmailIcon fontSize="lg" me="2" mb="0.5" />{' '}
+					zeyad[.]etman[@]gmail[.]com
+				</Link>
 
 				{careers.map((career: any) => (
 					<CareerStack career={career} />
