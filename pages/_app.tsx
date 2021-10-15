@@ -18,6 +18,9 @@ const theme = extendTheme({
 	colors,
 	components,
 	breakpoints,
+	config: {
+		initialColorMode: 'dark',
+	},
 });
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {

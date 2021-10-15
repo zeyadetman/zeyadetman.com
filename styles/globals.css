@@ -18,3 +18,11 @@ a {
 .pic-of-me {
 	margin-bottom: -40px !important;
 }
+
+.chakra-ui-light #github-container .contrib-number {
+	color: #333;
+}
+
+.chakra-ui-dark #github-container .contrib-number {
+	color: #eee;
+}

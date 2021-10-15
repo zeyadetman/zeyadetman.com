@@ -18,7 +18,7 @@ function Layout(props: Props) {
 	return (
 		<Container
 			maxW={'80ch'}
-			px={{ lg: 4, sm: 1 }}
+			px={{ lg: 4, sm: 3, xs: 2 }}
 			pt={6}
 			color={useColorModeValue('blackLight', 'whiteDark')}
 		>
