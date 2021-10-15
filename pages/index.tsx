@@ -180,7 +180,7 @@ export default function Home({ user }: any) {
 						as="span"
 						display="inline-block"
 					>
-						Note: unavailable in the current time.
+						Note: I'm not available at the current time.
 					</Text>
 				</Text>
 
