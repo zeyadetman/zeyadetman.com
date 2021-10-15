@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import LinkRoute from 'next/link';
 import {
 	Box,
 	Flex,
