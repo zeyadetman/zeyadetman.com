@@ -46,7 +46,7 @@ export default function Home({ user }: any) {
 
 	return (
 		<>
-			<Stack mb="32px !important">
+			<Stack mb="64px !important">
 				<Heading
 					color={useColorModeValue('black', 'white')}
 					mb="-60px !important"
@@ -117,11 +117,11 @@ export default function Home({ user }: any) {
 				</Text>
 			</Stack>
 
-			<Stack mb="32px !important">
+			<Stack mb="64px !important">
 				<Heading
 					as="h2"
 					size="xl"
-					mb="4px !important"
+					mb="16px !important"
 					color={useColorModeValue('black', 'white')}
 				>
 					Stats
@@ -148,7 +148,7 @@ export default function Home({ user }: any) {
 				<Heading
 					as="h2"
 					size="xl"
-					mb="4px !important"
+					mb="16px !important"
 					color={useColorModeValue('black', 'white')}
 				>
 					Career
