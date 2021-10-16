@@ -14,13 +14,13 @@ import {
 	useDisclosure,
 	useColorModeValue,
 	Stack,
-	Image,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
 import { signOut } from 'next-auth/client';
 import ColorModeIcon from '../ColorModeIcon';
 import { useRouter } from 'next/router';
 import { Session } from 'next-auth';
+import Image from 'next/image';
 
 const authLinks = [
 	{ name: 'Dashboard', url: '/dashboard' },
@@ -82,10 +82,11 @@ export default function Navbar({ user }: Session): ReactElement {
 					<HStack spacing={8} alignItems={'center'}>
 						<Box>
 							<Image
-								borderRadius="full"
 								src="/static/images/logo.jpeg"
-								boxSize="50px"
 								alt="logo"
+								width="50"
+								height="50"
+								className="nav-logo"
 							/>
 						</Box>
 						<HStack

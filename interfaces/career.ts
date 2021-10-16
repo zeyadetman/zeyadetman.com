@@ -5,4 +5,5 @@ export interface ICareer {
 	logo?: string;
 	date: string;
 	techStack: string[];
+	childs?: ICareer[];
 }
