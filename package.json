@@ -20,6 +20,7 @@
 		"@zeit/next-css": "^1.0.1",
 		"countapi-js": "^1.0.2",
 		"eslint-config-next": "^11.1.2",
+		"feed": "^4.2.2",
 		"framer-motion": "^4.1.17",
 		"googleapis": "^85.0.0",
 		"gray-matter": "^4.0.3",

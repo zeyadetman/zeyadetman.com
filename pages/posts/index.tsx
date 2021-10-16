@@ -19,6 +19,7 @@ import { useRouter } from 'next/router';
 import MarkdownWrapper from '../../components/MarkdownRender';
 import { IPost } from '../../interfaces/post';
 import { GetStaticPropsResult } from 'next';
+import Newsletter from '../../components/Newsletter';
 
 interface Props {
 	posts: IPost[];
@@ -105,8 +106,9 @@ function Blog(props: Props): ReactElement {
 				<Heading color={useColorModeValue('black', 'white')}>
 					Articles
 					<Text fontSize="sm" marginTop="4" fontWeight="normal">
-						I write about software engineering, and frontend.
+						I write about web development, and software engineering.
 					</Text>
+					<Newsletter />
 				</Heading>
 			</Stack>
 			<Stack mt="8">

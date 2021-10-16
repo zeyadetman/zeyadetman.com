@@ -14,6 +14,7 @@ import { site } from '../../configs/site';
 import { GetStaticPathsResult } from 'next';
 import { TwitterShareButton } from 'react-share';
 import { Button } from '@chakra-ui/button';
+import Newsletter from '../../components/Newsletter';
 
 interface Props {
 	post: IPost;
@@ -155,7 +156,7 @@ function BlogIndex(props: Props): ReactElement {
 						</Flex>
 					</Stack>
 					<MarkdownWrapper content={post.content} />
-					<Flex justify="center" mt={16} mb={-8}>
+					<Flex justify="center" direction="column" mt={16} mb={-8}>
 						<TwitterShareButton
 							title={post.data.title}
 							via={site.twitter.username}
@@ -170,6 +171,8 @@ function BlogIndex(props: Props): ReactElement {
 								Tweet This Post
 							</Button>
 						</TwitterShareButton>
+
+						<Newsletter />
 					</Flex>
 				</>
 			)}
