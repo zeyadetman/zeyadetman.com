@@ -1,11 +1,7 @@
 import { NextSeo } from 'next-seo';
-import React from 'react';
+import React, { ReactElement } from 'react';
 
-interface Props {}
-
-function NotFound(props: Props) {
-	const {} = props;
-
+function NotFound(): ReactElement {
 	return (
 		<>
 			<NextSeo title={'404'} description={'404'} />

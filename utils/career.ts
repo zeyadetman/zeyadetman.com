@@ -1,4 +1,6 @@
-const careers = [
+import { ICareer } from '../interfaces/career';
+
+const careers: ICareer[] = [
 	{
 		title: 'Front-End Engineer',
 		company: 'Blink22',

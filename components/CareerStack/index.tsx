@@ -1,16 +1,13 @@
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { HStack, Stack, Text, Badge } from '@chakra-ui/layout';
-import React from 'react';
+import React, { ReactElement } from 'react';
+import { ICareer } from '../../interfaces/career';
 
-interface Props {}
-
-function CareerStack(props: {
-	career: { company: string; date: string; techStack: [string] };
-}) {
+function CareerStack(props: { career: ICareer; key: string }): ReactElement {
 	const { company, date, techStack } = props.career;
 	const renderJobStack = () => {
-		return techStack.map((tech) => (
-			<Badge ms="0 !important" size="xs">
+		return techStack.map((tech: string) => (
+			<Badge ms="0 !important" size="xs" key={tech}>
 				{tech}
 			</Badge>
 		));

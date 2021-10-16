@@ -7,9 +7,11 @@ import { careers } from '../utils/career';
 import CareerStack from '../components/CareerStack';
 import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode';
 import Image from 'next/image';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { EmailIcon } from '@chakra-ui/icons';
 import dynamic from 'next/dynamic';
+import { site } from '../configs/site';
+import { ICareer } from '../interfaces/career';
 
 const Arrow = createIcon({
 	displayName: 'Arrow',
@@ -28,6 +30,7 @@ const ReactGitHubCalendar = dynamic(() => import('react-ts-github-calendar'), {
 	ssr: false,
 });
 
+// eslint-disable-next-line
 export async function getServerSideProps(ctx: NextPageContext) {
 	const session = await getSession(ctx);
 	console.log({ session: session?.user });
@@ -39,7 +42,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
 	};
 }
 
-export default function Home({ user }: any) {
+export default function Home(): ReactElement {
 	const { colorMode } = useColorMode();
 	const [sayHello, setSayHello] = useState(false);
 	const toggleHover = () => setSayHello(!sayHello);
@@ -52,12 +55,12 @@ export default function Home({ user }: any) {
 					mb="-60px !important"
 					zIndex={10000}
 				>
-					Hi, I'm Zeyad{' '}
+					Hi, I&apos;m Zeyad{' '}
 					<Icon
 						as={AiFillSound}
 						boxSize="8"
 						onClick={() => {
-							var audio = new Audio('/static/sounds/zeyad_ar.mp3');
+							const audio = new Audio('/static/sounds/zeyad_ar.mp3');
 							audio.play();
 						}}
 					/>
@@ -129,7 +132,7 @@ export default function Home({ user }: any) {
 
 				<Box mb="12px !important">
 					<a href="https://stackoverflow.com/users/5721245/zeyad-etman">
-						<img
+						<Image
 							src={`https://stackoverflow.com/users/flair/5721245.png?theme=${
 								colorMode === 'dark' ? '' : 'dark'
 							}`}
@@ -168,26 +171,29 @@ export default function Home({ user }: any) {
 						Hire me!
 					</Badge>
 					I build web apps for startups, businesses as a freelance frontend
-					developer. Let's discuss your needs and what solutions I can bring.
-					<Text
-						fontStyle="italic"
-						fontWeight="700"
-						background="red"
-						p="2px 10px"
-						mt="2"
-						w="fit-content"
-						color="whiteDark"
-						as="span"
-						display="inline-block"
-					>
-						Note: I'm not available at the current time.
-					</Text>
+					developer. Let&apos;s discuss your needs and what solutions I can
+					bring.
+					{!site.openToWork && (
+						<Text
+							fontStyle="italic"
+							fontWeight="700"
+							background="red"
+							p="2px 10px"
+							mt="2"
+							w="fit-content"
+							color="whiteDark"
+							as="span"
+							display="inline-block"
+						>
+							Note: I&apos;m not available at the current time.
+						</Text>
+					)}
 				</Text>
 
 				<Text fontSize="sm">
-					If you're a beginner or need advice from me, don't hesitate, Mail me
-					and i'll send you some advices how to start learning frontend or
-					programming.
+					If you&apos;re a beginner or need advice from me, don&apos;t hesitate,
+					Mail me and i&apos;ll send you some advices how to start learning
+					frontend or programming.
 				</Text>
 
 				<Link
@@ -200,8 +206,8 @@ export default function Home({ user }: any) {
 					zeyad[.]etman[@]gmail[.]com
 				</Link>
 
-				{careers.map((career: any) => (
-					<CareerStack career={career} />
+				{careers.map((career: ICareer) => (
+					<CareerStack key={career.company} career={career} />
 				))}
 			</Stack>
 		</>

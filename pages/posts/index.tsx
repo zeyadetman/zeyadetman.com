@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable */
+//@ts-nocheck
+import React, { ReactElement, useEffect, useState } from 'react';
 import {
 	Stack,
 	Text,
@@ -8,6 +10,7 @@ import {
 	Input,
 	Flex,
 	useColorModeValue,
+	useColorMode,
 } from '@chakra-ui/react';
 import { Badge, Box, HStack, Link } from '@chakra-ui/layout';
 import { SearchIcon } from '@chakra-ui/icons';
@@ -15,18 +18,20 @@ import { getPosts } from '../../libs/posts';
 import { useRouter } from 'next/router';
 import MarkdownWrapper from '../../components/MarkdownRender';
 import { IPost } from '../../interfaces/post';
+import { GetStaticPropsResult } from 'next';
 
 interface Props {
 	posts: IPost[];
 }
 
-export async function getStaticProps() {
+export async function getStaticProps(): Promise<GetStaticPropsResult<IPost>> {
 	const posts = await getPosts();
 	return { props: { posts } };
 }
 
-function Blog(props: Props) {
+function Blog(props: Props): ReactElement {
 	const router = useRouter();
+	const { colorMode } = useColorMode();
 	const { posts } = props;
 	const [listedPosts, setListedPosts] = useState<IPost[]>(posts);
 	const [searchPostsInputText, setSearchPostsInput] = useState('');
@@ -37,7 +42,7 @@ function Blog(props: Props) {
 		);
 
 		setListedPosts(filteredPosts);
-	}, [searchPostsInputText]);
+	}, [searchPostsInputText, posts]);
 
 	const renderPosts = () => {
 		if (listedPosts.length === 0) {
@@ -66,16 +71,11 @@ function Blog(props: Props) {
 							onClick={() => router.push(`/posts/${fileName}`)}
 							as="button"
 							variant="title"
-							color={useColorModeValue('blackMid', 'whiteMid')}
+							color={colorMode === 'light' ? 'blackMid' : 'whiteMid'}
 						>
 							{data.title}
 						</Link>
-						<Flex
-							fontSize="xs"
-							color="gray.500"
-							flexWrap="wrap"
-							css={{ gap: '0.3rem 1rem' }}
-						>
+						<Flex fontSize="xs" flexWrap="wrap" css={{ gap: '0.3rem 1rem' }}>
 							<Text>
 								<Text display="inline">{`${data.date}  •  `}</Text>
 								{readingTime.text}
@@ -89,7 +89,7 @@ function Blog(props: Props) {
 						<Text
 							fontSize="sm"
 							noOfLines={3}
-							color={useColorModeValue('gray.600', 'gray.300')}
+							color={colorMode === 'light' ? 'blackLight' : 'whiteDark'}
 						>
 							<MarkdownWrapper content={excerpt || ''} />
 						</Text>
@@ -114,16 +114,15 @@ function Blog(props: Props) {
 					Search articles
 				</Text>
 				<InputGroup>
-					<InputLeftElement
-						pointerEvents="none"
-						children={<SearchIcon color="gray.300" />}
-					/>
+					<InputLeftElement pointerEvents="none">
+						<SearchIcon color="whiteDark" />
+					</InputLeftElement>
 					<Input
 						_hover={{
 							bg: 'transparent',
 						}}
 						_focus={{
-							borderColor: useColorModeValue('black', 'gray.300'),
+							borderColor: useColorModeValue('blackLight', 'whiteDark'),
 						}}
 						placeholder="Search articles..."
 						borderRadius="5"

@@ -8,10 +8,11 @@ import { shadows } from '../styles/theme/shadows';
 import Layout from '../components/Layout';
 import { breakpoints } from '../styles/theme/breakpoints';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import * as gtag from '../libs/gtag';
 import { DefaultSeo, LogoJsonLd } from 'next-seo';
 import Script from 'next/script';
+import { site } from '../configs/site';
 
 const theme = extendTheme({
 	shadows,
@@ -20,7 +21,10 @@ const theme = extendTheme({
 	breakpoints,
 });
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+function MyApp({
+	Component,
+	pageProps: { session, ...pageProps },
+}: AppProps): ReactElement {
 	const router = useRouter();
 
 	useEffect(() => {
@@ -43,7 +47,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 				}}
 				session={{ ...session }}
 			>
-				<Script async>
+				<Script id="twitter-share-link" async>
 					{`window.twttr = (function(d, s, id) {
 						var js, fjs = d.getElementsByTagName(s)[0],
 							t = window.twttr || {};
@@ -67,22 +71,19 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 					src="https://apis.google.com/js/api.js"
 				/>
 				<Layout>
-					<LogoJsonLd
-						logo="/static/images/logo.jpeg"
-						url="https://zeyadetman.vercel.app/"
-					/>
+					<LogoJsonLd logo="/static/images/logo.jpeg" url={site.baseUrl} />
 					<DefaultSeo
 						openGraph={{
 							type: 'blog',
 							locale: 'en_IE',
-							url: 'https://zeyadetman.vercel.app/',
-							site_name: "Zeyad Etman's Blog",
+							url: site.baseUrl,
+							site_name: `${site.name}'s Blog`,
 						}}
-						titleTemplate="%s | Zeyad Etman"
-						defaultTitle="Zeyad Etman"
+						titleTemplate={`%s | ${site.name}`}
+						defaultTitle={site.name}
 						twitter={{
-							handle: '@zeyadetman',
-							site: '@zeyadetman',
+							handle: `@${site.twitter.username}`,
+							site: 'zeyadetman.com',
 							cardType: 'summary_large_image',
 						}}
 					/>

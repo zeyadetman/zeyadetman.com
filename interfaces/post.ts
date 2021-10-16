@@ -4,7 +4,7 @@ export interface IPost {
 	content: string;
 	excerpt: string | undefined;
 	data: {
-		[key: string]: any;
+		[key: string]: unknown;
 	};
 	fileName: string;
 	readingTime: ReadTimeResults;

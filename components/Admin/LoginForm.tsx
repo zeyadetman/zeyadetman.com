@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import {
 	Flex,
 	Box,
@@ -12,17 +12,15 @@ import {
 	Heading,
 	Text,
 	useColorModeValue,
-	useColorMode,
 	Center,
 } from '@chakra-ui/react';
 import { FcGoogle } from 'react-icons/fc';
 
 interface Props {
-	onSignInWithGoogle: () => {};
+	onSignInWithGoogle: () => Promise<unknown>;
 }
 
-function LoginForm(props: Props) {
-	const { toggleColorMode } = useColorMode();
+function LoginForm(props: Props): ReactElement {
 	const { onSignInWithGoogle } = props;
 
 	return (

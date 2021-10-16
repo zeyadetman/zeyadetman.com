@@ -1,14 +1,15 @@
 import { useColorMode } from '@chakra-ui/color-mode';
 import Icon from '@chakra-ui/icon';
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { IoMoonOutline, IoPartlySunnyOutline } from 'react-icons/io5';
 import { RiMoonCloudyLine } from 'react-icons/ri';
 import { FaCloudMoonRain } from 'react-icons/fa';
 import { WiDaySunny, WiDayRainMix } from 'react-icons/wi';
 import { getCookie, setCookie } from '../../utils/cookies';
-interface Props {}
 
-const weatherIcons = {
+const weatherIcons: {
+	[key: string]: { day: JSX.Element; night: JSX.Element };
+} = {
 	default: {
 		night: <IoMoonOutline />,
 		day: <WiDaySunny />,
@@ -25,20 +26,23 @@ const weatherIcons = {
 
 const getLocation = async () => {
 	try {
-		const data = await (await fetch('http://ip-api.com/json')).json();
-		setCookie('latitude', data.lat);
-		setCookie('longitude', data.lon);
+		const data = await (await fetch('https://geolocation-db.com/json/')).json();
+		setCookie('latitude', data.latitude);
+		setCookie('longitude', data.longitude);
 		return data;
 	} catch (e) {
 		throw new Error('fail');
 	}
 };
 
-function ColorModeIcon(props: Props) {
-	const {} = props;
+function ColorModeIcon(): ReactElement {
 	const { colorMode, toggleColorMode } = useColorMode();
-	const [weatherIcon, setWeatherIcon] = useState(weatherIcons.default);
+	const [weatherIcon, setWeatherIcon] = useState<{
+		day: JSX.Element;
+		night: JSX.Element;
+	}>(weatherIcons.default);
 
+	// eslint-disable-next-line
 	const applyWeatherIcon = (body: any) => {
 		if (body.rain) {
 			setCookie('weather', 'rain');
@@ -58,11 +62,11 @@ function ColorModeIcon(props: Props) {
 
 		if (!(lat && lon)) {
 			getLocation()
-				.then(async ({ lat, lon }) => {
+				.then(async ({ latitude, longitude }) => {
 					try {
 						const body = await (
 							await fetch(
-								`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=87eb04e63a1d2d86f382d92a06242e9c`
+								`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=87eb04e63a1d2d86f382d92a06242e9c`
 							)
 						).json();
 
@@ -76,8 +80,7 @@ function ColorModeIcon(props: Props) {
 					setWeatherIcon(weatherIcons.default);
 				});
 		} else {
-			const weather: 'default' | 'rain' | 'cloud' =
-				getCookie('weather') || 'default';
+			const weather: string = getCookie('weather') || 'default';
 			setWeatherIcon(weatherIcons[weather]);
 		}
 	}, []);
