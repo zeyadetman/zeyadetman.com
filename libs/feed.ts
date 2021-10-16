@@ -33,7 +33,7 @@ export const generateRSSFeed = (articles: IPost[]): void => {
 			excerpt,
 			data: { date, title },
 		} = post;
-		const url = `${baseUrl}/${fileName}`;
+		const url = `${baseUrl}/posts/${fileName}`;
 
 		feed.addItem({
 			//eslint-disable-next-line
