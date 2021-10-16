@@ -5,11 +5,10 @@ import { AiFillSound } from 'react-icons/ai';
 import { Icon, createIcon } from '@chakra-ui/react';
 import { careers } from '../utils/career';
 import CareerStack from '../components/CareerStack';
-import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode';
+import { useColorModeValue } from '@chakra-ui/color-mode';
 import Image from 'next/image';
 import { ReactElement, useState } from 'react';
 import { EmailIcon } from '@chakra-ui/icons';
-import dynamic from 'next/dynamic';
 import { site } from '../configs/site';
 import { ICareer } from '../interfaces/career';
 
@@ -26,10 +25,6 @@ const Arrow = createIcon({
 	),
 });
 
-const ReactGitHubCalendar = dynamic(() => import('react-ts-github-calendar'), {
-	ssr: false,
-});
-
 // eslint-disable-next-line
 export async function getServerSideProps(ctx: NextPageContext) {
 	const session = await getSession(ctx);
@@ -43,7 +38,6 @@ export async function getServerSideProps(ctx: NextPageContext) {
 }
 
 export default function Home(): ReactElement {
-	const { colorMode } = useColorMode();
 	const [sayHello, setSayHello] = useState(false);
 	const toggleHover = () => setSayHello(!sayHello);
 
@@ -82,6 +76,8 @@ export default function Home(): ReactElement {
 							className="pic-of-me"
 							onMouseEnter={toggleHover}
 							onMouseLeave={toggleHover}
+							loading="eager"
+							priority
 						/>
 					</Box>
 					<Box visibility={sayHello ? 'visible' : 'hidden'}>
@@ -118,33 +114,6 @@ export default function Home(): ReactElement {
 					share some technical tutorials and articles. Also I like take photos,
 					you can visit my online gallery.
 				</Text>
-			</Stack>
-
-			<Stack mb="64px !important">
-				<Heading
-					as="h2"
-					size="xl"
-					mb="16px !important"
-					color={useColorModeValue('black', 'white')}
-				>
-					Stats
-				</Heading>
-
-				<Box mb="12px !important">
-					<a href="https://stackoverflow.com/users/5721245/zeyad-etman">
-						<Image
-							src={`https://stackoverflow.com/users/flair/5721245.png?theme=${
-								colorMode === 'dark' ? '' : 'dark'
-							}`}
-							width="208"
-							height="58"
-							alt="profile for Zeyad Etman at Stack Overflow, Q&amp;A for professional and enthusiast programmers"
-							title="profile for Zeyad Etman at Stack Overflow, Q&amp;A for professional and enthusiast programmers"
-						/>
-					</a>
-				</Box>
-
-				<ReactGitHubCalendar userName="zeyadetman" tooltips responsive />
 			</Stack>
 
 			<Stack mb="-32px !important">

@@ -88,7 +88,7 @@ export const components = {
 	Badge: {
 		variants: {
 			tag: {
-				backgroundColor: '#ffc700',
+				backgroundColor: 'orange',
 				color: 'black',
 			},
 		},
