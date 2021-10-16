@@ -1,10 +1,13 @@
-export const setCookie = (cookieName: string, cookieValue: string) => {
+export const setCookie = (
+	cookieName: string,
+	cookieValue: string
+): string | void => {
 	if (document) {
 		document.cookie = `${cookieName}=${cookieValue}; max-age=3600; path=/`;
 	}
 };
 
-export const getCookie = (cookieName: string) => {
+export const getCookie = (cookieName: string): string | void => {
 	if (document) {
 		return Object.fromEntries(
 			document.cookie

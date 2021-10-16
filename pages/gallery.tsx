@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import {
 	Stack,
 	Text,
@@ -41,7 +41,7 @@ const pictures: IPic[] = [
 	},
 ];
 
-function Gallery(props: { google: string }) {
+function Gallery(): ReactElement {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [selectedImage, selectImage] = useState(0);
 
@@ -52,7 +52,7 @@ function Gallery(props: { google: string }) {
 				<Heading color={useColorModeValue('black', 'white')}>
 					Gallery
 					<Text fontSize="sm" marginTop="4" fontWeight="normal">
-						Photos I've taken, all of them{' '}
+						Photos I&apos;ve taken, all of them{' '}
 						<Text fontWeight="bold" display="inline">
 							captured by iPhone11
 						</Text>

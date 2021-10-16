@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import LoginForm from '../components/Admin/LoginForm';
 import { useSession, signIn, signOut, getSession } from 'next-auth/client';
 import { NextPageContext } from 'next';
 
-interface Props {}
-
+// eslint-disable-next-line
 export async function getServerSideProps(ctx: NextPageContext) {
 	const session = await getSession(ctx);
 	console.log({ session });
@@ -16,7 +15,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
 	};
 }
 
-function Admin(props: { google: string }) {
+function Admin(props: { google: string }): ReactElement | null {
 	const [session, loading] = useSession();
 	const { google } = props;
 	console.log({ google });

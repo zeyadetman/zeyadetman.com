@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import {
 	Box,
 	Flex,
@@ -20,6 +20,7 @@ import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
 import { signOut } from 'next-auth/client';
 import ColorModeIcon from '../ColorModeIcon';
 import { useRouter } from 'next/router';
+import { Session } from 'next-auth';
 
 const authLinks = [
 	{ name: 'Dashboard', url: '/dashboard' },
@@ -63,7 +64,7 @@ const NavLink = ({ children, url }: { children: ReactNode; url: string }) => {
 	);
 };
 
-export default function Navbar({ user }: any) {
+export default function Navbar({ user }: Session): ReactElement {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const links = user ? authLinks : visitorLinks;
 
@@ -84,6 +85,7 @@ export default function Navbar({ user }: any) {
 								borderRadius="full"
 								src="/static/images/logo.jpeg"
 								boxSize="50px"
+								alt="logo"
 							/>
 						</Box>
 						<HStack
@@ -120,7 +122,7 @@ export default function Navbar({ user }: any) {
 										cursor={'pointer'}
 										minW={0}
 									>
-										<Avatar size={'sm'} src={user?.image} />
+										{user?.image && <Avatar size={'sm'} src={user?.image} />}
 									</MenuButton>
 									<MenuList>
 										<MenuItem

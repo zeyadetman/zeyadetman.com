@@ -3,4 +3,8 @@ export interface ISite {
 	username: string;
 	baseUrl: string;
 	namespace: string;
+	openToWork: boolean;
+	twitter: {
+		username: string;
+	};
 }

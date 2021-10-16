@@ -1,7 +1,7 @@
 const withPlugins = require('next-compose-plugins');
 
 const nextConfig = {
-	webpack: (config, options) => {
+	webpack: (config) => {
 		config.module.rules.push({
 			test: /\.mp3$/,
 			use: {
@@ -20,7 +20,7 @@ const nextConfig = {
 		PROJECT_ROOT: __dirname,
 	},
 	images: {
-		domains: ['/public/static/', '/static/'],
+		domains: ['/public/static/', '/static/', 'stackoverflow.com'],
 	},
 };
 

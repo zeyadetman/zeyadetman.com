@@ -1,13 +1,9 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkLint from 'remark-lint';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
-import {
-	vs,
-	vsDark,
-	vscDarkPlus,
-} from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import rehypeRaw from 'rehype-raw';
 import { Code, Heading, Link, Text } from '@chakra-ui/layout';
 import { Img } from '@chakra-ui/image';
@@ -17,22 +13,22 @@ interface Props {
 	content: string;
 }
 
-function MarkdownWrapper(props: Props) {
+function MarkdownWrapper(props: Props): ReactElement {
 	const { content } = props;
+	const h2Color = useColorModeValue('black', 'white');
 
 	return (
 		<ReactMarkdown
-			children={content}
 			remarkPlugins={[remarkGfm, remarkLint]}
 			rehypePlugins={[rehypeRaw]}
 			components={{
-				code({ node, inline, className, children, ...props }) {
+				code({ inline, className, children, ...props }) {
 					const match = /language-(\w+)/.exec(className || '');
 					const lang = match?.[1] === 'js' ? 'javascript' : match?.[1];
 					return !inline && match ? (
+						//eslint-disable-next-line
 						//@ts-ignore
 						<SyntaxHighlighter
-							children={String(children).replace(/\n$/, '') || ''}
 							style={vscDarkPlus}
 							PreTag="div"
 							showLineNumbers
@@ -40,37 +36,34 @@ function MarkdownWrapper(props: Props) {
 							language={lang}
 							customStyle={{ marginBottom: '2rem' }}
 							{...props}
-						/>
+						>
+							{String(children).replace(/\n$/, '') || ''}
+						</SyntaxHighlighter>
 					) : (
 						<Code {...props}>{children}</Code>
 					);
 				},
-				a({ node, children, href, ...props }) {
+				a({ children, href, ...props }) {
 					return (
 						<Link href={href} {...props}>
 							{children}
 						</Link>
 					);
 				},
-				h2({ node, children }) {
+				h2({ children }) {
 					return (
-						<Heading
-							as="h2"
-							fontSize="xl"
-							mt="8"
-							mb="6"
-							color={useColorModeValue('black', 'white')}
-						>
+						<Heading as="h2" fontSize="xl" mt="8" mb="6" color={h2Color}>
 							{children}
 						</Heading>
 					);
 				},
-				p({ node, children }) {
+				p({ children }) {
 					return <Text mb="8">{children}</Text>;
 				},
-				li({ node, children, ...props }) {
+				li({ children, ...props }) {
 					const child = children.filter((item) => item !== '\n');
 					return (
+						//eslint-disable-next-line
 						//@ts-ignore
 						<Text as="li" mb="2" {...props}>
 							{child}
@@ -81,7 +74,9 @@ function MarkdownWrapper(props: Props) {
 					return <Img src={src} mb="8" alt={alt} {...props} />;
 				},
 			}}
-		/>
+		>
+			{content}
+		</ReactMarkdown>
 	);
 }
 

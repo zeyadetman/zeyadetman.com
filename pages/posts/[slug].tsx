@@ -1,5 +1,8 @@
+/* eslint-disable */
+//@ts-nocheck
+
 import { Badge, Flex, Heading, HStack, Stack, Text } from '@chakra-ui/layout';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactElement } from 'react';
 import { getPostBySlug, getPosts } from '../../libs/posts';
 import { ArticleJsonLd, NextSeo } from 'next-seo';
 import { useColorModeValue } from '@chakra-ui/color-mode';
@@ -7,15 +10,18 @@ import MarkdownWrapper from '../../components/MarkdownRender';
 import { IPost } from '../../interfaces/post';
 import { useRouter } from 'next/router';
 import { getViews, hitPath } from '../../libs/analytics';
-const handle: string = 'zeyadetman';
+import { site } from '../../configs/site';
+import { GetStaticPathsResult } from 'next';
 interface Props {
 	post: IPost;
 	isProduction: boolean;
 }
 
-export async function getStaticPaths() {
+export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 	const postsSlugs = await getPosts();
-	const slugs = postsSlugs.map((post) => ({ params: { slug: post.fileName } }));
+	const slugs = postsSlugs.map((post) => ({
+		params: { slug: post?.fileName },
+	}));
 
 	return {
 		paths: slugs,
@@ -23,6 +29,7 @@ export async function getStaticPaths() {
 	};
 }
 
+// eslint-disable-next-line
 export async function getStaticProps(props: any) {
 	const isProduction = process.env.NODE_ENV === 'production';
 	const {
@@ -40,7 +47,7 @@ export async function getStaticProps(props: any) {
 	};
 }
 
-function BlogIndex(props: Props) {
+function BlogIndex(props: Props): ReactElement {
 	const { post, isProduction } = props;
 	const router = useRouter();
 	const [pagePath, setPagePath] = useState('');
@@ -64,7 +71,7 @@ function BlogIndex(props: Props) {
 				getPathViews();
 			}
 		}
-	}, []);
+	}, [isProduction, post]);
 
 	useEffect(() => {
 		if (!post) {
@@ -72,7 +79,7 @@ function BlogIndex(props: Props) {
 		}
 
 		setPagePath(router.asPath);
-	}, []);
+	}, [post, router]);
 
 	const renderTags = (tags: [string]) => {
 		return tags.map((tag: string) => (
@@ -126,7 +133,7 @@ function BlogIndex(props: Props) {
 					<Flex justify="center" mt={16} mb={-8}>
 						<a
 							className="twitter-share-button"
-							href={`https://twitter.com/intent/tweet?text=${post.data.title}&via=${handle}`}
+							href={`https://twitter.com/intent/tweet?text=${post.data.title}&via=${site.twitter.username}`}
 						>
 							Tweet
 						</a>

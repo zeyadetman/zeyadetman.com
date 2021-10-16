@@ -7,8 +7,9 @@ import {
 	useColorModeValue,
 	VisuallyHidden,
 } from '@chakra-ui/react';
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
-import { ReactNode } from 'react';
+import { FaTwitter } from 'react-icons/fa';
+import { ReactElement, ReactNode } from 'react';
+import { site } from '../../configs/site';
 
 const SocialButton = ({
 	children,
@@ -41,7 +42,7 @@ const SocialButton = ({
 	);
 };
 
-export default function Footer() {
+export default function Footer(): ReactElement {
 	return (
 		<Box color={useColorModeValue('gray.700', 'gray.200')}>
 			<Container
@@ -53,11 +54,11 @@ export default function Footer() {
 				justify={{ base: 'center', md: 'space-between' }}
 				align={{ base: 'center', md: 'center' }}
 			>
-				<Text fontSize="xs">© 2021 Zeyad's Space on internet.</Text>
+				<Text fontSize="xs">© 2021 Zeyad&apos;s Space on internet.</Text>
 				<Stack direction={'row'} spacing={6}>
 					<SocialButton
 						label={'Twitter'}
-						href={'https://twitter.com/zeyadetman'}
+						href={`https://twitter.com/${site.twitter.username}`}
 					>
 						<FaTwitter />
 					</SocialButton>
