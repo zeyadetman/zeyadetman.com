@@ -47,25 +47,6 @@ function MyApp({
 				}}
 				session={{ ...session }}
 			>
-				<Script id="twitter-share-link" async>
-					{`window.twttr = (function(d, s, id) {
-						var js, fjs = d.getElementsByTagName(s)[0],
-							t = window.twttr || {};
-						if (d.getElementById(id)) return t;
-						js = d.createElement(s);
-						js.id = id;
-						js.src = "https://platform.twitter.com/widgets.js";
-						fjs.parentNode.insertBefore(js, fjs);
-
-						t._e = [];
-						t.ready = function(f) {
-							t._e.push(f);
-						};
-
-						return t;
-						}(document, "script", "twitter-wjs"));
-					`}
-				</Script>
 				<Script
 					strategy="afterInteractive"
 					src="https://apis.google.com/js/api.js"
@@ -78,6 +59,16 @@ function MyApp({
 							locale: 'en_IE',
 							url: site.baseUrl,
 							site_name: `${site.name}'s Blog`,
+							images: [
+								{
+									url: '/static/images/logo.jpeg',
+									width: 200,
+									height: 200,
+									alt: 'Logo',
+									type: 'image/jpeg',
+								},
+							],
+							description: `${site.name}'s Space on internet.`,
 						}}
 						titleTemplate={`%s | ${site.name}`}
 						defaultTitle={site.name}
