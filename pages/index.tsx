@@ -167,7 +167,7 @@ export default function Home(): ReactElement {
 
 				<Link
 					fontSize="sm"
-					href="mailto:zeyad.etman@gmail.com"
+					href={`mailto:${site.email}`}
 					fontStyle="italic"
 					mb="24px !important"
 				>
