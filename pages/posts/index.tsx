@@ -20,6 +20,7 @@ import MarkdownWrapper from '../../components/MarkdownRender';
 import { IPost } from '../../interfaces/post';
 import { GetStaticPropsResult } from 'next';
 import Newsletter from '../../components/Newsletter';
+import { generateRSSFeed } from '../../libs/feed';
 
 interface Props {
 	posts: IPost[];
@@ -27,6 +28,8 @@ interface Props {
 
 export async function getStaticProps(): Promise<GetStaticPropsResult<IPost>> {
 	const posts = await getPosts();
+	generateRSSFeed(posts);
+
 	return { props: { posts } };
 }
 

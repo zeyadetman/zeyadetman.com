@@ -4,6 +4,7 @@ export interface ISite {
 	baseUrl: string;
 	namespace: string;
 	openToWork: boolean;
+	email: string;
 	twitter: {
 		username: string;
 	};

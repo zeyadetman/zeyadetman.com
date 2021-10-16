@@ -21,6 +21,7 @@ async function getPosts(): Promise<IPost[]> {
 				file.excerpt = file.content.split('\n').slice(0, 4).join(' ');
 			},
 		});
+
 		return {
 			content,
 			excerpt,
