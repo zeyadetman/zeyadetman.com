@@ -1,6 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { GA_TRACKING_ID } from '../libs/gtag';
-
 const isProduction = process.env.NODE_ENV === 'production';
 
 export default class MyDocument extends Document {

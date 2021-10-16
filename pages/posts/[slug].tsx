@@ -12,6 +12,9 @@ import { useRouter } from 'next/router';
 import { getViews, hitPath } from '../../libs/analytics';
 import { site } from '../../configs/site';
 import { GetStaticPathsResult } from 'next';
+import { TwitterShareButton } from 'react-share';
+import { Button } from '@chakra-ui/button';
+
 interface Props {
 	post: IPost;
 	isProduction: boolean;
@@ -93,14 +96,36 @@ function BlogIndex(props: Props): ReactElement {
 		<>
 			{post && (
 				<>
-					<NextSeo title={post.data.title} description={post.excerpt} />
+					<NextSeo
+						title={post.data.title}
+						description={post.excerpt}
+						openGraph={{
+							images: [
+								{
+									url: '/static/images/logo.jpeg',
+									width: 200,
+									height: 200,
+									alt: 'Logo',
+									type: 'image/jpeg',
+								},
+							],
+						}}
+					/>
 					<ArticleJsonLd
 						url={pagePath}
 						title={post.data.title}
-						images={[]}
+						images={[
+							{
+								url: '/static/images/logo.jpeg',
+								width: 200,
+								height: 200,
+								alt: 'Logo',
+								type: 'image/jpeg',
+							},
+						]}
 						datePublished={post.data.date}
-						authorName={['Zeyad Etman']}
-						publisherName="Zeyad Etman"
+						authorName={[site.name]}
+						publisherName={site.name}
 						publisherLogo=""
 						description={post.excerpt || ''}
 					/>
@@ -131,12 +156,20 @@ function BlogIndex(props: Props): ReactElement {
 					</Stack>
 					<MarkdownWrapper content={post.content} />
 					<Flex justify="center" mt={16} mb={-8}>
-						<a
-							className="twitter-share-button"
-							href={`https://twitter.com/intent/tweet?text=${post.data.title}&via=${site.twitter.username}`}
+						<TwitterShareButton
+							title={post.data.title}
+							via={site.twitter.username}
+							url={`${site.baseUrl}${router.asPath}`}
 						>
-							Tweet
-						</a>
+							<Button
+								bg="#1d9bf0"
+								color="#fff"
+								_hover={{ bg: '#1e9cf1dd', color: 'fff' }}
+								size="sm"
+							>
+								Tweet This Post
+							</Button>
+						</TwitterShareButton>
 					</Flex>
 				</>
 			)}
