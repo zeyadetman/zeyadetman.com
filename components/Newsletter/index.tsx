@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import {
 	Stack,
 	useColorModeValue,
@@ -7,8 +7,31 @@ import {
 	Container,
 	Flex,
 } from '@chakra-ui/react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
+interface Inputs {
+	email: string;
+}
 export default function Newsletter(): ReactElement {
+	const { register, handleSubmit } = useForm<Inputs>();
+	const onSubmit: SubmitHandler<Inputs> = async (data) => {
+		const response = await (
+			await fetch('https://www.getrevue.co/api/v2/subscribers', {
+				method: 'POST',
+				body: JSON.stringify({
+					email: data.email,
+					double_opt_in: false,
+				}),
+				headers: {
+					Authorization: `Token ${process.env.NEXT_PUBLIC_GETREVUE_API_KEY}`,
+					'Content-Type': 'application/json',
+				},
+			})
+		).json();
+
+		console.log({ response });
+	};
+
 	return (
 		<Flex my={8} align={'center'} justify={'center'}>
 			<Container
@@ -27,34 +50,22 @@ export default function Newsletter(): ReactElement {
 				>
 					Subscribe to our Newsletter
 				</Heading>
-				<Stack
-					direction={{ base: 'column', md: 'row' }}
-					as={'form'}
-					spacing={'12px'}
-				>
-					<div id="revue-embed">
-						<form
-							action="https://www.getrevue.co/profile/zeyadetman/add_subscriber"
-							method="post"
-							id="revue-form"
-							name="revue-form"
-							target="_blank"
-						>
+				<Stack direction={{ base: 'column', md: 'row' }} spacing={'12px'}>
+					<div className="revue-embed">
+						<form onSubmit={handleSubmit(onSubmit)} className="revue-form">
 							<div className="revue-form-group">
 								<input
-									className="revue-form-field"
+									className="revue-form-field member_email"
 									placeholder="Your email"
 									type="email"
-									name="member[email]"
-									id="member_email"
+									{...register('email')}
 								/>
 							</div>
 							<div className="revue-form-actions">
 								<input
+									className="member_submit"
 									type="submit"
 									value="Subscribe"
-									name="member[subscribe]"
-									id="member_submit"
 								/>
 							</div>
 						</form>
