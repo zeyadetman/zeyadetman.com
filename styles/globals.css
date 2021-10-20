@@ -88,3 +88,8 @@ a {
 	border-color: inherit;
 	background: inherit;
 }
+
+.revue-form-actions {
+	display: flex;
+	align-items: end;
+}
