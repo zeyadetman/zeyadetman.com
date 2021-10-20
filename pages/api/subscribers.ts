@@ -1,4 +1,13 @@
-const subscribeHandler = async (req, res) => {
+import { NextApiRequest, NextApiResponse } from 'next';
+
+interface Data {
+	error: string;
+}
+
+const subscribeHandler = async (
+	req: NextApiRequest,
+	res: NextApiResponse<Data>
+): Promise<NextApiResponse<Data> | void> => {
 	const { email } = req.body;
 	console.log(email);
 
