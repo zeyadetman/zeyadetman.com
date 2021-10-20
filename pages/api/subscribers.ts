@@ -9,7 +9,6 @@ const subscribeHandler = async (
 	res: NextApiResponse<Data>
 ): Promise<NextApiResponse<Data> | void> => {
 	const { email } = req.body;
-	console.log(email);
 
 	if (!email) {
 		return res.status(400).json({ error: 'Email is required' });
