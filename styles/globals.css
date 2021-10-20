@@ -31,7 +31,7 @@ a {
 	border-radius: 50%;
 }
 
-#revue-embed {
+.revue-embed {
 	width: 100%;
 }
 
@@ -39,31 +39,31 @@ a {
 	width: 100%;
 }
 
-#revue-form {
+.revue-form {
 	display: flex;
 	justify-content: space-between;
 }
 
-#revue-form #member_submit {
+.revue-form .member_submit {
 	padding: 6px 12px;
 	border-radius: 5px;
 	height: var(--chakra-sizes-10);
 	font-size: 16px;
 }
 
-.chakra-ui-light #revue-form #member_submit {
+.chakra-ui-light .revue-form .member_submit {
 	color: #fff;
 	background-color: #111;
 	cursor: pointer;
 }
 
-.chakra-ui-dark #revue-form #member_submit {
+.chakra-ui-dark .revue-form .member_submit {
 	color: #111;
 	background-color: #eee;
 	cursor: pointer;
 }
 
-#member_email {
+.member_email {
 	width: 90%;
 	min-width: 0px;
 	outline: 2px solid transparent;
@@ -91,5 +91,5 @@ a {
 
 .revue-form-actions {
 	display: flex;
-	align-items: end;
+	align-items: flex-end;
 }
