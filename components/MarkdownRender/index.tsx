@@ -6,7 +6,6 @@ import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import rehypeRaw from 'rehype-raw';
 import { Code, Heading, Link, Text } from '@chakra-ui/layout';
-import { Img } from '@chakra-ui/image';
 import Image from 'next/image';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { Box } from '@chakra-ui/react';
