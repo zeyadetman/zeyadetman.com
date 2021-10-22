@@ -7,7 +7,9 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import rehypeRaw from 'rehype-raw';
 import { Code, Heading, Link, Text } from '@chakra-ui/layout';
 import { Img } from '@chakra-ui/image';
+import Image from 'next/image';
 import { useColorModeValue } from '@chakra-ui/color-mode';
+import { Box } from '@chakra-ui/react';
 
 interface Props {
 	content: string;
@@ -70,8 +72,17 @@ function MarkdownWrapper(props: Props): ReactElement {
 						</Text>
 					);
 				},
-				img({ src, alt, ...props }) {
-					return <Img src={src} mb="8" alt={alt} {...props} />;
+				img({ src, alt }) {
+					return (
+						<Box width="100%" className="post-image-container">
+							<Image
+								src={src || ''}
+								alt={alt}
+								layout="fill"
+								className="image"
+							/>
+						</Box>
+					);
 				},
 			}}
 		>

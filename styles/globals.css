@@ -93,3 +93,18 @@ a {
 	display: flex;
 	align-items: flex-end;
 }
+
+.post-image-container {
+	width: 100%;
+}
+
+.post-image-container > div {
+	position: unset !important;
+}
+
+.post-image-container .image {
+	object-fit: contain;
+	width: 100% !important;
+	position: relative !important;
+	height: unset !important;
+}

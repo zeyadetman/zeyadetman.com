@@ -44,6 +44,10 @@ export async function getStaticProps(props: any) {
 		if (post) {
 			return { props: { post, isProduction } };
 		}
+
+		return {
+			notFound: true,
+		};
 	}
 
 	return {
@@ -58,32 +62,34 @@ function BlogIndex(props: Props): ReactElement {
 	const [pageVisits, setPageVisits] = useState<number>(0);
 
 	useEffect(() => {
-		const updatePathViews = async () => {
-			const views: number = await hitPath(post.fileName);
-			setPageVisits(views);
-		};
+		if (!post) {
+			router.push('/404');
+		} else {
+			// setPagePath(router.asPath);
+		}
+	}, [post]);
 
-		const getPathViews = async () => {
-			const views: number = await getViews(post.fileName);
-			setPageVisits(views);
-		};
+	useEffect(() => {
+		if (post) {
+			const updatePathViews = async () => {
+				const views: number = await hitPath(post.fileName);
+				setPageVisits(views);
+			};
 
-		if (post.fileName) {
-			if (isProduction) {
-				updatePathViews();
-			} else {
-				getPathViews();
+			const getPathViews = async () => {
+				const views: number = await getViews(post.fileName);
+				setPageVisits(views);
+			};
+
+			if (post.fileName) {
+				if (isProduction) {
+					updatePathViews();
+				} else {
+					getPathViews();
+				}
 			}
 		}
 	}, [isProduction, post]);
-
-	useEffect(() => {
-		if (!post) {
-			router.push('/404');
-		}
-
-		setPagePath(router.asPath);
-	}, [post, router]);
 
 	const renderTags = (tags: [string]) => {
 		return tags.map((tag: string) => (

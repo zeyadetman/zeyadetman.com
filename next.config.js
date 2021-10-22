@@ -20,7 +20,13 @@ const nextConfig = {
 		PROJECT_ROOT: __dirname,
 	},
 	images: {
-		domains: ['/public/static/', '/static/', 'stackoverflow.com'],
+		domains: [
+			'/public/static/',
+			'/static/',
+			'stackoverflow.com',
+			'i.imgur.com',
+			'zeyadetman.files.wordpress.com',
+		],
 	},
 };
 
