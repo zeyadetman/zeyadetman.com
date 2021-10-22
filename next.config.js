@@ -25,7 +25,8 @@ const nextConfig = {
 			'/static/',
 			'stackoverflow.com',
 			'i.imgur.com',
-			'https://upload.wikimedia.org',
+			'upload.wikimedia.org',
+			'*',
 		],
 	},
 };
