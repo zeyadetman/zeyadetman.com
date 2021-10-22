@@ -25,7 +25,7 @@ const nextConfig = {
 			'/static/',
 			'stackoverflow.com',
 			'i.imgur.com',
-			'zeyadetman.files.wordpress.com',
+			'https://upload.wikimedia.org',
 		],
 	},
 };
