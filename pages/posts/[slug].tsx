@@ -29,7 +29,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 
 	return {
 		paths: slugs,
-		fallback: true,
+		fallback: false,
 	};
 }
 
