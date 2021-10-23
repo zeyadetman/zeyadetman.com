@@ -22,6 +22,7 @@ import { IPost } from '../../interfaces/post';
 import { GetStaticPropsResult } from 'next';
 import Newsletter from '../../components/Newsletter';
 import { generateRSSFeed } from '../../libs/feed';
+import { site } from '../../configs/site';
 
 interface Props {
 	posts: IPost[];
@@ -93,7 +94,7 @@ function Blog(props: Props): ReactElement {
 					<Box as="div">
 						<Text
 							fontSize="sm"
-							noOfLines={3}
+							noOfLines={site.post?.excerpt?.noOfLines || 3}
 							color={colorMode === 'light' ? 'blackLight' : 'whiteDark'}
 						>
 							<MarkdownWrapper content={excerpt || ''} />

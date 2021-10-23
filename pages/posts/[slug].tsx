@@ -11,7 +11,6 @@ import { IPost } from '../../interfaces/post';
 import { useRouter } from 'next/router';
 import { getViews, hitPath } from '../../libs/analytics';
 import { site } from '../../configs/site';
-import { GetStaticPathsResult } from 'next';
 import { TwitterShareButton } from 'react-share';
 import { Button } from '@chakra-ui/button';
 import Newsletter from '../../components/Newsletter';

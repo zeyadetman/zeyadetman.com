@@ -4,6 +4,7 @@ import path from 'path';
 import readingTime from 'reading-time';
 import getConfig from 'next/config';
 import { IPost } from '../interfaces/post';
+import { site } from '../configs/site';
 
 async function getPosts(): Promise<IPost[]> {
 	const { serverRuntimeConfig } = getConfig();
@@ -18,7 +19,15 @@ async function getPosts(): Promise<IPost[]> {
 			// @ts-ignore
 			// eslint-disable-next-line
 			excerpt: (file: any): void => {
-				file.excerpt = file.content.split('\n').slice(0, 4).join(' ');
+				file.excerpt = file.content
+					.split('\n')
+					.slice(
+						0,
+						site.post?.excerpt?.noOfLines
+							? site.post?.excerpt?.noOfLines + 1
+							: 4
+					)
+					.join(' ');
 			},
 		});
 

@@ -26,7 +26,6 @@ const nextConfig = {
 			'stackoverflow.com',
 			'i.imgur.com',
 			'upload.wikimedia.org',
-			'*',
 		],
 	},
 };

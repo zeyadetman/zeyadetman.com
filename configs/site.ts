@@ -10,4 +10,9 @@ export const site: ISite = {
 	twitter: {
 		username: 'zeyadetman',
 	},
+	post: {
+		excerpt: {
+			noOfLines: 3,
+		},
+	},
 };

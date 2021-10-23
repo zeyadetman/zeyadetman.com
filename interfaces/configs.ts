@@ -8,4 +8,9 @@ export interface ISite {
 	twitter: {
 		username: string;
 	};
+	post?: {
+		excerpt?: {
+			noOfLines?: number;
+		};
+	};
 }

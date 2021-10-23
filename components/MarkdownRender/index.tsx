@@ -27,8 +27,6 @@ function MarkdownWrapper(props: Props): ReactElement {
 					const match = /language-(\w+)/.exec(className || '');
 					const lang = match?.[1] === 'js' ? 'javascript' : match?.[1];
 					return !inline && match ? (
-						//eslint-disable-next-line
-						//@ts-ignore
 						<SyntaxHighlighter
 							style={vscDarkPlus}
 							PreTag="div"
@@ -36,7 +34,6 @@ function MarkdownWrapper(props: Props): ReactElement {
 							showInlineLineNumbers
 							language={lang}
 							customStyle={{ marginBottom: '2rem' }}
-							{...props}
 						>
 							{String(children).replace(/\n$/, '') || ''}
 						</SyntaxHighlighter>
