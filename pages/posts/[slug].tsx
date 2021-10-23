@@ -58,7 +58,6 @@ export async function getStaticProps(props: any) {
 function BlogIndex(props: Props): ReactElement {
 	const { post, isProduction } = props;
 	const router = useRouter();
-	console.log(router);
 	const [pageVisits, setPageVisits] = useState<number>(0);
 
 	useEffect(() => {
