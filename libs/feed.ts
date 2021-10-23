@@ -13,8 +13,7 @@ export const generateRSSFeed = (articles: IPost[]): void => {
 
 	const feed = new Feed({
 		title: `Articles by ${site.name}`,
-		description:
-			'Technical Blog | mostly about web development, Occasionally software engineering topics.',
+		description: site.description,
 		id: baseUrl,
 		link: baseUrl,
 		language: 'en',
@@ -22,7 +21,7 @@ export const generateRSSFeed = (articles: IPost[]): void => {
 			rss2: `${baseUrl}/rss.xml`,
 		},
 		author,
-		copyright: 'zeyadetman',
+		copyright: site.username,
 	});
 
 	articles.forEach((post) => {

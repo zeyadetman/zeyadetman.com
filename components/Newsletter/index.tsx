@@ -15,6 +15,7 @@ import {
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import { RiErrorWarningLine } from 'react-icons/ri';
+import { site } from '../../configs/site';
 
 interface Inputs {
 	email: string;
@@ -150,8 +151,7 @@ export default function Newsletter(): ReactElement {
 					color={useColorModeValue('blackLight', 'whiteDark')}
 					fontSize="sm"
 				>
-					Technical Blog | mostly about web development, Occasionally software
-					engineering topics.
+					{site.description}
 				</Text>
 			</Container>
 		</Flex>

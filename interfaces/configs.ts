@@ -1,5 +1,6 @@
 export interface ISite {
 	name: string;
+	description: string;
 	username: string;
 	baseUrl: string;
 	namespace: string;
