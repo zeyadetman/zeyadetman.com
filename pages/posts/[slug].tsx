@@ -21,7 +21,7 @@ interface Props {
 	isProduction: boolean;
 }
 
-export async function getStaticPaths(): Promise<GetStaticPathsResult> {
+export const getStaticPaths: GetStaticPaths = async () => {
 	const postsSlugs = await getPosts();
 	const slugs = postsSlugs.map((post) => ({
 		params: { slug: post?.fileName },
@@ -31,7 +31,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 		paths: slugs,
 		fallback: false,
 	};
-}
+};
 
 // eslint-disable-next-line
 export async function getStaticProps(props: any) {
