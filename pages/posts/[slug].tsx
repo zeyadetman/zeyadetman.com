@@ -58,14 +58,12 @@ export async function getStaticProps(props: any) {
 function BlogIndex(props: Props): ReactElement {
 	const { post, isProduction } = props;
 	const router = useRouter();
-	const [pagePath, setPagePath] = useState('');
+	console.log(router);
 	const [pageVisits, setPageVisits] = useState<number>(0);
 
 	useEffect(() => {
 		if (!post) {
 			router.push('/404');
-		} else {
-			// setPagePath(router.asPath);
 		}
 	}, [post]);
 
@@ -119,7 +117,7 @@ function BlogIndex(props: Props): ReactElement {
 						}}
 					/>
 					<ArticleJsonLd
-						url={pagePath}
+						url={`${site.baseUrl}${router.asPath}`}
 						title={post.data.title}
 						images={[
 							{

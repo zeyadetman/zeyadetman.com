@@ -11,6 +11,7 @@ export const hitPath = async (slug: string): Promise<number> => {
 	return views;
 };
 
+// eslint-disable-next-line
 const createKey = () => {
 	countapi
 		.create({

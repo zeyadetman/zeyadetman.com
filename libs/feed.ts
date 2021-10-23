@@ -25,7 +25,6 @@ export const generateRSSFeed = (articles: IPost[]): void => {
 		copyright: 'zeyadetman',
 	});
 
-	// Add each article to the feed
 	articles.forEach((post) => {
 		const {
 			content,

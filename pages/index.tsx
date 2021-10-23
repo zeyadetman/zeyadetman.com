@@ -1,6 +1,6 @@
 import { Text, Heading, Link, Stack, Box, Badge } from '@chakra-ui/layout';
-import { NextPageContext } from 'next';
-import { getSession } from 'next-auth/client';
+// import { NextPageContext } from 'next';
+// import { getSession } from 'next-auth/client';
 import { AiFillSound } from 'react-icons/ai';
 import { Icon, createIcon } from '@chakra-ui/react';
 import { careers } from '../utils/career';
@@ -25,17 +25,17 @@ const Arrow = createIcon({
 	),
 });
 
-// eslint-disable-next-line
-export async function getServerSideProps(ctx: NextPageContext) {
-	const session = await getSession(ctx);
-	console.log({ session: session?.user });
+// // eslint-disable-next-line
+// export async function getServerSideProps(ctx: NextPageContext) {
+// 	const session = await getSession(ctx);
+// 	console.log({ session: session?.user });
 
-	return {
-		props: {
-			user: session?.user || null,
-		},
-	};
-}
+// 	return {
+// 		props: {
+// 			user: session?.user || null,
+// 		},
+// 	};
+// }
 
 export default function Home(): ReactElement {
 	const [sayHello, setSayHello] = useState(false);

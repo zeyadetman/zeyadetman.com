@@ -13,6 +13,7 @@ import {
 	useColorMode,
 } from '@chakra-ui/react';
 import { Badge, Box, HStack, Link } from '@chakra-ui/layout';
+import NextLink from 'next/link';
 import { SearchIcon } from '@chakra-ui/icons';
 import { getPosts } from '../../libs/posts';
 import { useRouter } from 'next/router';
@@ -26,7 +27,7 @@ interface Props {
 	posts: IPost[];
 }
 
-export async function getStaticProps(): Promise<GetStaticPropsResult<IPost>> {
+export async function getStaticProps(): Promise<GetStaticPropsResult<IPost[]>> {
 	const posts = await getPosts();
 	generateRSSFeed(posts);
 
@@ -68,17 +69,17 @@ function Blog(props: Props): ReactElement {
 			return (
 				<Stack as="article" key={fileName} py={4}>
 					<Box as="header">
-						<Link
-							textAlign="start"
-							fontSize="xl"
-							fontWeight="bold"
-							onClick={() => router.push(`/posts/${fileName}`)}
-							as="button"
-							variant="title"
-							color={colorMode === 'light' ? 'blackMid' : 'whiteMid'}
-						>
-							{data.title}
-						</Link>
+						<NextLink href={`/posts/${encodeURIComponent(fileName)}`} passHref>
+							<Link
+								textAlign="start"
+								fontSize="xl"
+								fontWeight="bold"
+								variant="title"
+								color={colorMode === 'light' ? 'blackMid' : 'whiteMid'}
+							>
+								{data.title}
+							</Link>
+						</NextLink>
 						<Flex fontSize="xs" flexWrap="wrap" css={{ gap: '0.3rem 1rem' }}>
 							<Text>
 								<Text display="inline">{`${data.date}  •  `}</Text>
