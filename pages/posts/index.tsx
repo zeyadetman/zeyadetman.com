@@ -60,7 +60,7 @@ function Blog(props: Props): ReactElement {
 		}
 		const renderTags = (tags: [string]) => {
 			return tags.map((tag: string) => (
-				<Badge size="xs" variant="tag" key={tag}>
+				<Badge size="xs" variant="tag" key={tag} ms="0 !important">
 					{tag}
 				</Badge>
 			));
@@ -87,7 +87,9 @@ function Blog(props: Props): ReactElement {
 								{readingTime.text}
 							</Text>
 							{data.tags.length ? (
-								<HStack>{renderTags(data.tags)}</HStack>
+								<HStack flexWrap="wrap" display="flex" css={{ gap: '5px' }}>
+									{renderTags(data.tags)}
+								</HStack>
 							) : null}
 						</Flex>
 					</Box>

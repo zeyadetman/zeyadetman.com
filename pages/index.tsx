@@ -48,6 +48,7 @@ export default function Home(): ReactElement {
 					color={useColorModeValue('black', 'white')}
 					mb="-60px !important"
 					zIndex={10000}
+					fontWeight="extrabold"
 				>
 					Hi, I&apos;m Zeyad{' '}
 					<Icon
@@ -122,6 +123,7 @@ export default function Home(): ReactElement {
 					size="xl"
 					mb="16px !important"
 					color={useColorModeValue('black', 'white')}
+					fontWeight="bold"
 				>
 					Career
 					<Text

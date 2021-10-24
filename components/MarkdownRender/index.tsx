@@ -50,7 +50,28 @@ function MarkdownWrapper(props: Props): ReactElement {
 				},
 				h2({ children }) {
 					return (
-						<Heading as="h2" fontSize="xl" mt="8" mb="6" color={h2Color}>
+						<Heading
+							as="h2"
+							fontSize="xl"
+							mt="8"
+							mb="6"
+							color={h2Color}
+							fontWeight="bold"
+						>
+							{children}
+						</Heading>
+					);
+				},
+				h3({ children }) {
+					return (
+						<Heading
+							as="h3"
+							fontSize="md"
+							mt="8"
+							mb="6"
+							color={h2Color}
+							fontWeight="bold"
+						>
 							{children}
 						</Heading>
 					);
@@ -58,12 +79,12 @@ function MarkdownWrapper(props: Props): ReactElement {
 				p({ children }) {
 					return <Text mb="8">{children}</Text>;
 				},
-				li({ children, ...props }) {
+				li({ children }) {
 					const child = children.filter((item) => item !== '\n');
 					return (
 						//eslint-disable-next-line
 						//@ts-ignore
-						<Text as="li" mb="2" {...props}>
+						<Text as="li" mb="2" ms="4">
 							{child}
 						</Text>
 					);

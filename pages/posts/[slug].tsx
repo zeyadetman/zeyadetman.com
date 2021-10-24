@@ -89,7 +89,7 @@ function BlogIndex(props: Props): ReactElement {
 
 	const renderTags = (tags: [string]) => {
 		return tags.map((tag: string) => (
-			<Badge size="xs" variant="tag" key={tag}>
+			<Badge size="xs" variant="tag" key={tag} ms="0 !important">
 				{tag}
 			</Badge>
 		));
@@ -137,6 +137,7 @@ function BlogIndex(props: Props): ReactElement {
 							as="h1"
 							fontSize="4xl"
 							color={useColorModeValue('black', 'white')}
+							fontWeight="extrabold"
 						>
 							{post.data.title}
 						</Heading>
@@ -153,7 +154,9 @@ function BlogIndex(props: Props): ReactElement {
 								{post.readingTime.text}
 							</Text>
 							{post.data.tags.length ? (
-								<HStack>{renderTags(post.data.tags)}</HStack>
+								<HStack flexWrap="wrap" display="flex" css={{ gap: '5px' }}>
+									{renderTags(post.data.tags)}
+								</HStack>
 							) : null}
 						</Flex>
 					</Stack>
