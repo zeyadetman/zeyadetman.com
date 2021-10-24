@@ -15,6 +15,8 @@ layout: post
 
 In this post I’ll go with you in a detailed way on how i created my blog/portfolio from scratch using NextJS and Chakra UI, from creating the pages and posts markdown files to displaying them as html files, And how I handled newsletter service, and deploying the project on Vercel, Handling custom domains. So this post will good for you if you want to know more about anything that I’ve implemented here on my blog.
 
+**[Here's the source code for this site.](https://github.com/zeyadetman/zeyadetman.github.io)**
+
 ## NextJS + Typescript + Chakra UI
 [`NextJS`](https://nextjs.org/) is one of the strongest framework to build a production project. I've used some features like SSG or pre-render pages at build time, API routes, file-system routing, fast refresh, configuration and deployments are super easy.
 
@@ -49,6 +51,7 @@ The structure of the portfolio goes like that:
 └── utils
 ```
 
+<br />
 NextJS uses the `pages` folder to handle the app routes, as you may know if you created a file called `pages/hello.tsx` you can open it by visiting `your-app.com/hello` and that's super cool. So I created a folder called pages to handle the routes for the app. Also I created another folder called `components` to handle the react components that will be used across the pages.
 
 Another feature of using NextJS is creating API routes, To do so you can create this folder `pages/api` and then create your apis inside it.
