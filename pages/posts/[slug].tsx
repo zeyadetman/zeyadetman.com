@@ -103,6 +103,8 @@ function BlogIndex(props: Props): ReactElement {
 						title={post.data.title}
 						description={post.excerpt}
 						openGraph={{
+							title: post.data.title,
+							description: post.excerpt,
 							images: [
 								{
 									url: '/static/images/logo.jpeg',

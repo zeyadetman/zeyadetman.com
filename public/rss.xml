@@ -4,19 +4,21 @@
         <title>Articles by Zeyad Etman</title>
         <link>https://zeyadetman.com</link>
         <description>Technical Blog | mostly about web development, Occasionally software engineering topics.</description>
-        <lastBuildDate>Sun, 24 Oct 2021 02:16:26 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 24 Oct 2021 21:32:01 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>zeyadetman</copyright>
         <item>
-            <title><![CDATA[How I built my portfolio with NextJS, Typescript, and Chakra UI]]></title>
-            <link>https://zeyadetman.com/posts/how-i-built-my-portfolio-with-nextjs-typescript-chakraui</link>
-            <guid>https://zeyadetman.com/posts/how-i-built-my-portfolio-with-nextjs-typescript-chakraui</guid>
-            <pubDate>Mon, 25 Oct 2021 00:00:00 GMT</pubDate>
-            <description><![CDATA[ In this post I’ll go with you in a detailed way on how i created my blog/portfolio from scratch using NextJS and Chakra UI, from creating the pages and posts markdown files to displaying them as html files, And how I handled newsletter service, and deploying the project on Vercel, Handling custom domains. So this post will good for you if you want to know more about anything that I’ve implemented here on my blog.  ## NextJS + Typescript + Chakra UI]]></description>
+            <title><![CDATA[How I built my portfolio using NextJS, Typescript, and Chakra UI]]></title>
+            <link>https://zeyadetman.com/posts/how-i-built-my-portfolio-using-nextjs-typescript-chakraui</link>
+            <guid>https://zeyadetman.com/posts/how-i-built-my-portfolio-using-nextjs-typescript-chakraui</guid>
+            <pubDate>Sun, 24 Oct 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[ In this post I’ll go with you in a detailed way on how i created my blog/portfolio from scratch using NextJS and Chakra UI, from creating the pages and posts markdown files to displaying them as html files, And how I handled newsletter service, and deploying the project on Vercel, Handling custom domains. So this post will good for you if you want to know more about anything that I’ve implemented here on my blog.  **[Here's the source code for this site.](https://github.com/zeyadetman/zeyadetman.github.io)**]]></description>
             <content:encoded><![CDATA[
 In this post I’ll go with you in a detailed way on how i created my blog/portfolio from scratch using NextJS and Chakra UI, from creating the pages and posts markdown files to displaying them as html files, And how I handled newsletter service, and deploying the project on Vercel, Handling custom domains. So this post will good for you if you want to know more about anything that I’ve implemented here on my blog.
+
+**[Here's the source code for this site.](https://github.com/zeyadetman/zeyadetman.github.io)**
 
 ## NextJS + Typescript + Chakra UI
 [`NextJS`](https://nextjs.org/) is one of the strongest framework to build a production project. I've used some features like SSG or pre-render pages at build time, API routes, file-system routing, fast refresh, configuration and deployments are super easy.
@@ -52,6 +54,7 @@ The structure of the portfolio goes like that:
 └── utils
 ```
 
+<br />
 NextJS uses the `pages` folder to handle the app routes, as you may know if you created a file called `pages/hello.tsx` you can open it by visiting `your-app.com/hello` and that's super cool. So I created a folder called pages to handle the routes for the app. Also I created another folder called `components` to handle the react components that will be used across the pages.
 
 Another feature of using NextJS is creating API routes, To do so you can create this folder `pages/api` and then create your apis inside it.
@@ -364,6 +367,8 @@ The final part is going production.
 Until now I have implemented the app, and want to go production, I use [`vercel`](https://vercel.com/) it's the easist way to deploy your nextjs app.
 
 Create new project, add the github repo of your project, don't forget to add the environment variables.
+
+I'll keep this blog updated whenver I add a new feature to the blog. Just subscribe to the newsletter and I'll notify you via email.
 
 ### Here's some resources that helped me:
 - [Custom Domains](https://vercel.com/docs/concepts/projects/custom-domains#): This helps me link my godaddy custom domain to vercel deployment.
