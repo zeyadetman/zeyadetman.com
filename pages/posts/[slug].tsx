@@ -100,12 +100,12 @@ function BlogIndex(props: Props): ReactElement {
 			{post && (
 				<>
 					<NextSeo
-						title={post.data.title}
+						title={`${post.data.title} | Zeyad's Blog`}
 						description={post.excerpt}
 						canonical={`${site.baseUrl}${router.asPath}`}
 						openGraph={{
 							url: `${site.baseUrl}${router.asPath}`,
-							title: post.data.title,
+							title: `${post.data.title} | Zeyad's Blog`,
 							description: post.excerpt,
 							images: [
 								{
@@ -120,7 +120,7 @@ function BlogIndex(props: Props): ReactElement {
 					/>
 					<ArticleJsonLd
 						url={`${site.baseUrl}${router.asPath}`}
-						title={post.data.title}
+						title={`${post.data.title} | Zeyad's Blog`}
 						images={[
 							{
 								url: '/static/images/logo.jpeg',
