@@ -102,6 +102,7 @@ function BlogIndex(props: Props): ReactElement {
 					<NextSeo
 						title={post.data.title}
 						description={post.excerpt}
+						canonical={`${site.baseUrl}${router.asPath}`}
 						openGraph={{
 							title: post.data.title,
 							description: post.excerpt,

@@ -54,7 +54,7 @@ function MyApp({
 					<LogoJsonLd logo="/static/images/logo.jpeg" url={site.baseUrl} />
 					<DefaultSeo
 						openGraph={{
-							type: 'blog',
+							type: 'website',
 							locale: 'en_IE',
 							url: site.baseUrl,
 							site_name: `${site.name}'s Blog`,
@@ -68,6 +68,7 @@ function MyApp({
 								},
 							],
 							description: `${site.name}'s Space on internet.`,
+							title: `${site.name}`,
 						}}
 						titleTemplate={`%s | ${site.name}`}
 						defaultTitle={site.name}
