@@ -104,6 +104,7 @@ function BlogIndex(props: Props): ReactElement {
 						description={post.excerpt}
 						canonical={`${site.baseUrl}${router.asPath}`}
 						openGraph={{
+							url: `${site.baseUrl}${router.asPath}`,
 							title: post.data.title,
 							description: post.excerpt,
 							images: [
