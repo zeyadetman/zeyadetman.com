@@ -9,6 +9,11 @@ export interface ISite {
 	twitter: {
 		username: string;
 	};
+	social: {
+		linkedin?: string;
+		stackoverflow?: string;
+		github?: string;
+	};
 	post?: {
 		excerpt?: {
 			noOfLines?: number;

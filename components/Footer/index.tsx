@@ -7,7 +7,9 @@ import {
 	useColorModeValue,
 	VisuallyHidden,
 } from '@chakra-ui/react';
-import { FaTwitter } from 'react-icons/fa';
+import { FiTwitter, FiLinkedin, FiGithub } from 'react-icons/fi';
+import { DiStackoverflow } from 'react-icons/di';
+import { HiOutlineMail } from 'react-icons/hi';
 import { ReactElement, ReactNode } from 'react';
 import { site } from '../../configs/site';
 
@@ -55,13 +57,44 @@ export default function Footer(): ReactElement {
 				align={{ base: 'center', md: 'center' }}
 			>
 				<Text fontSize="xs">© 2021 Zeyad&apos;s Space on internet.</Text>
-				<Stack direction={'row'} spacing={6}>
-					<SocialButton
-						label={'Twitter'}
-						href={`https://twitter.com/${site.twitter.username}`}
-					>
-						<FaTwitter />
-					</SocialButton>
+				<Stack direction={'row'} spacing={1}>
+					{site.twitter.username && (
+						<SocialButton
+							label={'Twitter'}
+							href={`https://twitter.com/${site.twitter.username}`}
+						>
+							<FiTwitter />
+						</SocialButton>
+					)}
+					{site.social.linkedin && (
+						<SocialButton
+							label={'Linkedin'}
+							href={`https://www.linkedin.com/in/${site.social.linkedin}`}
+						>
+							<FiLinkedin />
+						</SocialButton>
+					)}
+					{site.social.stackoverflow && (
+						<SocialButton
+							label={'Stack Overflow'}
+							href={`https://stackoverflow.com/users/${site.social.stackoverflow}`}
+						>
+							<DiStackoverflow />
+						</SocialButton>
+					)}
+					{site.social.github && (
+						<SocialButton
+							label={'Github'}
+							href={`https://www.github.com/${site.social.github}`}
+						>
+							<FiGithub />
+						</SocialButton>
+					)}
+					{site.email && (
+						<SocialButton label={'Email'} href={`mailto:${site.email}`}>
+							<HiOutlineMail />
+						</SocialButton>
+					)}
 				</Stack>
 			</Container>
 		</Box>

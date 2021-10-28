@@ -14,13 +14,15 @@ import {
 	useDisclosure,
 	useColorModeValue,
 	Stack,
+	Fade,
 } from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
+import { AddIcon } from '@chakra-ui/icons';
 import { signOut } from 'next-auth/client';
 import ColorModeIcon from '../ColorModeIcon';
 import { useRouter } from 'next/router';
 import { Session } from 'next-auth';
 import Image from 'next/image';
+import { FiMenu, FiX } from 'react-icons/fi';
 
 const authLinks = [
 	{ name: 'Dashboard', url: '/dashboard' },
@@ -73,11 +75,15 @@ export default function Navbar({ user }: Session): ReactElement {
 			<Box px={4}>
 				<Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
 					<IconButton
-						size={'md'}
-						icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+						backgroundColor="transparent"
+						color={useColorModeValue('black', 'white')}
+						display={{ md: 'none', sm: 'flex' }}
+						justifyContent="center"
+						fontSize="22px"
+						icon={isOpen ? <FiX /> : <FiMenu />}
 						aria-label={'Open Menu'}
-						display={{ md: 'none' }}
 						onClick={isOpen ? onClose : onOpen}
+						transition="fade"
 					/>
 					<HStack spacing={8} alignItems={'center'}>
 						<Box>
@@ -141,15 +147,17 @@ export default function Navbar({ user }: Session): ReactElement {
 				</Flex>
 
 				{isOpen ? (
-					<Box pb={4} display={{ md: 'none' }}>
-						<Stack as={'nav'} spacing={4}>
-							{links.map(({ url, name }) => (
-								<NavLink key={url} url={url}>
-									{name}
-								</NavLink>
-							))}
-						</Stack>
-					</Box>
+					<Fade in={isOpen}>
+						<Box pb={4} display={{ md: 'none' }}>
+							<Stack as={'nav'} spacing={4}>
+								{links.map(({ url, name }) => (
+									<NavLink key={url} url={url}>
+										{name}
+									</NavLink>
+								))}
+							</Stack>
+						</Box>
+					</Fade>
 				) : null}
 			</Box>
 		</>

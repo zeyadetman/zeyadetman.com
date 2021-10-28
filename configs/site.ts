@@ -12,6 +12,11 @@ export const site: ISite = {
 	twitter: {
 		username: 'zeyadetman',
 	},
+	social: {
+		linkedin: 'zeyadetman',
+		stackoverflow: '5721245',
+		github: 'zeyadetman',
+	},
 	post: {
 		excerpt: {
 			noOfLines: 3,

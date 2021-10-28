@@ -1,14 +1,15 @@
 import { Text, Heading, Link, Stack, Box, Badge } from '@chakra-ui/layout';
 // import { NextPageContext } from 'next';
 // import { getSession } from 'next-auth/client';
-import { AiFillSound } from 'react-icons/ai';
+import { AiOutlineSound } from 'react-icons/ai';
 import { Icon, createIcon } from '@chakra-ui/react';
 import { careers } from '../utils/career';
 import CareerStack from '../components/CareerStack';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import Image from 'next/image';
 import { ReactElement, useState } from 'react';
-import { EmailIcon } from '@chakra-ui/icons';
+// import { EmailIcon } from '@chakra-ui/icons';
+import { HiOutlineMailOpen } from 'react-icons/hi';
 import { site } from '../configs/site';
 import { ICareer } from '../interfaces/career';
 
@@ -52,7 +53,7 @@ export default function Home(): ReactElement {
 				>
 					Hi, I&apos;m Zeyad{' '}
 					<Icon
-						as={AiFillSound}
+						as={AiOutlineSound}
 						boxSize="8"
 						onClick={() => {
 							const audio = new Audio('/static/sounds/zeyad_ar.mp3');
@@ -172,9 +173,11 @@ export default function Home(): ReactElement {
 					href={`mailto:${site.email}`}
 					fontStyle="italic"
 					mb="24px !important"
+					display="flex"
+					alignItems="center"
+					css={{ gap: '0 6px' }}
 				>
-					<EmailIcon fontSize="lg" me="2" mb="0.5" />{' '}
-					zeyad[.]etman[@]gmail[.]com
+					<HiOutlineMailOpen fontSize="16px" /> Send email
 				</Link>
 
 				{careers.map((career: ICareer) => (
