@@ -7,11 +7,10 @@ import {
 	useColorModeValue,
 	VisuallyHidden,
 } from '@chakra-ui/react';
-import { FiTwitter, FiLinkedin, FiGithub } from 'react-icons/fi';
-import { DiStackoverflow } from 'react-icons/di';
-import { HiOutlineMail } from 'react-icons/hi';
 import { ReactElement, ReactNode } from 'react';
-import { site } from '../../configs/site';
+import { trackEvent } from '../../libs/gtag';
+import { EVENTS, EVENTS_CATEGORIES } from '../../utils/events';
+import { ISocialIcon, socialLinks } from './social-links';
 
 const SocialButton = ({
 	children,
@@ -37,6 +36,14 @@ const SocialButton = ({
 			_hover={{
 				bg: useColorModeValue('blackAlpha.200', 'whiteAlpha.200'),
 			}}
+			target="_blank"
+			onClick={() => {
+				trackEvent({
+					action: EVENTS.CLICK_ON_SOCIAL_ICON,
+					label: `${label} ICON`,
+					category: EVENTS_CATEGORIES.HIGH,
+				});
+			}}
 		>
 			<VisuallyHidden>{label}</VisuallyHidden>
 			{children}
@@ -45,6 +52,24 @@ const SocialButton = ({
 };
 
 export default function Footer(): ReactElement {
+	const renderSocialLinks = () => {
+		return socialLinks.map((socialLink: ISocialIcon) => {
+			if (!socialLink.hidden) {
+				return (
+					<SocialButton
+						href={socialLink.href}
+						label={socialLink.label}
+						key={socialLink.label}
+					>
+						{socialLink.icon}
+					</SocialButton>
+				);
+			}
+
+			return null;
+		});
+	};
+
 	return (
 		<Box color={useColorModeValue('gray.700', 'gray.200')}>
 			<Container
@@ -58,43 +83,7 @@ export default function Footer(): ReactElement {
 			>
 				<Text fontSize="xs">© 2021 Zeyad&apos;s Space on internet.</Text>
 				<Stack direction={'row'} spacing={1}>
-					{site.twitter.username && (
-						<SocialButton
-							label={'Twitter'}
-							href={`https://twitter.com/${site.twitter.username}`}
-						>
-							<FiTwitter />
-						</SocialButton>
-					)}
-					{site.social.linkedin && (
-						<SocialButton
-							label={'Linkedin'}
-							href={`https://www.linkedin.com/in/${site.social.linkedin}`}
-						>
-							<FiLinkedin />
-						</SocialButton>
-					)}
-					{site.social.stackoverflow && (
-						<SocialButton
-							label={'Stack Overflow'}
-							href={`https://stackoverflow.com/users/${site.social.stackoverflow}`}
-						>
-							<DiStackoverflow />
-						</SocialButton>
-					)}
-					{site.social.github && (
-						<SocialButton
-							label={'Github'}
-							href={`https://www.github.com/${site.social.github}`}
-						>
-							<FiGithub />
-						</SocialButton>
-					)}
-					{site.email && (
-						<SocialButton label={'Email'} href={`mailto:${site.email}`}>
-							<HiOutlineMail />
-						</SocialButton>
-					)}
+					{renderSocialLinks()}
 				</Stack>
 			</Container>
 		</Box>

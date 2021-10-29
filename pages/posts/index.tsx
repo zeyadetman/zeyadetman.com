@@ -23,6 +23,8 @@ import { GetStaticPropsResult } from 'next';
 import Newsletter from '../../components/Newsletter';
 import { generateRSSFeed } from '../../libs/feed';
 import { site } from '../../configs/site';
+import { trackEvent } from '../../libs/gtag';
+import { EVENTS, EVENTS_CATEGORIES } from '../../utils/events';
 
 interface Props {
 	posts: IPost[];
@@ -43,6 +45,11 @@ function Blog(props: Props): ReactElement {
 	const [searchPostsInputText, setSearchPostsInput] = useState('');
 
 	useEffect(() => {
+		trackEvent({
+			action: EVENTS.SEARCH_ARTICLES,
+			label: `Search text: ${searchPostsInputText}`,
+			category: EVENTS_CATEGORIES.MID,
+		});
 		const filteredPosts: IPost[] = posts.filter(({ content }) =>
 			content.includes(searchPostsInputText)
 		);

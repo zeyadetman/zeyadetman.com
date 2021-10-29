@@ -1,6 +1,4 @@
 import { Text, Heading, Link, Stack, Box, Badge } from '@chakra-ui/layout';
-// import { NextPageContext } from 'next';
-// import { getSession } from 'next-auth/client';
 import { AiOutlineSound } from 'react-icons/ai';
 import { Icon, createIcon } from '@chakra-ui/react';
 import { careers } from '../utils/career';
@@ -8,10 +6,11 @@ import CareerStack from '../components/CareerStack';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import Image from 'next/image';
 import { ReactElement, useState } from 'react';
-// import { EmailIcon } from '@chakra-ui/icons';
 import { HiOutlineMailOpen } from 'react-icons/hi';
 import { site } from '../configs/site';
 import { ICareer } from '../interfaces/career';
+import { trackEvent } from '../libs/gtag';
+import { EVENTS, EVENTS_CATEGORIES } from '../utils/events';
 
 const Arrow = createIcon({
 	displayName: 'Arrow',
@@ -25,18 +24,6 @@ const Arrow = createIcon({
 		/>
 	),
 });
-
-// // eslint-disable-next-line
-// export async function getServerSideProps(ctx: NextPageContext) {
-// 	const session = await getSession(ctx);
-// 	console.log({ session: session?.user });
-
-// 	return {
-// 		props: {
-// 			user: session?.user || null,
-// 		},
-// 	};
-// }
 
 export default function Home(): ReactElement {
 	const [sayHello, setSayHello] = useState(false);
@@ -56,6 +43,11 @@ export default function Home(): ReactElement {
 						as={AiOutlineSound}
 						boxSize="8"
 						onClick={() => {
+							trackEvent({
+								action: EVENTS.PRONOUNCE_MY_NAME,
+								category: EVENTS_CATEGORIES.MID,
+								label: EVENTS.PRONOUNCE_MY_NAME,
+							});
 							const audio = new Audio('/static/sounds/zeyad_ar.mp3');
 							audio.play();
 						}}
@@ -176,6 +168,14 @@ export default function Home(): ReactElement {
 					display="flex"
 					alignItems="center"
 					css={{ gap: '0 6px' }}
+					target="_blank"
+					onClick={() => {
+						trackEvent({
+							action: EVENTS.EMAIL_ME,
+							label: EVENTS.EMAIL_ME,
+							category: EVENTS_CATEGORIES.MID,
+						});
+					}}
 				>
 					<HiOutlineMailOpen fontSize="16px" /> Send email
 				</Link>

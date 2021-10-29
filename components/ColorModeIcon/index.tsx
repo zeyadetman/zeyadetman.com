@@ -6,6 +6,8 @@ import { RiMoonCloudyLine } from 'react-icons/ri';
 import { FaCloudMoonRain } from 'react-icons/fa';
 import { WiDaySunny, WiDayRainMix } from 'react-icons/wi';
 import { getCookie, setCookie } from '../../utils/cookies';
+import { trackEvent } from '../../libs/gtag';
+import { EVENTS, EVENTS_CATEGORIES } from '../../utils/events';
 
 const weatherIcons: {
 	[key: string]: { day: JSX.Element; night: JSX.Element };
@@ -86,7 +88,17 @@ function ColorModeIcon(): ReactElement {
 	}, []);
 
 	return (
-		<Icon fontSize="22px" onClick={toggleColorMode}>
+		<Icon
+			fontSize="22px"
+			onClick={() => {
+				toggleColorMode();
+				trackEvent({
+					action: EVENTS.TRIGGER_COLOR_MODE,
+					label: EVENTS.TRIGGER_COLOR_MODE,
+					category: EVENTS_CATEGORIES.LOW,
+				});
+			}}
+		>
 			{colorMode === 'dark' ? weatherIcon.night : weatherIcon.day}
 		</Icon>
 	);

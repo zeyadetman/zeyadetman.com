@@ -17,6 +17,8 @@ import { useDisclosure } from '@chakra-ui/hooks';
 import { NextSeo } from 'next-seo';
 import { IPic } from '../interfaces/picture';
 import { useColorModeValue } from '@chakra-ui/color-mode';
+import { trackEvent } from '../libs/gtag';
+import { EVENTS, EVENTS_CATEGORIES } from '../utils/events';
 
 const pictures: IPic[] = [
 	{
@@ -75,6 +77,11 @@ function Gallery(): ReactElement {
 						lineHeight="0"
 						_hover={{ boxShadow: 'md' }}
 						onClick={() => {
+							trackEvent({
+								action: EVENTS.ENLARGE_IMAGE,
+								label: `Image: ${pic.src}`,
+								category: EVENTS_CATEGORIES.MID,
+							});
 							selectImage(index);
 							onOpen();
 						}}

@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import {
 	Stack,
 	useColorModeValue,
@@ -16,6 +16,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import { RiErrorWarningLine } from 'react-icons/ri';
 import { site } from '../../configs/site';
+import { trackEvent } from '../../libs/gtag';
+import { EVENTS, EVENTS_CATEGORIES } from '../../utils/events';
 
 interface Inputs {
 	email: string;
@@ -23,12 +25,36 @@ interface Inputs {
 
 export default function Newsletter(): ReactElement {
 	const spinnerColor = useColorModeValue('black', 'white');
-	const { register, handleSubmit } = useForm<Inputs>();
+	const { register, handleSubmit, watch } = useForm<Inputs>();
 	const [loading, setLoading] = useState<boolean>(false);
+	const [isEmailTouched, setIsEmailInputTouched] = useState<boolean>(false);
 	const [visitorSubscribed, setVisitorSubscribe] = useState<
 		'success' | 'fail' | 'init'
 	>('init');
+
+	const userEmail = watch('email');
+	if (userEmail.length > 3 && !isEmailTouched) {
+		setIsEmailInputTouched(true);
+	}
+
+	useEffect(() => {
+		if (isEmailTouched) {
+			trackEvent({
+				action: EVENTS.WRITING_EMAIL_NEWSLETTER_FORM,
+				label: `WRITING | ${userEmail}`,
+				category: EVENTS_CATEGORIES.HIGH,
+			});
+		}
+
+		//eslint-disable-next-line
+	}, [isEmailTouched]);
+
 	const onSubmit: SubmitHandler<Inputs> = async (data) => {
+		trackEvent({
+			action: EVENTS.SUBMIT_NEWSLETTER_FORM,
+			label: `REQUEST | email: ${data.email}`,
+			category: EVENTS_CATEGORIES.HIGH,
+		});
 		setLoading(true);
 		const { status } = await fetch('/api/subscribers', {
 			method: 'POST',
@@ -42,8 +68,18 @@ export default function Newsletter(): ReactElement {
 		setLoading(false);
 		if (status === 201) {
 			setVisitorSubscribe('success');
+			trackEvent({
+				action: EVENTS.SUBMIT_NEWSLETTER_FORM,
+				label: `SUCCESS | email: ${data.email}`,
+				category: EVENTS_CATEGORIES.HIGH,
+			});
 		} else {
 			setVisitorSubscribe('fail');
+			trackEvent({
+				action: EVENTS.SUBMIT_NEWSLETTER_FORM,
+				label: `FAIL | email: ${data.email} | ${status}`,
+				category: EVENTS_CATEGORIES.HIGH,
+			});
 		}
 	};
 
