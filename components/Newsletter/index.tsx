@@ -33,7 +33,7 @@ export default function Newsletter(): ReactElement {
 	>('init');
 
 	const userEmail = watch('email');
-	if (userEmail.length > 3 && !isEmailTouched) {
+	if (userEmail?.length > 3 && !isEmailTouched) {
 		setIsEmailInputTouched(true);
 	}
 
