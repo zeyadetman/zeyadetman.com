@@ -23,6 +23,7 @@ import { useRouter } from 'next/router';
 import { Session } from 'next-auth';
 import Image from 'next/image';
 import { FiMenu, FiX } from 'react-icons/fi';
+import LocaleSwitcher from '../LocaleSwitcher';
 
 const authLinks = [
 	{ name: 'Dashboard', url: '/dashboard' },
@@ -107,8 +108,10 @@ export default function Navbar({ user }: Session): ReactElement {
 							))}
 						</HStack>
 					</HStack>
-					<Flex alignItems={'center'}>
+					<Flex alignItems={'center'} css={{ gap: '0 5px' }}>
 						<ColorModeIcon />
+						<LocaleSwitcher />
+
 						{user ? (
 							<>
 								<Button

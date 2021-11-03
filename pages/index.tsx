@@ -11,6 +11,7 @@ import { site } from '../configs/site';
 import { ICareer } from '../interfaces/career';
 import { trackEvent } from '../libs/gtag';
 import { EVENTS, EVENTS_CATEGORIES } from '../utils/events';
+import { GetStaticPropsContext } from 'next';
 
 const Arrow = createIcon({
 	displayName: 'Arrow',
@@ -24,6 +25,15 @@ const Arrow = createIcon({
 		/>
 	),
 });
+
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
+	const messages = await import(`/messages/${locale}.json`);
+	return {
+		props: {
+			messages: JSON.stringify(messages),
+		},
+	};
+}
 
 export default function Home(): ReactElement {
 	const [sayHello, setSayHello] = useState(false);

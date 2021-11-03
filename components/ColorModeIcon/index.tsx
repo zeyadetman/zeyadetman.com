@@ -89,7 +89,7 @@ function ColorModeIcon(): ReactElement {
 
 	return (
 		<Icon
-			fontSize="22px"
+			fontSize="24px"
 			onClick={() => {
 				toggleColorMode();
 				trackEvent({
