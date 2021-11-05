@@ -19,6 +19,7 @@ import { IPic } from '../interfaces/picture';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { trackEvent } from '../libs/gtag';
 import { EVENTS, EVENTS_CATEGORIES } from '../utils/events';
+import { GetStaticPropsContext, GetStaticPropsResult } from 'next';
 
 const pictures: IPic[] = [
 	{
@@ -42,6 +43,17 @@ const pictures: IPic[] = [
 		alt: 'sea in night',
 	},
 ];
+
+export async function getStaticProps({
+	locale,
+}: GetStaticPropsContext): Promise<GetStaticPropsResult<unknown>> {
+	const messages = await import(`/messages/${locale}.json`);
+	return {
+		props: {
+			messages: JSON.stringify(messages),
+		},
+	};
+}
 
 function Gallery(): ReactElement {
 	const { isOpen, onOpen, onClose } = useDisclosure();

@@ -14,6 +14,7 @@ import { site } from '../../configs/site';
 import { TwitterShareButton } from 'react-share';
 import { Button } from '@chakra-ui/button';
 import Newsletter from '../../components/Newsletter';
+import { GetStaticPropsContext, GetStaticPropsResult } from 'next';
 
 interface Props {
 	post: IPost;
@@ -32,25 +33,32 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	};
 };
 
-// eslint-disable-next-line
-export async function getStaticProps(props: any) {
+export async function getStaticProps(
+	props: GetStaticPropsContext
+): Promise<GetStaticPropsResult> {
 	const isProduction = process.env.NODE_ENV === 'production';
 	const {
 		params: { slug },
 	} = props;
+	const messages = await import(`/messages/${locale}.json`);
+
 	if (slug) {
 		const post = await getPostBySlug(slug);
 		if (post) {
-			return { props: { post, isProduction } };
+			return {
+				props: { post, isProduction, messages: JSON.stringify(messages) },
+			};
 		}
 
 		return {
 			notFound: true,
+			messages: JSON.stringify(messages),
 		};
 	}
 
 	return {
 		notFound: true,
+		messages: JSON.stringify(messages),
 	};
 }
 

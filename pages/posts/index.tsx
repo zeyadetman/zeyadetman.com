@@ -30,11 +30,14 @@ interface Props {
 	posts: IPost[];
 }
 
-export async function getStaticProps(): Promise<GetStaticPropsResult<IPost[]>> {
+export async function getStaticProps({
+	locale,
+}: GetStaticPropsContext): Promise<GetStaticPropsResult<IPost[]>> {
 	const posts = await getPosts();
 	generateRSSFeed(posts);
 
-	return { props: { posts } };
+	const messages = await import(`/messages/${locale}.json`);
+	return { props: { posts, messages: JSON.stringify(messages) } };
 }
 
 function Blog(props: Props): ReactElement {

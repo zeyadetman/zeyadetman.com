@@ -11,7 +11,7 @@ import { site } from '../configs/site';
 import { ICareer } from '../interfaces/career';
 import { trackEvent } from '../libs/gtag';
 import { EVENTS, EVENTS_CATEGORIES } from '../utils/events';
-import { GetStaticPropsContext } from 'next';
+import { GetStaticPropsContext, GetStaticPropsResult } from 'next';
 
 const Arrow = createIcon({
 	displayName: 'Arrow',
@@ -26,7 +26,9 @@ const Arrow = createIcon({
 	),
 });
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
+export async function getStaticProps({
+	locale,
+}: GetStaticPropsContext): Promise<GetStaticPropsResult<unknown>> {
 	const messages = await import(`/messages/${locale}.json`);
 	return {
 		props: {
