@@ -30,8 +30,9 @@ export const generateRSSFeed = (articles: IPost[]): void => {
 			fileName,
 			excerpt,
 			data: { date, title },
+			locale,
 		} = post;
-		const url = `${baseUrl}/posts/${fileName}`;
+		const url = `${baseUrl}/${locale === 'ar' ? 'ar' : 'en'}/posts/${fileName}`;
 
 		feed.addItem({
 			//eslint-disable-next-line

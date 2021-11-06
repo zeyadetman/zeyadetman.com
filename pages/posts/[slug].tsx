@@ -115,9 +115,9 @@ function BlogIndex(props: Props): ReactElement {
 					<NextSeo
 						title={`${post.data.title}`}
 						description={post.excerpt}
-						canonical={`${site.baseUrl}${router.asPath}`}
+						canonical={`${site.baseUrl}/${router.locale}${router.asPath}`}
 						openGraph={{
-							url: `${site.baseUrl}${router.asPath}`,
+							url: `${site.baseUrl}/${router.locale}${router.asPath}`,
 							title: `${post.data.title}`,
 							description: post.excerpt,
 							images: [
@@ -132,7 +132,7 @@ function BlogIndex(props: Props): ReactElement {
 						}}
 					/>
 					<ArticleJsonLd
-						url={`${site.baseUrl}${router.asPath}`}
+						url={`${site.baseUrl}/${router.locale}${router.asPath}`}
 						title={`${post.data.title}`}
 						images={[
 							{
@@ -182,7 +182,7 @@ function BlogIndex(props: Props): ReactElement {
 						<TwitterShareButton
 							title={post.data.title}
 							via={site.twitter.username}
-							url={`${site.baseUrl}${router.asPath}`}
+							url={`${site.baseUrl}/${router.locale}${router.asPath}`}
 						>
 							<Button
 								bg="#1d9bf0"

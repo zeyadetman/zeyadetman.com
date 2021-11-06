@@ -4,15 +4,15 @@
         <title>Articles by Zeyad Etman</title>
         <link>https://zeyadetman.com</link>
         <description>Technical Blog | mostly about web development, Occasionally software engineering topics.</description>
-        <lastBuildDate>Sat, 06 Nov 2021 06:40:52 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 06 Nov 2021 07:14:43 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>zeyadetman</copyright>
         <item>
             <title><![CDATA[How I built my portfolio using NextJS, Typescript, and Chakra UI]]></title>
-            <link>https://zeyadetman.com/posts/how-i-built-my-portfolio-using-nextjs-typescript-chakraui</link>
-            <guid>https://zeyadetman.com/posts/how-i-built-my-portfolio-using-nextjs-typescript-chakraui</guid>
+            <link>https://zeyadetman.com/en/posts/how-i-built-my-portfolio-using-nextjs-typescript-chakraui</link>
+            <guid>https://zeyadetman.com/en/posts/how-i-built-my-portfolio-using-nextjs-typescript-chakraui</guid>
             <pubDate>Sun, 24 Oct 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[ In this post I’ll go with you in a detailed way on how i created my blog/portfolio from scratch using NextJS and Chakra UI, from creating the pages and posts markdown files to displaying them as html files, And how I handled newsletter service, and deploying the project on Vercel, Handling custom domains. So this post will good for you if you want to know more about anything that I’ve implemented here on my blog.  **[Here's the source code for this site.](https://github.com/zeyadetman/zeyadetman.github.io)**]]></description>
             <content:encoded><![CDATA[
@@ -384,8 +384,8 @@ I'll keep this blog updated whenver I add a new feature to the blog. Just subscr
         </item>
         <item>
             <title><![CDATA[How I've been using Google Sheets as a personal assistant]]></title>
-            <link>https://zeyadetman.com/posts/how-ive-been-using-google-sheets-as-personal-assistant</link>
-            <guid>https://zeyadetman.com/posts/how-ive-been-using-google-sheets-as-personal-assistant</guid>
+            <link>https://zeyadetman.com/en/posts/how-ive-been-using-google-sheets-as-personal-assistant</link>
+            <guid>https://zeyadetman.com/en/posts/how-ive-been-using-google-sheets-as-personal-assistant</guid>
             <pubDate>Sat, 30 May 2020 00:00:00 GMT</pubDate>
             <description><![CDATA[ Hello, In this post I’ll share with you How I've been using Google Sheets to track some of important things, Replacing almost all other productivity apps. In the beginning I want to note that not all things will be interesting to you, but I think you’ll find inspiration to do your own, and this is the goal of this post btw. Not all following sheets created by me, and I’ll mention this in their sections. ]]></description>
             <content:encoded><![CDATA[
@@ -486,8 +486,8 @@ I didn't mention everything in this post, I want to inspire you how can you trac
         </item>
         <item>
             <title><![CDATA[JavaScript and Object Keys]]></title>
-            <link>https://zeyadetman.com/posts/javascript-and-object-keys</link>
-            <guid>https://zeyadetman.com/posts/javascript-and-object-keys</guid>
+            <link>https://zeyadetman.com/en/posts/javascript-and-object-keys</link>
+            <guid>https://zeyadetman.com/en/posts/javascript-and-object-keys</guid>
             <pubDate>Mon, 06 Jan 2020 00:00:00 GMT</pubDate>
             <description><![CDATA[ Hello 👋 In this post we will try to use objects in a different wrong way 😃 by implement a frequency array in javascript. But before we dive into this, We will discover what's the frequency array? ]]></description>
             <content:encoded><![CDATA[
@@ -549,8 +549,8 @@ Then we can iterate over it using `forEach` method.
         </item>
         <item>
             <title><![CDATA[Another way to write your JavaScript]]></title>
-            <link>https://zeyadetman.com/posts/another-way-to-write-your-javascript</link>
-            <guid>https://zeyadetman.com/posts/another-way-to-write-your-javascript</guid>
+            <link>https://zeyadetman.com/en/posts/another-way-to-write-your-javascript</link>
+            <guid>https://zeyadetman.com/en/posts/another-way-to-write-your-javascript</guid>
             <pubDate>Mon, 09 Sep 2019 00:00:00 GMT</pubDate>
             <description><![CDATA[ Hi all, in this post I'll share with you some frontend code, that we can write it in another way, And everything is working well, doesn't break the rules or putting smells in code, is cool. <br />]]></description>
             <content:encoded><![CDATA[
@@ -680,8 +680,8 @@ or putting smells in code.
         </item>
         <item>
             <title><![CDATA[How Dropbox Knows When You’re Sharing Copyrighted Stuff?]]></title>
-            <link>https://zeyadetman.com/posts/how-dropbox-knows-when-youre-sharing-copyrighted-stuff</link>
-            <guid>https://zeyadetman.com/posts/how-dropbox-knows-when-youre-sharing-copyrighted-stuff</guid>
+            <link>https://zeyadetman.com/en/posts/how-dropbox-knows-when-youre-sharing-copyrighted-stuff</link>
+            <guid>https://zeyadetman.com/en/posts/how-dropbox-knows-when-youre-sharing-copyrighted-stuff</guid>
             <pubDate>Fri, 30 Jun 2017 00:00:00 GMT</pubDate>
             <description><![CDATA[ <div dir="ltr"><strong>Hashing.</strong> Before i dive in: ]]></description>
             <content:encoded><![CDATA[
@@ -702,8 +702,8 @@ It’s the same idea to store your password and username.
         </item>
         <item>
             <title><![CDATA[ازاي تويتر بيهندل ال emojis]]></title>
-            <link>https://zeyadetman.com/posts/how-can-twitter-handle-twitter</link>
-            <guid>https://zeyadetman.com/posts/how-can-twitter-handle-twitter</guid>
+            <link>https://zeyadetman.com/ar/posts/how-can-twitter-handle-twitter</link>
+            <guid>https://zeyadetman.com/ar/posts/how-can-twitter-handle-twitter</guid>
             <pubDate>Sat, 06 Nov 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[ <div dir="rtl"> تعالوا نحكي فالثريد دي ازاي تويتر بيهندل ال emojis. ال emojis دي زيها زي اي حاجة انت بتكتبها من الكيبورد عبارة عن unicode بيتحول لشكل character معين، زي حرف "أ" مثلًا او "A" او اي حاجة فاي لغة، بس مش كل الحروف طبعًا ليها نفس عدد ال unicodes chars يعني.]]></description>
             <content:encoded><![CDATA[
