@@ -14,6 +14,7 @@ import { DefaultSeo, LogoJsonLd } from 'next-seo';
 import Script from 'next/script';
 import { site } from '../configs/site';
 import { NextIntlProvider } from 'next-intl';
+import { RtlProvider } from '../components/rtl-provider';
 
 const theme = extendTheme({
 	shadows,
@@ -41,48 +42,50 @@ function MyApp({
 	return (
 		<NextIntlProvider messages={JSON.parse(pageProps.messages)}>
 			<ChakraProvider theme={theme}>
-				<Provider
-					options={{
-						clientMaxAge: 0,
-						keepAlive: 0,
-					}}
-					session={{ ...session }}
-				>
-					<Script
-						strategy="afterInteractive"
-						src="https://apis.google.com/js/api.js"
-					/>
-					<Layout>
-						<LogoJsonLd logo="/static/images/logo.jpeg" url={site.baseUrl} />
-						<DefaultSeo
-							openGraph={{
-								type: 'website',
-								locale: 'en_IE',
-								url: site.baseUrl,
-								site_name: `${site.name}'s Blog`,
-								images: [
-									{
-										url: '/static/images/logo.jpeg',
-										width: 200,
-										height: 200,
-										alt: 'Logo',
-										type: 'image/jpeg',
-									},
-								],
-								description: `${site.name}'s Space on internet.`,
-								title: `${site.name}`,
-							}}
-							titleTemplate={`%s | ${site.name}`}
-							defaultTitle={site.name}
-							twitter={{
-								handle: `@${site.twitter.username}`,
-								site: 'zeyadetman.com',
-								cardType: 'summary_large_image',
-							}}
+				<RtlProvider>
+					<Provider
+						options={{
+							clientMaxAge: 0,
+							keepAlive: 0,
+						}}
+						session={{ ...session }}
+					>
+						<Script
+							strategy="afterInteractive"
+							src="https://apis.google.com/js/api.js"
 						/>
-						<Component {...pageProps} />
-					</Layout>
-				</Provider>
+						<Layout>
+							<LogoJsonLd logo="/static/images/logo.jpeg" url={site.baseUrl} />
+							<DefaultSeo
+								openGraph={{
+									type: 'website',
+									locale: 'en_IE',
+									url: site.baseUrl,
+									site_name: `${site.name}'s Blog`,
+									images: [
+										{
+											url: '/static/images/logo.jpeg',
+											width: 200,
+											height: 200,
+											alt: 'Logo',
+											type: 'image/jpeg',
+										},
+									],
+									description: `${site.name}'s Space on internet.`,
+									title: `${site.name}`,
+								}}
+								titleTemplate={`%s | ${site.name}`}
+								defaultTitle={site.name}
+								twitter={{
+									handle: `@${site.twitter.username}`,
+									site: 'zeyadetman.com',
+									cardType: 'summary_large_image',
+								}}
+							/>
+							<Component {...pageProps} />
+						</Layout>
+					</Provider>
+				</RtlProvider>
 			</ChakraProvider>
 		</NextIntlProvider>
 	);
