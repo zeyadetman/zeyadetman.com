@@ -52,8 +52,6 @@ function Blog(props: Props): ReactElement {
 	const [searchPostsInputText, setSearchPostsInput] = useState('');
 	const a = useRouter();
 
-	console.log({ a });
-
 	useEffect(() => {
 		trackEvent({
 			action: EVENTS.SEARCH_ARTICLES,
