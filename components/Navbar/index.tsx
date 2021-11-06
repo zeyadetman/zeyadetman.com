@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement } from 'react';
 import {
 	Box,
 	Flex,
@@ -23,20 +23,23 @@ import { useRouter } from 'next/router';
 import { Session } from 'next-auth';
 import Image from 'next/image';
 import { FiMenu, FiX } from 'react-icons/fi';
+import LocaleSwitcher from '../LocaleSwitcher';
+import { useTranslations } from 'next-intl';
 
 const authLinks = [
-	{ name: 'Dashboard', url: '/dashboard' },
-	{ name: 'Settings', url: '/settings' },
+	{ name: 'dashboard', url: '/dashboard' },
+	{ name: 'settings', url: '/settings' },
 ];
 
 const visitorLinks = [
-	{ name: 'About', url: '/' },
-	{ name: 'Blog', url: '/posts' },
-	{ name: 'Gallery', url: '/gallery' },
+	{ name: 'about', url: '/' },
+	{ name: 'blog', url: '/posts' },
+	{ name: 'gallery', url: '/gallery' },
 ];
 
-const NavLink = ({ children, url }: { children: ReactNode; url: string }) => {
+const NavLink = ({ children, url }: { children: string; url: string }) => {
 	const router = useRouter();
+	const t = useTranslations('Navbar');
 
 	return (
 		<Link
@@ -59,9 +62,10 @@ const NavLink = ({ children, url }: { children: ReactNode; url: string }) => {
 				e.preventDefault();
 				router.push(url);
 			}}
+			textTransform="capitalize"
 			as="a"
 		>
-			{children}
+			{t(children)}
 		</Link>
 	);
 };
@@ -107,8 +111,10 @@ export default function Navbar({ user }: Session): ReactElement {
 							))}
 						</HStack>
 					</HStack>
-					<Flex alignItems={'center'}>
+					<Flex alignItems={'center'} css={{ gap: '0 10px' }}>
 						<ColorModeIcon />
+						<LocaleSwitcher />
+
 						{user ? (
 							<>
 								<Button

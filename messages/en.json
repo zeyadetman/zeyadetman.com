@@ -1,0 +1,44 @@
+{
+	"LocaleSwitcher": {
+		"switchLang": "Switch Language"
+	},
+	"Index": {
+		"hello": "Hello",
+		"zeyad": "Zeyad",
+		"sendEmail": "Send Email"
+	},
+	"Navbar": {
+		"about": "About",
+		"blog": "Blog",
+		"gallery": "Gallery",
+		"dashboard": "Dashboard",
+		"settings": "Settings"
+	},
+	"Newsletter": {
+		"newsletter": "Newsletter",
+		"subscribeMsg": "Subscribe to our Newsletter",
+		"thanksMsg": "Thanks for subscribing to our newsletter",
+		"failedMsg": "Failed to subscribe!",
+		"subscribe": "Subscribe",
+		"yourEmail": "Your email",
+		"description": "Technical Blog | mostly about web development, Occasionally software engineering topics."
+	},
+	"Articles": {
+		"articles": "Articles",
+		"searchArticles": "Search articles",
+		"articlesInfo": "I write about web development, and software engineering.",
+		"searchArticlesPlaceholder": "Search articles...",
+		"noPosts": "No posts found. If you think it should exist, send me a message."
+	},
+	"Gallery": {
+		"gallery": "Gallery",
+		"galleryInfo": "Photos I've taken, all of them",
+		"byIphone11": "captured by iPhone11."
+	},
+	"Footer": {
+		"copyright": "© 2021 Zeyad's Space on internet."
+	},
+	"Post": {
+		"tweetIt": "Tweet This Post"
+	}
+}

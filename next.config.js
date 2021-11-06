@@ -28,6 +28,11 @@ const nextConfig = {
 			'upload.wikimedia.org',
 		],
 	},
+	i18n: {
+		locales: ['ar', 'en'],
+		defaultLocale: 'en',
+		localeDetection: true,
+	},
 };
 
 module.exports = withPlugins([], nextConfig);

@@ -15,9 +15,10 @@ import {
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import { RiErrorWarningLine } from 'react-icons/ri';
-import { site } from '../../configs/site';
 import { trackEvent } from '../../libs/gtag';
 import { EVENTS, EVENTS_CATEGORIES } from '../../utils/events';
+import { useTranslations } from 'use-intl';
+import { useRouter } from 'next/router';
 
 interface Inputs {
 	email: string;
@@ -27,6 +28,9 @@ export default function Newsletter(): ReactElement {
 	const spinnerColor = useColorModeValue('black', 'white');
 	const { register, handleSubmit, watch } = useForm<Inputs>();
 	const [loading, setLoading] = useState<boolean>(false);
+	const t = useTranslations('Newsletter');
+	const { locale } = useRouter();
+	const isArabic: boolean = locale === 'ar';
 	const [isEmailTouched, setIsEmailInputTouched] = useState<boolean>(false);
 	const [visitorSubscribed, setVisitorSubscribe] = useState<
 		'success' | 'fail' | 'init'
@@ -92,7 +96,7 @@ export default function Newsletter(): ReactElement {
 					textAlign={'center'}
 					mb={5}
 				>
-					Subscribe to our Newsletter
+					{t('subscribeMsg')}
 				</Heading>
 			);
 		} else if (visitorSubscribed === 'success') {
@@ -110,7 +114,7 @@ export default function Newsletter(): ReactElement {
 						color="green.400"
 						mb={5}
 					/>
-					Thanks for subscribing to our newsletter
+					{t('thanksMsg')}
 				</Heading>
 			);
 		} else if (visitorSubscribed === 'fail') {
@@ -129,7 +133,7 @@ export default function Newsletter(): ReactElement {
 						color="green.400"
 						mb={2.5}
 					/>
-					Failed to subscribe!
+					{t('failedMsg')}
 				</Heading>
 			);
 		}
@@ -152,8 +156,11 @@ export default function Newsletter(): ReactElement {
 							<form onSubmit={handleSubmit(onSubmit)} className="revue-form">
 								<div className="revue-form-group">
 									<input
+										style={{
+											...(isArabic ? { lineHeight: '30px' } : {}),
+										}}
 										className="revue-form-field member_email"
-										placeholder="Your email"
+										placeholder={t('yourEmail')}
 										type="email"
 										{...register('email')}
 									/>
@@ -170,8 +177,11 @@ export default function Newsletter(): ReactElement {
 											</InputLeftElement>
 										) : null}
 										<Input
+											style={{
+												...(isArabic ? { lineHeight: '30px' } : {}),
+											}}
 											type="submit"
-											value="Subscribe"
+											value={t('subscribe')}
 											className="member_submit"
 											{...(loading ? { opacity: '0.5' } : {})}
 										/>
@@ -187,7 +197,7 @@ export default function Newsletter(): ReactElement {
 					color={useColorModeValue('blackLight', 'whiteDark')}
 					fontSize="sm"
 				>
-					{site.description}
+					{t('description')}
 				</Text>
 			</Container>
 		</Flex>

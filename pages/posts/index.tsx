@@ -16,7 +16,6 @@ import { Badge, Box, HStack, Link } from '@chakra-ui/layout';
 import NextLink from 'next/link';
 import { SearchIcon } from '@chakra-ui/icons';
 import { getPosts } from '../../libs/posts';
-import { useRouter } from 'next/router';
 import MarkdownWrapper from '../../components/MarkdownRender';
 import { IPost } from '../../interfaces/post';
 import { GetStaticPropsResult } from 'next';
@@ -25,20 +24,27 @@ import { generateRSSFeed } from '../../libs/feed';
 import { site } from '../../configs/site';
 import { trackEvent } from '../../libs/gtag';
 import { EVENTS, EVENTS_CATEGORIES } from '../../utils/events';
+import { useTranslations } from 'use-intl';
 
 interface Props {
 	posts: IPost[];
 }
 
-export async function getStaticProps(): Promise<GetStaticPropsResult<IPost[]>> {
-	const posts = await getPosts();
-	generateRSSFeed(posts);
+export async function getStaticProps({
+	locale,
+}: GetStaticPropsContext): Promise<GetStaticPropsResult<IPost[]>> {
+	const posts = await getPosts(locale);
+	const arPosts = await getPosts('ar');
+	const enPosts = await getPosts('en');
 
-	return { props: { posts } };
+	generateRSSFeed([...enPosts, ...arPosts]);
+
+	const messages = await import(`/messages/${locale}.json`);
+	return { props: { posts, messages: JSON.stringify(messages) } };
 }
 
 function Blog(props: Props): ReactElement {
-	const router = useRouter();
+	const t = useTranslations('Articles');
 	const { colorMode } = useColorMode();
 	const { posts } = props;
 	const [listedPosts, setListedPosts] = useState<IPost[]>(posts);
@@ -61,7 +67,7 @@ function Blog(props: Props): ReactElement {
 		if (listedPosts.length === 0) {
 			return (
 				<Text fontSize="sm" color="gray.400" textAlign="center">
-					No posts found. If you think it should exist, send me a message.
+					{t('noPosts')}
 				</Text>
 			);
 		}
@@ -118,16 +124,16 @@ function Blog(props: Props): ReactElement {
 		<>
 			<Stack>
 				<Heading color={useColorModeValue('black', 'white')}>
-					Articles
+					{t('articles')}
 					<Text fontSize="sm" marginTop="4" fontWeight="normal">
-						I write about web development, and software engineering.
+						{t('articlesInfo')}
 					</Text>
 					<Newsletter />
 				</Heading>
 			</Stack>
 			<Stack mt="8">
 				<Text fontSize="sm" fontWeight="bold">
-					Search articles
+					{t('searchArticles')}
 				</Text>
 				<InputGroup>
 					<InputLeftElement pointerEvents="none">
@@ -140,7 +146,7 @@ function Blog(props: Props): ReactElement {
 						_focus={{
 							borderColor: useColorModeValue('blackLight', 'whiteDark'),
 						}}
-						placeholder="Search articles..."
+						placeholder={t('searchArticlesPlaceholder')}
 						borderRadius="5"
 						onChange={(e) => {
 							setSearchPostsInput(e.target.value);
