@@ -33,8 +33,11 @@ interface Props {
 export async function getStaticProps({
 	locale,
 }: GetStaticPropsContext): Promise<GetStaticPropsResult<IPost[]>> {
-	const posts = await getPosts();
-	generateRSSFeed(posts);
+	const posts = await getPosts(locale);
+	const arPosts = await getPosts('ar');
+	const enPosts = await getPosts('en');
+
+	generateRSSFeed([...enPosts, ...arPosts]);
 
 	const messages = await import(`/messages/${locale}.json`);
 	return { props: { posts, messages: JSON.stringify(messages) } };

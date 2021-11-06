@@ -21,6 +21,7 @@ export default class MyDocument extends Document {
 		return (
 			<Html dir={dir} lang={locale}>
 				<Head>
+					<script async src="https://platform.twitter.com/widgets.js" />
 					{isProduction && (
 						<>
 							<script

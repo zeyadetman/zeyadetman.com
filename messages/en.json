@@ -37,5 +37,8 @@
 	},
 	"Footer": {
 		"copyright": "© 2021 Zeyad's Space on internet."
+	},
+	"Post": {
+		"tweetIt": "Tweet This Post"
 	}
 }

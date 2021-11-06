@@ -6,9 +6,14 @@ import getConfig from 'next/config';
 import { IPost } from '../interfaces/post';
 import { site } from '../configs/site';
 
-async function getPosts(): Promise<IPost[]> {
+type Lang = 'en' | 'ar';
+async function getPosts(lang: Lang): Promise<IPost[]> {
+	const language = lang || 'en';
 	const { serverRuntimeConfig } = getConfig();
-	const postsDirectory = path.join(serverRuntimeConfig.PROJECT_ROOT, 'blogs');
+	const postsDirectory = path.join(
+		serverRuntimeConfig.PROJECT_ROOT,
+		`blogs/${language}`
+	);
 	const filenames = fs.readdirSync(postsDirectory);
 
 	const posts = filenames.map((filename: string) => {
@@ -47,8 +52,8 @@ async function getPosts(): Promise<IPost[]> {
 	return postsSortedByDate;
 }
 
-async function getPostBySlug(slug: string): Promise<null | IPost> {
-	const posts = await getPosts();
+async function getPostBySlug(slug: string, lang: Lang): Promise<null | IPost> {
+	const posts = await getPosts(lang);
 	const post = posts.find(({ fileName }) => slug === fileName);
 	return post || null;
 }

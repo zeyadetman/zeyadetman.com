@@ -15,6 +15,7 @@ import { TwitterShareButton } from 'react-share';
 import { Button } from '@chakra-ui/button';
 import Newsletter from '../../components/Newsletter';
 import { GetStaticPropsContext, GetStaticPropsResult } from 'next';
+import { useTranslations } from 'use-intl';
 
 interface Props {
 	post: IPost;
@@ -22,9 +23,11 @@ interface Props {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const postsSlugs = await getPosts();
-	const slugs = postsSlugs.map((post) => ({
+	const arPosts = await getPosts('ar');
+	const enPosts = await getPosts('en');
+	const slugs = [...arPosts, ...enPosts].map((post, index) => ({
 		params: { slug: post?.fileName },
+		locale: index === 0 ? 'ar' : 'en',
 	}));
 
 	return {
@@ -39,11 +42,12 @@ export async function getStaticProps(
 	const isProduction = process.env.NODE_ENV === 'production';
 	const {
 		params: { slug },
+		locale,
 	} = props;
 	const messages = await import(`/messages/${locale}.json`);
 
 	if (slug) {
-		const post = await getPostBySlug(slug);
+		const post = await getPostBySlug(slug, locale);
 		if (post) {
 			return {
 				props: { post, isProduction, messages: JSON.stringify(messages) },
@@ -66,6 +70,7 @@ function BlogIndex(props: Props): ReactElement {
 	const { post, isProduction } = props;
 	const router = useRouter();
 	const [pageVisits, setPageVisits] = useState<number>(0);
+	const t = useTranslations('Post');
 
 	useEffect(() => {
 		if (!post) {
@@ -108,12 +113,12 @@ function BlogIndex(props: Props): ReactElement {
 			{post && (
 				<>
 					<NextSeo
-						title={`${post.data.title} | Zeyad's Blog`}
+						title={`${post.data.title}`}
 						description={post.excerpt}
 						canonical={`${site.baseUrl}${router.asPath}`}
 						openGraph={{
 							url: `${site.baseUrl}${router.asPath}`,
-							title: `${post.data.title} | Zeyad's Blog`,
+							title: `${post.data.title}`,
 							description: post.excerpt,
 							images: [
 								{
@@ -128,7 +133,7 @@ function BlogIndex(props: Props): ReactElement {
 					/>
 					<ArticleJsonLd
 						url={`${site.baseUrl}${router.asPath}`}
-						title={`${post.data.title} | Zeyad's Blog`}
+						title={`${post.data.title}`}
 						images={[
 							{
 								url: '/static/images/logo.jpeg',
@@ -185,7 +190,7 @@ function BlogIndex(props: Props): ReactElement {
 								_hover={{ bg: '#1e9cf1dd', color: 'fff' }}
 								size="sm"
 							>
-								Tweet This Post
+								{t('tweetIt')}
 							</Button>
 						</TwitterShareButton>
 

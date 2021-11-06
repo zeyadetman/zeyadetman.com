@@ -3,6 +3,8 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import Flag from 'react-flagkit';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import { trackEvent } from '../../libs/gtag';
+import { EVENTS, EVENTS_CATEGORIES } from '../../utils/events';
 
 const SUPPORTED_LOCALES_WITH_FLAGS = {
 	en: 'US',
@@ -27,6 +29,11 @@ function LocaleSwitcher(): ReactElement {
 
 	useEffect(() => {
 		if (!isFirstMount) {
+			trackEvent({
+				action: EVENTS.SWITCH_LANG,
+				label: `${EVENTS.TRIGGER_COLOR_MODE}: ${activeLocale}`,
+				category: EVENTS_CATEGORIES.MID,
+			});
 			reload();
 		}
 
@@ -39,7 +46,6 @@ function LocaleSwitcher(): ReactElement {
 			href={{ pathname, query }}
 			as={asPath}
 			locale={anotherLocale}
-			replace
 			passHref
 		>
 			<Flag
