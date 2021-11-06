@@ -27,7 +27,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	const enPosts = await getPosts('en');
 	const slugs = [...arPosts, ...enPosts].map((post, index) => ({
 		params: { slug: post?.fileName },
-		locale: index === 0 ? 'ar' : 'en',
+		locale: index < arPosts.length ? 'ar' : 'en',
 	}));
 
 	return {
