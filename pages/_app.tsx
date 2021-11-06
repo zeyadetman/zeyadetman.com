@@ -43,8 +43,9 @@ function MyApp({
 		};
 	}, [router.events]);
 
+	const messages = pageProps?.messages ? JSON.parse(pageProps.messages) : {};
 	return (
-		<NextIntlProvider messages={JSON.parse(pageProps.messages)}>
+		<NextIntlProvider messages={messages}>
 			<ChakraProvider theme={theme}>
 				<RtlProvider>
 					<Provider
