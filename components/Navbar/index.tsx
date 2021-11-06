@@ -111,7 +111,7 @@ export default function Navbar({ user }: Session): ReactElement {
 							))}
 						</HStack>
 					</HStack>
-					<Flex alignItems={'center'} css={{ gap: '0 5px' }}>
+					<Flex alignItems={'center'} css={{ gap: '0 10px' }}>
 						<ColorModeIcon />
 						<LocaleSwitcher />
 
