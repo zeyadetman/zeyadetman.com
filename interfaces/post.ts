@@ -8,4 +8,5 @@ export interface IPost {
 	};
 	fileName: string;
 	readingTime: ReadTimeResults;
+	locale: 'en' | 'ar';
 }

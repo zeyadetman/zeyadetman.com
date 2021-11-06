@@ -42,6 +42,7 @@ async function getPosts(lang: Lang): Promise<IPost[]> {
 			data,
 			fileName: path.parse(filePath).name,
 			readingTime: readingTime(content),
+			locale: language,
 		};
 	});
 

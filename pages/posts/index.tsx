@@ -25,6 +25,7 @@ import { site } from '../../configs/site';
 import { trackEvent } from '../../libs/gtag';
 import { EVENTS, EVENTS_CATEGORIES } from '../../utils/events';
 import { useTranslations } from 'use-intl';
+import { useRouter } from 'next/router';
 
 interface Props {
 	posts: IPost[];
@@ -49,6 +50,7 @@ function Blog(props: Props): ReactElement {
 	const { posts } = props;
 	const [listedPosts, setListedPosts] = useState<IPost[]>(posts);
 	const [searchPostsInputText, setSearchPostsInput] = useState('');
+	const a = useRouter();
 
 	useEffect(() => {
 		trackEvent({
