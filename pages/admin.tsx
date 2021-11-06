@@ -1,11 +1,7 @@
 import React, { ReactElement } from 'react';
 import LoginForm from '../components/Admin/LoginForm';
 import { useSession, signIn, signOut, getSession } from 'next-auth/client';
-import {
-	GetStaticPropsContext,
-	GetStaticPropsResult,
-	NextPageContext,
-} from 'next';
+import { NextPageContext } from 'next';
 
 // eslint-disable-next-line
 export async function getServerSideProps(ctx: NextPageContext) {
@@ -15,17 +11,6 @@ export async function getServerSideProps(ctx: NextPageContext) {
 	return {
 		props: {
 			google: 'JSON.stringify(drive)',
-		},
-	};
-}
-
-export async function getStaticProps({
-	locale,
-}: GetStaticPropsContext): Promise<GetStaticPropsResult<unknown>> {
-	const messages = await import(`/messages/${locale}.json`);
-	return {
-		props: {
-			messages: JSON.stringify(messages),
 		},
 	};
 }
