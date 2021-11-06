@@ -1,5 +1,8 @@
 {
 	"LocaleSwitcher": {
 		"switchLang": "Switch Language"
+	},
+	"Index": {
+		"hello": "Hello"
 	}
 }

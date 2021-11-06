@@ -47,7 +47,7 @@ function LocaleSwitcher(): ReactElement {
 				country={countryFlag}
 				size={22}
 				style={{ cursor: 'pointer' }}
-				title={t('switchLang', { locale: 'en' })}
+				title={t('switchLang')}
 			/>
 		</Link>
 	);

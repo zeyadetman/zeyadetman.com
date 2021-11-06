@@ -12,6 +12,7 @@ import { ICareer } from '../interfaces/career';
 import { trackEvent } from '../libs/gtag';
 import { EVENTS, EVENTS_CATEGORIES } from '../utils/events';
 import { GetStaticPropsContext, GetStaticPropsResult } from 'next';
+import { useTranslations } from 'use-intl';
 
 const Arrow = createIcon({
 	displayName: 'Arrow',
@@ -40,6 +41,7 @@ export async function getStaticProps({
 export default function Home(): ReactElement {
 	const [sayHello, setSayHello] = useState(false);
 	const toggleHover = () => setSayHello(!sayHello);
+	const t = useTranslations('Index');
 
 	return (
 		<>
@@ -102,7 +104,7 @@ export default function Home(): ReactElement {
 							top={{ xs: 160, sm: 180 }}
 							transform={'rotate(15deg)'}
 						>
-							Hello
+							{t('hello')}
 						</Text>
 					</Box>
 				</Stack>
