@@ -20,6 +20,7 @@ import { useColorModeValue } from '@chakra-ui/color-mode';
 import { trackEvent } from '../libs/gtag';
 import { EVENTS, EVENTS_CATEGORIES } from '../utils/events';
 import { GetStaticPropsContext, GetStaticPropsResult } from 'next';
+import { useTranslations } from 'use-intl';
 
 const pictures: IPic[] = [
 	{
@@ -58,17 +59,18 @@ export async function getStaticProps({
 function Gallery(): ReactElement {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [selectedImage, selectImage] = useState(0);
+	const t = useTranslations('Gallery');
 
 	return (
 		<>
 			<NextSeo title={'Gallery'} description={"Photos I've taken"} />
 			<Stack>
 				<Heading color={useColorModeValue('black', 'white')}>
-					Gallery
+					{t('gallery')}
 					<Text fontSize="sm" marginTop="4" fontWeight="normal">
-						Photos I&apos;ve taken, all of them{' '}
+						{t('galleryInfo')}{' '}
 						<Text fontWeight="bold" display="inline">
-							captured by iPhone11
+							{t('byIphone11')}
 						</Text>
 						.
 					</Text>

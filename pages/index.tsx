@@ -13,6 +13,7 @@ import { trackEvent } from '../libs/gtag';
 import { EVENTS, EVENTS_CATEGORIES } from '../utils/events';
 import { GetStaticPropsContext, GetStaticPropsResult } from 'next';
 import { useTranslations } from 'use-intl';
+import { useRouter } from 'next/router';
 
 const Arrow = createIcon({
 	displayName: 'Arrow',
@@ -41,95 +42,53 @@ export async function getStaticProps({
 export default function Home(): ReactElement {
 	const [sayHello, setSayHello] = useState(false);
 	const toggleHover = () => setSayHello(!sayHello);
+	const { locale } = useRouter();
 	const t = useTranslations('Index');
+	const isArabic: boolean = locale === 'ar';
+	const h2TextColor = useColorModeValue('black', 'white');
 
-	return (
-		<>
-			<Stack mb="64px !important">
-				<Heading
-					color={useColorModeValue('black', 'white')}
-					mb="-60px !important"
-					zIndex={10000}
-					fontWeight="extrabold"
-				>
-					Hi, I&apos;m Zeyad{' '}
-					<Icon
-						as={AiOutlineSound}
-						boxSize="8"
-						onClick={() => {
-							trackEvent({
-								action: EVENTS.PRONOUNCE_MY_NAME,
-								category: EVENTS_CATEGORIES.MID,
-								label: EVENTS.PRONOUNCE_MY_NAME,
-							});
-							const audio = new Audio('/static/sounds/zeyad_ar.mp3');
-							audio.play();
-						}}
-					/>
-				</Heading>
-				<Stack
-					position={'relative'}
-					direction={'column'}
-					spacing={3}
-					align={'center'}
-					alignSelf={'center'}
-				>
-					<Box justifyContent="center" display="flex" mb="12px !important">
-						<Image
-							src="/static/images/pic-of-me-removebg.png"
-							alt="Picture of zeyad"
-							width={350}
-							height={370}
-							quality="100"
-							className="pic-of-me"
-							onMouseEnter={toggleHover}
-							onMouseLeave={toggleHover}
-							loading="eager"
-							priority
-						/>
-					</Box>
-					<Box visibility={sayHello ? 'visible' : 'hidden'}>
-						<Icon
-							as={Arrow}
-							color={useColorModeValue('black', 'gray.300')}
-							w={71}
-							position={'absolute'}
-							right={{ xs: 50, sm: 70 }}
-							top={{ xs: 190, sm: 210 }}
-						/>
-						<Text
-							fontSize={'lg'}
-							position={'absolute'}
-							right={{ xs: 35, sm: '60px' }}
-							top={{ xs: 160, sm: 180 }}
-							transform={'rotate(15deg)'}
-						>
-							{t('hello')}
-						</Text>
-					</Box>
-				</Stack>
-				<Text fontSize="sm" mb="8px !important">
-					I am a software engineer, working as a fullstack developer (frontend
-					heavily){' '}
-					<Link href="https://www.crystalknows.com/personality-type/intj">
-						INTJ
-					</Link>{' '}
-					is my type.
-				</Text>
+	const renderAboutPageTitle = () => {
+		if (!isArabic) {
+			return `${t('hello')}, I'm ${t('zeyad')} `;
+		} else {
+			return `${t('hello')} `;
+		}
+	};
 
-				<Text fontSize="sm">
-					This is my space on internet, I write technical posts here, also may
-					share some technical tutorials and articles. Also I like take photos,
-					you can visit my online gallery.
-				</Text>
-			</Stack>
+	const renderSendEmailButton = () => {
+		return (
+			<Link
+				fontSize="sm"
+				href={`mailto:${site.email}`}
+				fontStyle="italic"
+				mb="24px !important"
+				display="flex"
+				alignItems="self-start"
+				css={{ gap: '0 6px' }}
+				target="_blank"
+				onClick={() => {
+					trackEvent({
+						action: EVENTS.EMAIL_ME,
+						label: EVENTS.EMAIL_ME,
+						category: EVENTS_CATEGORIES.MID,
+					});
+				}}
+			>
+				<HiOutlineMailOpen fontSize="16px" /> {t('sendEmail')}
+			</Link>
+		);
+	};
 
+	const renderAboutPageContent = () => {
+		if (isArabic) return null;
+
+		return (
 			<Stack mb="-32px !important">
 				<Heading
 					as="h2"
 					size="xl"
 					mb="16px !important"
-					color={useColorModeValue('black', 'white')}
+					color={h2TextColor}
 					fontWeight="bold"
 				>
 					Career
@@ -174,30 +133,111 @@ export default function Home(): ReactElement {
 					frontend or programming.
 				</Text>
 
-				<Link
-					fontSize="sm"
-					href={`mailto:${site.email}`}
-					fontStyle="italic"
-					mb="24px !important"
-					display="flex"
-					alignItems="center"
-					css={{ gap: '0 6px' }}
-					target="_blank"
-					onClick={() => {
-						trackEvent({
-							action: EVENTS.EMAIL_ME,
-							label: EVENTS.EMAIL_ME,
-							category: EVENTS_CATEGORIES.MID,
-						});
-					}}
-				>
-					<HiOutlineMailOpen fontSize="16px" /> Send email
-				</Link>
+				{renderSendEmailButton()}
 
 				{careers.map((career: ICareer) => (
 					<CareerStack key={career.company} career={career} />
 				))}
 			</Stack>
+		);
+	};
+
+	return (
+		<>
+			<Stack mb={isArabic ? -4 : 12}>
+				<Heading
+					color={useColorModeValue('black', 'white')}
+					mb="-60px !important"
+					zIndex={10000}
+					fontWeight="extrabold"
+				>
+					{renderAboutPageTitle()}
+
+					{!isArabic && (
+						<Icon
+							as={AiOutlineSound}
+							boxSize="8"
+							onClick={() => {
+								trackEvent({
+									action: EVENTS.PRONOUNCE_MY_NAME,
+									category: EVENTS_CATEGORIES.MID,
+									label: EVENTS.PRONOUNCE_MY_NAME,
+								});
+								const audio = new Audio('/static/sounds/zeyad_ar.mp3');
+								audio.play();
+							}}
+						/>
+					)}
+				</Heading>
+				<Stack
+					position={'relative'}
+					direction={'column'}
+					spacing={3}
+					align={'center'}
+					alignSelf={'center'}
+				>
+					<Box justifyContent="center" display="flex" mb="12px !important">
+						<Image
+							src="/static/images/pic-of-me-removebg.png"
+							alt="Picture of zeyad"
+							width={350}
+							height={370}
+							quality="100"
+							className="pic-of-me"
+							onMouseEnter={toggleHover}
+							onMouseLeave={toggleHover}
+							loading="eager"
+							priority
+						/>
+					</Box>
+					<Box visibility={sayHello ? 'visible' : 'hidden'}>
+						<Icon
+							as={Arrow}
+							color={useColorModeValue('black', 'gray.300')}
+							w={71}
+							position={'absolute'}
+							right={{ xs: 50, sm: 70 }}
+							top={{ xs: 190, sm: 210 }}
+						/>
+						<Text
+							fontSize={'lg'}
+							position={'absolute'}
+							right={{ xs: 35, sm: '60px' }}
+							top={{ xs: 160, sm: 180 }}
+							transform={'rotate(15deg)'}
+						>
+							{t('hello')}
+						</Text>
+					</Box>
+				</Stack>
+				{isArabic ? (
+					<>
+						<Text fontSize="sm" whiteSpace="pre-line" mb="8px !important">
+							{t('arabicMessage')}
+						</Text>
+						{renderSendEmailButton()}
+					</>
+				) : (
+					<>
+						<Text fontSize="sm" mb="8px !important">
+							I am a software engineer, working as a fullstack developer
+							(frontend heavily){' '}
+							<Link href="https://www.crystalknows.com/personality-type/intj">
+								INTJ
+							</Link>{' '}
+							is my type.
+						</Text>
+
+						<Text fontSize="sm">
+							This is my space on internet, I write technical posts here, also
+							may share some technical tutorials and articles. Also I like take
+							photos, you can visit my online gallery.
+						</Text>
+					</>
+				)}
+			</Stack>
+
+			{renderAboutPageContent()}
 		</>
 	);
 }

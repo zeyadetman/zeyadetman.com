@@ -31,7 +31,6 @@ function LocaleSwitcher(): ReactElement {
 		}
 
 		setRenderCount(false);
-
 		//eslint-disable-next-line
 	}, [activeLocale]);
 

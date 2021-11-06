@@ -8,6 +8,7 @@ import {
 	VisuallyHidden,
 } from '@chakra-ui/react';
 import { ReactElement, ReactNode } from 'react';
+import { useTranslations } from 'use-intl';
 import { trackEvent } from '../../libs/gtag';
 import { EVENTS, EVENTS_CATEGORIES } from '../../utils/events';
 import { ISocialIcon, socialLinks } from './social-links';
@@ -52,6 +53,7 @@ const SocialButton = ({
 };
 
 export default function Footer(): ReactElement {
+	const t = useTranslations('Footer');
 	const renderSocialLinks = () => {
 		return socialLinks.map((socialLink: ISocialIcon) => {
 			if (!socialLink.hidden) {
@@ -81,7 +83,7 @@ export default function Footer(): ReactElement {
 				justify={{ base: 'center', md: 'space-between' }}
 				align={{ base: 'center', md: 'center' }}
 			>
-				<Text fontSize="xs">© 2021 Zeyad&apos;s Space on internet.</Text>
+				<Text fontSize="xs">{t('copyright')}</Text>
 				<Stack direction={'row'} spacing={1}>
 					{renderSocialLinks()}
 				</Stack>

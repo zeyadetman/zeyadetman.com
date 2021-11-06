@@ -21,6 +21,10 @@ const theme = extendTheme({
 	colors,
 	components,
 	breakpoints,
+	fonts: {
+		body: "'Tajawal', sans-serif",
+		heading: "'Tajawal', sans-serif",
+	},
 });
 
 function MyApp({
