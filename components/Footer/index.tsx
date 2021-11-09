@@ -3,7 +3,7 @@ import {
 	chakra,
 	Container,
 	Stack,
-	Text,
+	useColorMode,
 	useColorModeValue,
 	VisuallyHidden,
 } from '@chakra-ui/react';
@@ -12,6 +12,7 @@ import { useTranslations } from 'use-intl';
 import { trackEvent } from '../../libs/gtag';
 import { EVENTS, EVENTS_CATEGORIES } from '../../utils/events';
 import { ISocialIcon, socialLinks } from './social-links';
+import Image from 'next/image';
 
 const SocialButton = ({
 	children,
@@ -54,6 +55,7 @@ const SocialButton = ({
 
 export default function Footer(): ReactElement {
 	const t = useTranslations('Footer');
+	const { colorMode } = useColorMode();
 	const renderSocialLinks = () => {
 		return socialLinks.map((socialLink: ISocialIcon) => {
 			if (!socialLink.hidden) {
@@ -83,7 +85,22 @@ export default function Footer(): ReactElement {
 				justify={{ base: 'center', md: 'space-between' }}
 				align={{ base: 'center', md: 'center' }}
 			>
-				<Text fontSize="xs">{t('copyright')}</Text>
+				<div
+					className="post-image-container"
+					style={{
+						width: '100px',
+						...(colorMode === 'dark' ? { filter: 'invert(1)' } : {}),
+					}}
+					title={t('copyright')}
+				>
+					<Image
+						src="/static/images/signature.png"
+						layout="fill"
+						className="image"
+						alt="signature"
+						priority
+					/>
+				</div>
 				<Stack direction={'row'} spacing={1}>
 					{renderSocialLinks()}
 				</Stack>

@@ -5,6 +5,7 @@ import React, { ReactElement } from 'react';
 export async function getStaticProps({
 	locale,
 }: GetStaticPropsContext): Promise<GetStaticPropsResult<unknown>> {
+	locale = locale || 'en';
 	const messages = await import(`/messages/${locale}.json`);
 	return {
 		props: {

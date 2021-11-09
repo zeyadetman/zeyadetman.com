@@ -28,7 +28,8 @@ a {
 }
 
 .nav-logo {
-	border-radius: 50%;
+	border-bottom-right-radius: 25px;
+	transform: rotateY(180deg);
 }
 
 .revue-embed {

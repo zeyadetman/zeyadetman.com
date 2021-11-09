@@ -13,6 +13,7 @@ import {
 	MenuItem,
 	useDisclosure,
 	useColorModeValue,
+	useColorMode,
 	Stack,
 	Fade,
 } from '@chakra-ui/react';
@@ -72,6 +73,7 @@ const NavLink = ({ children, url }: { children: string; url: string }) => {
 
 export default function Navbar({ user }: Session): ReactElement {
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const { colorMode } = useColorMode();
 	const links = user ? authLinks : visitorLinks;
 
 	return (
@@ -90,13 +92,18 @@ export default function Navbar({ user }: Session): ReactElement {
 						transition="fade"
 					/>
 					<HStack spacing={8} alignItems={'center'}>
-						<Box>
+						<Box
+							width="50px"
+							className="post-image-container"
+							{...(colorMode === 'dark'
+								? { filter: 'drop-shadow(0 0 35px #ffffff9e)' }
+								: {})}
+						>
 							<Image
-								src="/static/images/logo.jpeg"
+								src="/static/images/logo.png"
 								alt="logo"
-								width="50"
-								height="50"
-								className="nav-logo"
+								layout="fill"
+								className="nav-logo image"
 							/>
 						</Box>
 						<HStack
