@@ -29,6 +29,9 @@ a {
 
 .nav-logo {
 	border-bottom-right-radius: 25px;
+}
+
+html:lang(en) .nav-logo {
 	transform: rotateY(180deg);
 }
 
