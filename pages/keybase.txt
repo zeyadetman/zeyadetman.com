@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/zeyadetman
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://zeyadetman.com
+  * I am zeyadetman (https://keybase.io/zeyadetman) on keybase.
+  * I have a public key ASBMhPyomnelq8bQO1z_-lahvzuv1jqvHKhSo4fADHe64wo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01204c84fca89a77a5abc6d03b5cfffa56a1bf3bafd63aaf1ca852a387c00c77bae30a",
+      "host": "keybase.io",
+      "kid": "01204c84fca89a77a5abc6d03b5cfffa56a1bf3bafd63aaf1ca852a387c00c77bae30a",
+      "uid": "d5cccb354b7bd821f87c1a3cb649b519",
+      "username": "zeyadetman"
+    },
+    "merkle_root": {
+      "ctime": 1636958948,
+      "hash": "064639ef52b6fda11facb9eac863c75976b922592c64366a59ef49fe60c1f8f34a7906873b73788f1938e5e9e765d53adaeafcc304ff2a54077de5f7aa99e89e",
+      "hash_meta": "04f957f7a6eacd39a32ccbbb7504309213cd92608d7086e723faab75bbdc0af3",
+      "seqno": 21222880
+    },
+    "service": {
+      "entropy": "f3RFcVWXjKbVLHK2CBOYGDR9",
+      "hostname": "zeyadetman.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "5.8.0"
+  },
+  "ctime": 1636958994,
+  "expire_in": 504576000,
+  "prev": "e1e503b88c6736526321652959c36aa7d599fac7a989c74a27c6a9178689f950",
+  "seqno": 7,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgTIT8qJp3pavG0Dtc//pWob87r9Y6rxyoUqOHwAx3uuMKp3BheWxvYWTESpcCB8Qg4eUDuIxnNlJjIWUpWcNqp9WZ+sepicdKJ8apF4aJ+VDEICWU4+HQOhTefVk1W856mr9q/y7N8X2QpcP+rvQYZ3TnAgHCo3NpZ8RAb48hlaI+vHHBQZM1RaDu8mwRwrf4q5ZD/IELm7P5GaR3jN92Kaek90eF+uwbxekBxyJMlkricsN3dSrmTmX3BahzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIMv6gxfTS1Yjp8I3r8bQvvr7kI0+8k329xgohWp5o7pno3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/zeyadetman
+
+==================================================================
