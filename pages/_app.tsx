@@ -90,7 +90,7 @@ function MyApp({
 									rel="apple-touch-icon"
 									href="/icons/apple-touch-icon.png"
 								></link>
-								<meta name="theme-color" content="#ffc700" />
+								<meta name="theme-color" content="#111" />
 							</Head>
 							<LogoJsonLd logo="/static/images/logo.jpeg" url={site.baseUrl} />
 							<DefaultSeo
