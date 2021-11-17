@@ -17,7 +17,7 @@ function LocaleSwitcher(): ReactElement {
 	const t = useTranslations('LocaleSwitcher');
 	const router = useRouter();
 	const [isFirstMount, setRenderCount] = useState(true);
-	const { locale = 'en', locales, asPath, pathname, query, reload } = router;
+	const { locale = 'en', locales, asPath } = router;
 	const [activeLocale, anotherLocale] = [
 		locale,
 		locales?.find((loc) => loc !== locale),
@@ -34,7 +34,6 @@ function LocaleSwitcher(): ReactElement {
 				label: `${EVENTS.TRIGGER_COLOR_MODE}: ${activeLocale}`,
 				category: EVENTS_CATEGORIES.MID,
 			});
-			reload();
 		}
 
 		setRenderCount(false);
@@ -42,19 +41,14 @@ function LocaleSwitcher(): ReactElement {
 	}, [activeLocale]);
 
 	return (
-		<Link
-			href={{ pathname, query }}
-			as={asPath}
-			locale={anotherLocale}
-			passHref
-		>
+		<a href={`/${anotherLocale}${asPath}`}>
 			<Flag
 				country={countryFlag}
 				size={22}
 				style={{ cursor: 'pointer' }}
 				title={t('switchLang')}
 			/>
-		</Link>
+		</a>
 	);
 }
 
