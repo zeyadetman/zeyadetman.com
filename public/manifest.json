@@ -1,0 +1,23 @@
+{
+	"theme_color": "#111",
+	"background_color": "#111",
+	"display": "fullscreen",
+	"scope": "/",
+	"start_url": "/",
+	"name": "Zeyad Etman",
+	"short_name": "Zeyad Etman",
+	"description": "Zeyad Etman's Space on internet.",
+	"icons": [
+		{
+			"src": "/icons/icon-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "maskable"
+		},
+		{
+			"src": "/icons/icon-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	]
+}

@@ -1,4 +1,6 @@
 const withPlugins = require('next-compose-plugins');
+const withPWA = require('next-pwa');
+const runtimeCaching = require('next-pwa/cache');
 
 const nextConfig = {
 	webpack: (config) => {
@@ -35,4 +37,14 @@ const nextConfig = {
 	},
 };
 
-module.exports = withPlugins([], nextConfig);
+module.exports = withPlugins(
+	[
+		withPWA({
+			pwa: {
+				dest: 'public',
+				runtimeCaching,
+			},
+		}),
+	],
+	nextConfig
+);
