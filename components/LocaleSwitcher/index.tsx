@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { ReactElement, useEffect, useState } from 'react';
 import Flag from 'react-flagkit';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { trackEvent } from '../../libs/gtag';
 import { EVENTS, EVENTS_CATEGORIES } from '../../utils/events';
