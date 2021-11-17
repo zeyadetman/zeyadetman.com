@@ -2,6 +2,7 @@ import { ReactElement, useEffect, useState } from 'react';
 import {
 	Stack,
 	useColorModeValue,
+	useColorMode,
 	Heading,
 	Text,
 	Container,
@@ -19,6 +20,7 @@ import { trackEvent } from '../../libs/gtag';
 import { EVENTS, EVENTS_CATEGORIES } from '../../utils/events';
 import { useTranslations } from 'use-intl';
 import { useRouter } from 'next/router';
+import style from './index.module.scss';
 
 interface Inputs {
 	email: string;
@@ -31,6 +33,7 @@ export default function Newsletter(): ReactElement {
 	const t = useTranslations('Newsletter');
 	const { locale } = useRouter();
 	const isArabic: boolean = locale === 'ar';
+	const { colorMode } = useColorMode();
 	const [isEmailTouched, setIsEmailInputTouched] = useState<boolean>(false);
 	const [visitorSubscribed, setVisitorSubscribe] = useState<
 		'success' | 'fail' | 'init'
@@ -152,20 +155,23 @@ export default function Newsletter(): ReactElement {
 				{renderSubscribeTitle()}
 				<Stack direction={{ base: 'column', md: 'row' }} spacing={'12px'}>
 					{visitorSubscribed === 'success' ? null : (
-						<div className="revue-embed">
-							<form onSubmit={handleSubmit(onSubmit)} className="revue-form">
-								<div className="revue-form-group">
+						<div className={style.revueEmbed}>
+							<form
+								onSubmit={handleSubmit(onSubmit)}
+								className={style.revueForm}
+							>
+								<div className={style.revueFormGroup}>
 									<input
 										style={{
 											...(isArabic ? { lineHeight: '30px' } : {}),
 										}}
-										className="revue-form-field member_email"
+										className={style.memberEmail}
 										placeholder={t('yourEmail')}
 										type="email"
 										{...register('email')}
 									/>
 								</div>
-								<div className="revue-form-actions">
+								<div className={style.revueFormActions}>
 									<InputGroup>
 										{loading ? (
 											<InputLeftElement>
@@ -182,7 +188,9 @@ export default function Newsletter(): ReactElement {
 											}}
 											type="submit"
 											value={t('subscribe')}
-											className="member_submit"
+											className={`${style.memberSubmit} ${
+												colorMode === 'dark' ? style.dark : style.light
+											}`}
 											{...(loading ? { opacity: '0.5' } : {})}
 										/>
 									</InputGroup>
