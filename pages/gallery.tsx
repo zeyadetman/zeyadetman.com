@@ -76,6 +76,8 @@ function Gallery(props: IProps): ReactElement {
 	const [selectedImage, selectImage] = useState<null | IPic>(null);
 	const t = useTranslations('Gallery');
 
+	console.log({ images });
+
 	return (
 		<>
 			<NextSeo title={'Gallery'} description={"Photos I've taken"} />
@@ -95,7 +97,11 @@ function Gallery(props: IProps): ReactElement {
 			<Box mt="12" spacing={2} justify="center">
 				<VStack width="full" display={selectedImage ? 'none' : ''}>
 					<GalleryContainer
-						photos={images.map((i) => ({ ...i, src: i.image.url }))}
+						photos={images.map((i) => ({
+							...i,
+							src: i.image.url,
+						}))}
+						direction={'row'}
 						onClick={(_, record) => {
 							trackEvent({
 								action: EVENTS.ENLARGE_IMAGE,
@@ -107,6 +113,18 @@ function Gallery(props: IProps): ReactElement {
 							// eslint-disable-next-line
 							// @ts-ignore
 							selectImage(record.photo);
+						}}
+						renderImage={(record) => {
+							console.log({ record });
+							return (
+								<Img
+									// eslint-disable-next-line
+									// @ts-ignore
+									onClick={record.onClick}
+									{...record.photo}
+									style={{ margin: record.margin }}
+								/>
+							);
 						}}
 					/>
 				</VStack>
