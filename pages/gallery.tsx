@@ -76,8 +76,6 @@ function Gallery(props: IProps): ReactElement {
 	const [selectedImage, selectImage] = useState<null | IPic>(null);
 	const t = useTranslations('Gallery');
 
-	console.log({ images });
-
 	return (
 		<>
 			<NextSeo title={'Gallery'} description={"Photos I've taken"} />
@@ -102,25 +100,23 @@ function Gallery(props: IProps): ReactElement {
 							src: i.image.url,
 						}))}
 						direction={'row'}
-						onClick={(_, record) => {
-							trackEvent({
-								action: EVENTS.ENLARGE_IMAGE,
+						renderImage={(record) => {
+							return (
 								// eslint-disable-next-line
 								// @ts-ignore
-								label: `Image: ${record.photo?.name}`,
-								category: EVENTS_CATEGORIES.MID,
-							});
-							// eslint-disable-next-line
-							// @ts-ignore
-							selectImage(record.photo);
-						}}
-						renderImage={(record) => {
-							console.log({ record });
-							return (
 								<Img
-									// eslint-disable-next-line
-									// @ts-ignore
-									onClick={record.onClick}
+									onClick={() => {
+										trackEvent({
+											action: EVENTS.ENLARGE_IMAGE,
+											// eslint-disable-next-line
+											// @ts-ignore
+											label: `Image: ${record.photo?.name}`,
+											category: EVENTS_CATEGORIES.MID,
+										});
+										// eslint-disable-next-line
+										// @ts-ignore
+										selectImage(record.photo);
+									}}
 									{...record.photo}
 									style={{ margin: record.margin }}
 								/>
