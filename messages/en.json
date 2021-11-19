@@ -33,7 +33,9 @@
 	"Gallery": {
 		"gallery": "Gallery",
 		"galleryInfo": "Photos I've taken, all of them",
-		"byIphone11": "captured by iPhone11."
+		"byIphone11": "captured by iPhone11.",
+		"location": "Location",
+		"description": "Description"
 	},
 	"Footer": {
 		"copyright": "© 2021 Zeyad's Space on internet."

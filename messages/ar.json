@@ -34,7 +34,9 @@
 	"Gallery": {
 		"gallery": "صور",
 		"galleryInfo": "صور صورتها, كلها",
-		"byIphone11": "متصورة ب iPhone11."
+		"byIphone11": "متصورة ب iPhone11.",
+		"location": "الموقع",
+		"description": "تفاصيل"
 	},
 	"Footer": {
 		"copyright": "مساحة زياد على الانترنت 2021 ©"

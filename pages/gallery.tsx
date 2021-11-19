@@ -3,17 +3,13 @@ import {
 	Stack,
 	Text,
 	Heading,
-	WrapItem,
-	Wrap,
-	Modal,
-	ModalOverlay,
-	ModalContent,
-	ModalBody,
-	ModalCloseButton,
+	Box,
+	HStack,
 	Flex,
+	Icon,
+	VStack,
 } from '@chakra-ui/react';
 import { Img } from '@chakra-ui/react';
-import { useDisclosure } from '@chakra-ui/hooks';
 import { NextSeo } from 'next-seo';
 import { IPic } from '../interfaces/picture';
 import { useColorModeValue } from '@chakra-ui/color-mode';
@@ -21,44 +17,63 @@ import { trackEvent } from '../libs/gtag';
 import { EVENTS, EVENTS_CATEGORIES } from '../utils/events';
 import { GetStaticPropsContext, GetStaticPropsResult } from 'next';
 import { useTranslations } from 'use-intl';
+import GalleryContainer from 'react-photo-gallery';
+import { FiX, FiMapPin, FiFileText } from 'react-icons/fi';
 
-const pictures: IPic[] = [
-	{
-		src: '/static/gallery/sea-and-boat-min.jpg',
-		description: 'Boat in the sea',
-		alt: 'Boat in the sea',
-	},
-	{
-		src: '/static/gallery/plants-min.jpg',
-		description: 'Plant',
-		alt: 'Plant',
-	},
-	{
-		src: '/static/gallery/laptop-min.jpg',
-		description: 'Laptop',
-		alt: 'Laptop',
-	},
-	{
-		src: '/static/gallery/sea-in-night-min.jpg',
-		description: 'sea in night',
-		alt: 'sea in night',
-	},
-];
+interface IProps {
+	images: IPic[];
+}
 
 export async function getStaticProps({
 	locale,
 }: GetStaticPropsContext): Promise<GetStaticPropsResult<unknown>> {
 	const messages = await import(`/messages/${locale}.json`);
+
+	const photos = await (
+		await fetch('https://api.500px.com/graphql', {
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+			},
+			body: JSON.stringify({
+				operationName: 'PhotoSearchQueryRendererQuery',
+				variables: {
+					sort: 'RELEVANCE',
+					search: 'zeyadetman',
+				},
+				query:
+					'query PhotoSearchQueryRendererQuery($sort: PhotoSort, $search: String!) {\n  ...PhotoSearchPaginationContainer_query_67nah\n}\n\nfragment PhotoSearchPaginationContainer_query_67nah on Query {\n  photoSearch(sort: $sort, first: 20, search: $search) {\n    edges {\n      node {\n        id\n        legacyId\n        canonicalPath\n        name\n        description\n        category\n        uploadedAt\n        location\n        width\n        height\n        isLikedByMe\n        notSafeForWork\n        tags\n        images(sizes: [33, 35]) {\n          size\n          url\n          jpegUrl\n          webpUrl\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    totalCount\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n',
+			}),
+		})
+	).json();
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const images = photos.data.photoSearch.edges.map((edge: any) => {
+		return {
+			id: edge?.node?.id,
+			image: {
+				url: edge?.node?.images[1]?.url,
+				webpUrl: edge?.node?.images[1]?.webpUrl,
+			},
+			name: edge?.node?.name,
+			location: edge?.node?.location,
+			width: edge?.node?.width,
+			height: edge?.node?.height,
+			description: edge?.node?.description,
+		};
+	});
+
 	return {
 		props: {
 			messages: JSON.stringify(messages),
+			images,
 		},
 	};
 }
 
-function Gallery(): ReactElement {
-	const { isOpen, onOpen, onClose } = useDisclosure();
-	const [selectedImage, selectImage] = useState(0);
+function Gallery(props: IProps): ReactElement {
+	const { images } = props;
+	const [selectedImage, selectImage] = useState<null | IPic>(null);
 	const t = useTranslations('Gallery');
 
 	return (
@@ -77,64 +92,80 @@ function Gallery(): ReactElement {
 				</Heading>
 			</Stack>
 
-			<Wrap mt="12" spacing={2} justify="center">
-				{pictures.map((pic: IPic, index) => (
-					<WrapItem
-						key={pic.src}
-						boxShadow="base"
-						rounded="5px"
-						overflow="hidden"
-						maxW="xs"
-						width="fit-content"
-						height="fit-content"
-						bg="white"
-						lineHeight="0"
-						_hover={{ boxShadow: 'md' }}
-						onClick={() => {
+			<Box mt="12" spacing={2} justify="center">
+				<VStack width="full" display={selectedImage ? 'none' : ''}>
+					<GalleryContainer
+						photos={images.map((i) => ({ ...i, src: i.image.url }))}
+						onClick={(_, record) => {
 							trackEvent({
 								action: EVENTS.ENLARGE_IMAGE,
-								label: `Image: ${pic.src}`,
+								// eslint-disable-next-line
+								// @ts-ignore
+								label: `Image: ${record.photo?.name}`,
 								category: EVENTS_CATEGORIES.MID,
 							});
-							selectImage(index);
-							onOpen();
+							// eslint-disable-next-line
+							// @ts-ignore
+							selectImage(record.photo);
 						}}
-					>
-						<Img
-							src={pic.src}
-							alt={pic.alt}
-							fit="contain"
-							maxWidth="sm"
-							maxHeight="sm"
-						/>
-					</WrapItem>
-				))}
-			</Wrap>
+					/>
+				</VStack>
 
-			<Modal
-				isOpen={isOpen}
-				onClose={onClose}
-				size="full"
-				scrollBehavior="inside"
-				isCentered
-				allowPinchZoom
-				blockScrollOnMount
-			>
-				<ModalOverlay />
-				<ModalContent backgroundColor="black" borderRadius="0">
-					<ModalCloseButton color="white" />
-					<ModalBody>
-						<Flex align="center" justify="center">
-							<Img
-								src={pictures[selectedImage].src}
-								alt={pictures[selectedImage].description}
-								fit="contain"
-								maxH="calc(100vh - 20px)"
-							/>
-						</Flex>
-					</ModalBody>
-				</ModalContent>
-			</Modal>
+				<VStack width="full" display={!selectedImage ? 'none' : ''}>
+					<HStack justify="end" width="full">
+						<Icon
+							as={FiX}
+							onClick={() => {
+								selectImage(null);
+							}}
+							fontSize="3xl"
+							cursor="pointer"
+							color={useColorModeValue('black', 'white')}
+						/>
+					</HStack>
+					<Flex align="center" justify="center">
+						<Img
+							src={selectedImage?.image?.webpUrl}
+							alt={selectedImage?.name}
+						/>
+					</Flex>
+					<Text
+						fontSize="2xl"
+						fontWeight="bold"
+						textTransform="capitalize"
+						mt="24px !important"
+						mb="0 !important"
+						align="center"
+						color={useColorModeValue('black', 'white')}
+					>
+						{selectedImage?.name}
+					</Text>
+
+					{selectedImage?.location ? (
+						<Text
+							fontSize="sm"
+							fontWeight="medium"
+							mt="0 !important"
+							align="center"
+						>
+							<Icon as={FiMapPin} title={t('location')} />{' '}
+							{selectedImage?.location}
+						</Text>
+					) : null}
+
+					{selectedImage?.description ? (
+						<Text
+							fontSize="sm"
+							fontWeight="medium"
+							mt="6px !important"
+							align="center"
+						>
+							<Icon as={FiFileText} title={t('description')} />{' '}
+							{selectedImage?.description}
+						</Text>
+					) : null}
+				</VStack>
+			</Box>
 		</>
 	);
 }
