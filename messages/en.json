@@ -41,6 +41,7 @@
 		"copyright": "© 2021 Zeyad's Space on internet."
 	},
 	"Post": {
-		"tweetIt": "Tweet This Post"
+		"tweetIt": "Tweet This Post",
+		"editOnGithub": "Edit on GitHub"
 	}
 }

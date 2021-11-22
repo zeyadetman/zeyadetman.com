@@ -16,6 +16,10 @@ import { Button } from '@chakra-ui/button';
 import Newsletter from '../../components/Newsletter';
 import { GetStaticPropsContext, GetStaticPropsResult } from 'next';
 import { useTranslations } from 'use-intl';
+import { AiOutlineTwitter, AiOutlineGithub } from 'react-icons/ai';
+import Icon from '@chakra-ui/icon';
+import { trackEvent } from '../../libs/gtag';
+import { EVENTS, EVENTS_CATEGORIES } from '../../utils/events';
 
 interface Props {
 	post: IPost;
@@ -179,20 +183,50 @@ function BlogIndex(props: Props): ReactElement {
 					</Stack>
 					<MarkdownWrapper content={post.content} />
 					<Flex justify="center" direction="column" mt={16} mb={-8}>
-						<TwitterShareButton
-							title={post.data.title}
-							via={site.twitter.username}
-							url={`${site.baseUrl}/${router.locale}${router.asPath}`}
-						>
-							<Button
-								bg="#1d9bf0"
-								color="#fff"
-								_hover={{ bg: '#1e9cf1dd', color: 'fff' }}
-								size="sm"
+						<Flex justify="center" direction="row" style={{ gap: '0 8px' }}>
+							<TwitterShareButton
+								title={post.data.title}
+								via={site.twitter.username}
+								url={`${site.baseUrl}/${router.locale}${router.asPath}`}
+								key="twitter-share-button"
 							>
-								{t('tweetIt')}
-							</Button>
-						</TwitterShareButton>
+								<Button
+									bg="#1d9bf0"
+									color="#fff"
+									_hover={{ bg: '#1e9cf1dd', color: '#fff' }}
+									size="sm"
+									key="twitter"
+								>
+									<Icon as={AiOutlineTwitter} me={1} mb={0.5} fontSize="lg" />
+									{t('tweetIt')}
+								</Button>
+							</TwitterShareButton>
+
+							<div>
+								<Button
+									key="github-edit-button"
+									size="sm"
+									bgColor="#24292f"
+									color="#fff"
+									_hover={{ bgColor: '#24292fdd', color: '#fff' }}
+									_focus={{ borderColor: '#24292f' }}
+									onClick={() => {
+										trackEvent({
+											category: EVENTS_CATEGORIES.HIGH,
+											label: `${EVENTS.EDIT_ON_GITHUB}: ${post.fileName}`,
+											action: EVENTS.EDIT_ON_GITHUB,
+										});
+										window.open(
+											`${site.githubRepo}/blogs/${post.locale}/${post.fileName}.md`,
+											'_blank'
+										);
+									}}
+								>
+									<Icon as={AiOutlineGithub} me={1} mb={0.5} fontSize="lg" />
+									{t('editOnGithub')}
+								</Button>
+							</div>
+						</Flex>
 
 						<Newsletter />
 					</Flex>

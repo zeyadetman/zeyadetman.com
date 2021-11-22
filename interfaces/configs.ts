@@ -6,6 +6,7 @@ export interface ISite {
 	namespace: string;
 	openToWork: boolean;
 	email: string;
+	githubRepo: string;
 	twitter: {
 		username: string;
 	};

@@ -8,6 +8,7 @@ export const site: ISite = {
 	baseUrl: 'https://zeyadetman.com',
 	namespace: 'zeyadetman-blog',
 	openToWork: true,
+	githubRepo: 'https://github.com/zeyadetman/zeyadetman.com/blob/main',
 	email: 'zeyad.etman@gmail.com',
 	twitter: {
 		username: 'zeyadetman',

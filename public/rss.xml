@@ -4,7 +4,7 @@
         <title>Articles by Zeyad Etman</title>
         <link>https://zeyadetman.com</link>
         <description>Technical Blog | mostly about web development, Occasionally software engineering topics.</description>
-        <lastBuildDate>Mon, 22 Nov 2021 05:09:02 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 22 Nov 2021 06:10:16 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -14,11 +14,11 @@
             <link>https://zeyadetman.com/en/posts/how-i-built-my-portfolio-using-nextjs-typescript-chakraui</link>
             <guid>https://zeyadetman.com/en/posts/how-i-built-my-portfolio-using-nextjs-typescript-chakraui</guid>
             <pubDate>Sun, 24 Oct 2021 00:00:00 GMT</pubDate>
-            <description><![CDATA[ In this post I’ll go with you in a detailed way on how i created my blog/portfolio from scratch using NextJS and Chakra UI, from creating the pages and posts markdown files to displaying them as html files, And how I handled newsletter service, and deploying the project on Vercel, Handling custom domains. So this post will good for you if you want to know more about anything that I’ve implemented here on my blog.  **[Here's the source code for this site.](https://github.com/zeyadetman/zeyadetman.github.io)**]]></description>
+            <description><![CDATA[ In this post I’ll go with you in a detailed way on how i created my blog/portfolio from scratch using NextJS and Chakra UI, from creating the pages and posts markdown files to displaying them as html files, And how I handled newsletter service, and deploying the project on Vercel, Handling custom domains. So this post will good for you if you want to know more about anything that I’ve implemented here on my blog.  **[Here's the source code for this site.](https://github.com/zeyadetman/zeyadetman.com)**]]></description>
             <content:encoded><![CDATA[
 In this post I’ll go with you in a detailed way on how i created my blog/portfolio from scratch using NextJS and Chakra UI, from creating the pages and posts markdown files to displaying them as html files, And how I handled newsletter service, and deploying the project on Vercel, Handling custom domains. So this post will good for you if you want to know more about anything that I’ve implemented here on my blog.
 
-**[Here's the source code for this site.](https://github.com/zeyadetman/zeyadetman.github.io)**
+**[Here's the source code for this site.](https://github.com/zeyadetman/zeyadetman.com)**
 
 ## NextJS + Typescript + Chakra UI
 [`NextJS`](https://nextjs.org/) is one of the strongest framework to build a production project. I've used some features like SSG or pre-render pages at build time, API routes, file-system routing, fast refresh, configuration and deployments are super easy.
