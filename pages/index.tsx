@@ -107,6 +107,7 @@ export default function Home(): ReactElement {
 					color={useColorModeValue('black', 'white')}
 					zIndex={10000}
 					fontWeight="extrabold"
+					mb={2}
 				>
 					{renderAboutPageTitle()}
 

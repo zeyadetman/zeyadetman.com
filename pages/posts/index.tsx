@@ -26,6 +26,7 @@ import { trackEvent } from '../../libs/gtag';
 import { EVENTS, EVENTS_CATEGORIES } from '../../utils/events';
 import { useTranslations } from 'use-intl';
 import { useRouter } from 'next/router';
+import { customStyles } from '../../styles/styles';
 
 interface Props {
 	posts: IPost[];
@@ -124,16 +125,14 @@ function Blog(props: Props): ReactElement {
 
 	return (
 		<>
-			<Stack>
+			<Stack shouldWrapChildren>
 				<Heading color={useColorModeValue('black', 'white')}>
 					{t('articles')}
-					<Text fontSize="sm" marginTop="4" fontWeight="normal">
-						{t('articlesInfo')}
-					</Text>
+					<Text {...customStyles.Text.subTitle()}>{t('articlesInfo')}</Text>
 					<Newsletter />
 				</Heading>
 			</Stack>
-			<Stack mt="8">
+			<Stack mt="8" shouldWrapChildren>
 				<Text fontSize="sm" fontWeight="bold">
 					{t('searchArticles')}
 				</Text>

@@ -5,6 +5,11 @@ export const customStyles = {
 			whiteSpace: 'pre-line',
 			mb: 4,
 		}),
+		subTitle: (): Record<string, unknown> => ({
+			fontSize: 'sm',
+			my: 2,
+			fontWeight: 'normal',
+		}),
 		subDescription: {
 			fontSize: 'xs',
 			ms: 1,
@@ -28,7 +33,7 @@ export const customStyles = {
 		pageTitle: {},
 		sectionTitle: ({ color }: { color: string }): Record<string, unknown> => ({
 			size: 'xl',
-			mb: '16px !important',
+			mb: 2,
 			fontWeight: 'bold',
 			as: 'h2',
 			...(color ? { color } : {}),

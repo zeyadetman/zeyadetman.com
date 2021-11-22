@@ -19,6 +19,7 @@ import { GetStaticPropsContext, GetStaticPropsResult } from 'next';
 import { useTranslations } from 'use-intl';
 import GalleryContainer from 'react-photo-gallery';
 import { FiX, FiMapPin, FiFileText } from 'react-icons/fi';
+import { customStyles } from '../styles/styles';
 
 interface IProps {
 	images: IPic[];
@@ -82,7 +83,7 @@ function Gallery(props: IProps): ReactElement {
 			<Stack>
 				<Heading color={useColorModeValue('black', 'white')}>
 					{t('gallery')}
-					<Text fontSize="sm" marginTop="4" fontWeight="normal">
+					<Text {...customStyles.Text.subTitle()}>
 						{t('galleryInfo')}{' '}
 						<Text fontWeight="bold" display="inline">
 							{t('byIphone11')}
