@@ -13,7 +13,8 @@ import { EVENTS, EVENTS_CATEGORIES } from '../utils/events';
 import { GetStaticPropsContext, GetStaticPropsResult } from 'next';
 import { useTranslations } from 'use-intl';
 import { useRouter } from 'next/router';
-import PicOfMe from '../components/PicOfMe';
+import NLink from 'next/link';
+import { customStyles } from '../styles/styles';
 
 export async function getStaticProps({
 	locale,
@@ -46,6 +47,7 @@ export default function Home(): ReactElement {
 				fontSize="sm"
 				href={`mailto:${site.email}`}
 				fontStyle="italic"
+				mt={-4}
 				mb="24px !important"
 				display="flex"
 				alignItems="self-start"
@@ -64,58 +66,29 @@ export default function Home(): ReactElement {
 		);
 	};
 
-	const renderAboutPageContent = () => {
+	const renderCareerStack = () => {
 		if (isArabic) return null;
 
 		return (
-			<Stack mb="-32px !important">
-				<Heading
-					as="h2"
-					size="xl"
-					mb="16px !important"
-					color={h2TextColor}
-					fontWeight="bold"
-				>
+			<Stack mb="-32px !important" shouldWrapChildren>
+				<Heading {...customStyles.Heading.sectionTitle({ color: h2TextColor })}>
 					Career
-					<Text
-						fontSize="xs"
-						ms={1}
-						fontWeight={300}
-						fontStyle="italic"
-						display="inline"
-					>
+					<Text {...customStyles.Text.subDescription}>
 						freelance/part-time includes
 					</Text>
 				</Heading>
 
-				<Text fontSize="sm" mb="12px !important">
-					<Badge background="green" me="1" color="blackLight">
+				<Text {...customStyles.Text.paragraph()}>
+					<Badge background="green" me="1" mb="1" color="blackLight">
 						Hire me!
 					</Badge>
-					I build web apps for startups, businesses as a freelance frontend
-					developer. Let&apos;s discuss your needs and what solutions I can
-					bring.
+					Currently, I'm available for freelance work as a frontend engineer. My
+					main tech stack is React, Typescript, Next.js, Node.js.
 					{!site.openToWork && (
-						<Text
-							fontStyle="italic"
-							fontWeight="700"
-							background="red"
-							p="2px 10px"
-							mt="2"
-							w="fit-content"
-							color="whiteDark"
-							as="span"
-							display="inline-block"
-						>
-							Note: I&apos;m not available at the current time.
+						<Text {...customStyles.Text.highlightRed()}>
+							Note: I'm not available at the current time.
 						</Text>
 					)}
-				</Text>
-
-				<Text fontSize="sm">
-					If you&apos;re a beginner or need advice from me, don&apos;t hesitate,
-					Mail me and i&apos;ll send you some advices how to start learning
-					frontend or programming.
 				</Text>
 
 				{renderSendEmailButton()}
@@ -129,10 +102,9 @@ export default function Home(): ReactElement {
 
 	return (
 		<>
-			<Stack mb={isArabic ? -4 : 12}>
+			<Stack mb={isArabic ? -4 : 8} shouldWrapChildren>
 				<Heading
 					color={useColorModeValue('black', 'white')}
-					mb="-60px !important"
 					zIndex={10000}
 					fontWeight="extrabold"
 				>
@@ -154,35 +126,39 @@ export default function Home(): ReactElement {
 						/>
 					)}
 				</Heading>
-				<PicOfMe helloMessage={t('hello')} />
 				{isArabic ? (
 					<>
-						<Text fontSize="sm" whiteSpace="pre-line" mb="8px !important">
-							{t('arabicMessage')}
-						</Text>
+						<Text {...customStyles.Text.paragraph()}>{t('arabicMessage')}</Text>
 						{renderSendEmailButton()}
 					</>
 				) : (
 					<>
-						<Text fontSize="sm" mb="8px !important">
+						<Text {...customStyles.Text.paragraph()}>
 							I am a software engineer, working as a Fullstack Engineer
-							(frontend heavily){' '}
+							(Frontend heavily){' '}
 							<Link href="https://www.crystalknows.com/personality-type/intj">
 								INTJ
 							</Link>{' '}
 							is my type.
 						</Text>
 
-						<Text fontSize="sm">
-							This is my space on internet, I write technical posts here, also
-							may share some technical tutorials and articles. Also I like take
-							photos, you can visit my online gallery.
+						<Text {...customStyles.Text.paragraph()}>
+							This is my space on the internet, I've built it to reflect my
+							digital presence. Here I share about
+							<Link>
+								<NLink href="/posts"> what I've learned or interested in</NLink>
+							</Link>
+							, things I'm working on,
+							<Link>
+								<NLink href="/gallery"> photos I took</NLink>
+							</Link>
+							.
 						</Text>
 					</>
 				)}
 			</Stack>
 
-			{renderAboutPageContent()}
+			{renderCareerStack()}
 		</>
 	);
 }
