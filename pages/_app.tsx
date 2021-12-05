@@ -16,6 +16,8 @@ import { site } from '../configs/site';
 import { NextIntlProvider } from 'next-intl';
 import { RtlProvider } from '../components/rtl-provider';
 import Head from 'next/head';
+import LogRocket from 'logrocket';
+import setupLogRocketReact from 'logrocket-react';
 
 const theme = extendTheme({
 	shadows,
@@ -35,6 +37,11 @@ function MyApp({
 	const router = useRouter();
 
 	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			LogRocket.init('f16bwg/personal-site');
+			setupLogRocketReact(LogRocket);
+		}
+
 		const handleRouteChange = (url: URL) => {
 			gtag.pageview(url);
 		};
