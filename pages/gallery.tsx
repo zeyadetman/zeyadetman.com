@@ -49,7 +49,7 @@ export async function getStaticProps({
 	).json();
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const images = photos.data.photoSearch.edges.map((edge: any) => {
+	const images = photos.data.photoSearch?.edges?.reverse().map((edge: any) => {
 		return {
 			id: edge?.node?.id,
 			image: {
