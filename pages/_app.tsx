@@ -41,7 +41,9 @@ function MyApp({
 			typeof window !== 'undefined' &&
 			process.env.NODE_ENV === 'production'
 		) {
-			LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET_ID);
+			LogRocket.init(
+				process.env.NEXT_PUBLIC_LOGROCKET_ID || 'f16bwg/personal-site'
+			);
 			setupLogRocketReact(LogRocket);
 		}
 
