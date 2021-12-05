@@ -54,11 +54,12 @@ function Blog(props: Props): ReactElement {
 	const a = useRouter();
 
 	useEffect(() => {
+if(searchPostsInputText) {
 		trackEvent({
 			action: EVENTS.SEARCH_ARTICLES,
 			label: `Search text: ${searchPostsInputText}`,
 			category: EVENTS_CATEGORIES.MID,
-		});
+		});}
 		const filteredPosts: IPost[] = posts.filter(({ content }) =>
 			content.includes(searchPostsInputText)
 		);
