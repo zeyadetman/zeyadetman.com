@@ -37,8 +37,11 @@ function MyApp({
 	const router = useRouter();
 
 	useEffect(() => {
-		if (typeof window !== 'undefined') {
-			LogRocket.init('f16bwg/personal-site');
+		if (
+			typeof window !== 'undefined' &&
+			process.env.NODE_ENV === 'production'
+		) {
+			LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET_ID);
 			setupLogRocketReact(LogRocket);
 		}
 
