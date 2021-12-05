@@ -6,6 +6,9 @@ import Document, {
 	NextScript,
 } from 'next/document';
 import { GA_TRACKING_ID } from '../libs/gtag';
+import LogRocket from 'logrocket';
+import setupLogRocketReact from 'logrocket-react';
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 export default class MyDocument extends Document {
@@ -47,7 +50,8 @@ export default class MyDocument extends Document {
 				<body>
 					<Main />
 					<NextScript />
-
+					{LogRocket.init('f16bwg/personal-site')}
+					{setupLogRocketReact(LogRocket)}
 					{locale === 'ar' && (
 						<>
 							<link rel="preconnect" href="https://fonts.googleapis.com"></link>
