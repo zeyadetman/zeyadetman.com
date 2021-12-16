@@ -54,12 +54,13 @@ function Blog(props: Props): ReactElement {
 	const a = useRouter();
 
 	useEffect(() => {
-if(searchPostsInputText) {
-		trackEvent({
-			action: EVENTS.SEARCH_ARTICLES,
-			label: `Search text: ${searchPostsInputText}`,
-			category: EVENTS_CATEGORIES.MID,
-		});}
+		if (searchPostsInputText) {
+			trackEvent({
+				action: EVENTS.SEARCH_ARTICLES,
+				label: `Search text: ${searchPostsInputText}`,
+				category: EVENTS_CATEGORIES.MID,
+			});
+		}
 		const filteredPosts: IPost[] = posts.filter(({ content }) =>
 			content.includes(searchPostsInputText)
 		);
@@ -113,7 +114,6 @@ if(searchPostsInputText) {
 					<Box as="div">
 						<Text
 							fontSize="sm"
-							noOfLines={site.post?.excerpt?.noOfLines || 3}
 							color={colorMode === 'light' ? 'blackLight' : 'whiteDark'}
 						>
 							<MarkdownWrapper content={excerpt || ''} />

@@ -145,7 +145,7 @@ export default function Home(): ReactElement {
 
 						<Text {...customStyles.Text.paragraph()}>
 							This is my space on the internet, I've built it to reflect my
-							digital presence. Here I share about
+							digital world. Here I share about
 							<Link>
 								<NLink href="/posts"> what I've learned or interested in</NLink>
 							</Link>
