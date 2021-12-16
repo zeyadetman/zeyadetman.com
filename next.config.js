@@ -35,6 +35,16 @@ const nextConfig = {
 		defaultLocale: 'en',
 		localeDetection: true,
 	},
+	async redirects() {
+		return [
+			{
+				source: '/projects/:projectId',
+				destination: 'https://zeyadetman.github.io/:projectId',
+				permanent: true,
+				basePath: false,
+			},
+		];
+	},
 };
 
 module.exports = withPlugins(
