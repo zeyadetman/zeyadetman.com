@@ -12,7 +12,8 @@
 		"blog": "Blog",
 		"gallery": "Gallery",
 		"dashboard": "Dashboard",
-		"settings": "Settings"
+		"settings": "Settings",
+		"products": "Products"
 	},
 	"Newsletter": {
 		"newsletter": "Newsletter",
@@ -36,6 +37,11 @@
 		"byIphone11": "captured by iPhone11.",
 		"location": "Location",
 		"description": "Description"
+	},
+	"Products": {
+		"products": "Products",
+		"productsInfo": "I sell some products, mostly software development and productivity related.",
+		"tweetIt": "Tweet this product"
 	},
 	"Footer": {
 		"copyright": "© 2021 Zeyad's Space on internet."

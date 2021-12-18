@@ -35,6 +35,7 @@ const authLinks = [
 const visitorLinks = [
 	{ name: 'about', url: '/' },
 	{ name: 'blog', url: '/posts' },
+	{ name: 'products', url: '/products' },
 	{ name: 'gallery', url: '/gallery' },
 ];
 

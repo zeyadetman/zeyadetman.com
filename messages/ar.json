@@ -13,7 +13,8 @@
 		"blog": "المقالات",
 		"gallery": "صور",
 		"dashboard": "الرئيسية",
-		"settings": "الاعدادات"
+		"settings": "الاعدادات",
+		"products": "المنتجات"
 	},
 	"Newsletter": {
 		"Newsletter": "القائمة البريدية",
@@ -37,6 +38,11 @@
 		"byIphone11": "متصورة ب iPhone11.",
 		"location": "الموقع",
 		"description": "تفاصيل"
+	},
+	"Products": {
+		"products": "المنتجات",
+		"productsInfo": "المنتجات المتاحة.",
+		"tweetIt": "غرّد هذا المنتج"
 	},
 	"Footer": {
 		"copyright": "مساحة زياد على الانترنت 2021 ©"
