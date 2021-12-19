@@ -32,7 +32,7 @@ function Products(): React.ReactElement {
 
 	return (
 		<>
-			<Script src="https://gumroad.com/js/gumroad-embed.js" async></Script>
+			<Script src="https://gumroad.com/js/gumroad-embed.js"></Script>
 			<NextSeo title={'Products'} description={"Products I've created."} />
 			<Stack>
 				<Heading color={useColorModeValue('black', 'white')}>
