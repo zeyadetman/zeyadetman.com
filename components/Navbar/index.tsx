@@ -37,6 +37,7 @@ const visitorLinks = [
 	{ name: 'blog', url: '/posts' },
 	{ name: 'products', url: '/products' },
 	{ name: 'gallery', url: '/gallery' },
+	{ name: 'wiki', url: 'https://wiki.zeyadetman.com' },
 ];
 
 const NavLink = ({ children, url }: { children: string; url: string }) => {
