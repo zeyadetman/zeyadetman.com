@@ -101,6 +101,13 @@ function MarkdownWrapper(props: Props): ReactElement {
 						</Box>
 					);
 				},
+				blockquote({ children }) {
+					return (
+						<Box borderLeft={'4px'} borderLeftColor="gray.200" pl={2}>
+							<Text as="i">{children}</Text>
+						</Box>
+					);
+				},
 			}}
 		>
 			{content}
