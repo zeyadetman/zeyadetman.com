@@ -30,23 +30,15 @@ export async function getStaticProps({
 }: GetStaticPropsContext): Promise<GetStaticPropsResult<unknown>> {
 	const messages = await import(`/messages/${locale}.json`);
 
-	const photos = await (
-		await fetch('https://api.500px.com/graphql', {
-			method: 'POST',
-			headers: {
-				'content-type': 'application/json',
-			},
-			body: JSON.stringify({
-				operationName: 'OtherPhotosQuery',
-				variables: {
-					pageSize: 20,
-					search: 'zeyadetman',
-				},
-				query:
-					'query OtherPhotosQuery($username: String!, $pageSize: Int) {\n  user: userByUsername(username: $username) {\n    ...OtherPhotosPaginationContainer_user_RlXb8\n    id\n  }\n}\n\nfragment OtherPhotosPaginationContainer_user_RlXb8 on User {\n  photos(first: $pageSize, privacy: PROFILE, sort: ID_DESC) {\n    edges {\n      node {\n        id\n        legacyId\n        canonicalPath\n        width\n        height\n        name\n        isLikedByMe\n        notSafeForWork\n        photographer: uploader {\n          id\n          legacyId\n          username\n          displayName\n          canonicalPath\n          followedByUsers {\n            isFollowedByMe\n          }\n        }\n        images(sizes: [33, 35]) {\n          size\n          url\n          jpegUrl\n          webpUrl\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    totalCount\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n',
-			}),
-		})
-	).json();
+	const photos = await (await fetch("https://api.500px.com/graphql", {
+  "headers": {
+    "content-type": "application/json",
+  },
+  "referrer": "https://500px.com/",
+  "referrerPolicy": "strict-origin-when-cross-origin",
+  "body": "{\"operationName\":\"OtherPhotosQuery\",\"variables\":{\"username\":\"zeyadetman\",\"pageSize\":20},\"query\":\"query OtherPhotosQuery($username: String!, $pageSize: Int) {\\n  user: userByUsername(username: $username) {\\n    ...OtherPhotosPaginationContainer_user_RlXb8\\n    id\\n  }\\n}\\n\\nfragment OtherPhotosPaginationContainer_user_RlXb8 on User {\\n  photos(first: $pageSize, privacy: PROFILE, sort: ID_DESC) {\\n    edges {\\n      node {\\n        id\\n        legacyId\\n        canonicalPath\\n        width\\n        height\\n        name\\n        isLikedByMe\\n        notSafeForWork\\n        photographer: uploader {\\n          id\\n          legacyId\\n          username\\n          displayName\\n          canonicalPath\\n          followedByUsers {\\n            isFollowedByMe\\n          }\\n        }\\n        images(sizes: [33, 35]) {\\n          size\\n          url\\n          jpegUrl\\n          webpUrl\\n          id\\n        }\\n        __typename\\n      }\\n      cursor\\n    }\\n    totalCount\\n    pageInfo {\\n      endCursor\\n      hasNextPage\\n    }\\n  }\\n}\\n\"}",
+  "method": "POST",
+})).json();
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const images = photos.data.user.photos?.edges?.reverse().map((edge: any) => {
