@@ -227,6 +227,22 @@ function BlogIndex(props: Props): ReactElement {
 								</Button>
 							</div>
 						</Flex>
+						
+						<script src="https://giscus.app/client.js"
+        data-repo="zeyadetman/zeyadetman.com"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk0MDU4NjIyODk="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOGDD3kc4COmmU"
+        data-mapping="pathname"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
 
 						<Newsletter />
 					</Flex>
