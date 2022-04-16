@@ -37,19 +37,19 @@ export async function getStaticProps({
 				'content-type': 'application/json',
 			},
 			body: JSON.stringify({
-				operationName: 'PhotoSearchQueryRendererQuery',
+				operationName: 'OtherPhotosQuery',
 				variables: {
-					sort: 'RELEVANCE',
+					pageSize: 20,
 					search: 'zeyadetman',
 				},
 				query:
-					'query PhotoSearchQueryRendererQuery($sort: PhotoSort, $search: String!) {\n  ...PhotoSearchPaginationContainer_query_67nah\n}\n\nfragment PhotoSearchPaginationContainer_query_67nah on Query {\n  photoSearch(sort: $sort, first: 20, search: $search) {\n    edges {\n      node {\n        id\n        legacyId\n        canonicalPath\n        name\n        description\n        category\n        uploadedAt\n        location\n        width\n        height\n        isLikedByMe\n        notSafeForWork\n        tags\n        images(sizes: [33, 35]) {\n          size\n          url\n          jpegUrl\n          webpUrl\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    totalCount\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n',
+					'query OtherPhotosQuery($username: String!, $pageSize: Int) {\n  user: userByUsername(username: $username) {\n    ...OtherPhotosPaginationContainer_user_RlXb8\n    id\n  }\n}\n\nfragment OtherPhotosPaginationContainer_user_RlXb8 on User {\n  photos(first: $pageSize, privacy: PROFILE, sort: ID_DESC) {\n    edges {\n      node {\n        id\n        legacyId\n        canonicalPath\n        width\n        height\n        name\n        isLikedByMe\n        notSafeForWork\n        photographer: uploader {\n          id\n          legacyId\n          username\n          displayName\n          canonicalPath\n          followedByUsers {\n            isFollowedByMe\n          }\n        }\n        images(sizes: [33, 35]) {\n          size\n          url\n          jpegUrl\n          webpUrl\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    totalCount\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n',
 			}),
 		})
 	).json();
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const images = photos.data.photoSearch?.edges?.reverse().map((edge: any) => {
+	const images = photos.data.user.photos?.edges?.reverse().map((edge: any) => {
 		return {
 			id: edge?.node?.id,
 			image: {
