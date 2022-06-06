@@ -1,12 +1,22 @@
 /* eslint-disable */
 //@ts-nocheck
 
-import { Badge, Flex, Heading, HStack, Stack, Text } from '@chakra-ui/layout';
+import {
+	Badge,
+	Flex,
+	Heading,
+	HStack,
+	Stack,
+	Text,
+	Box,
+	Link,
+} from '@chakra-ui/layout';
 import React, { useState, useEffect, ReactElement } from 'react';
 import { getPostBySlug, getPosts } from '../../libs/posts';
 import { ArticleJsonLd, NextSeo } from 'next-seo';
 import { useColorModeValue } from '@chakra-ui/color-mode';
-import MarkdownWrapper from '../../components/MarkdownRender';
+import NextLink from 'next/link';
+import 'highlight.js/styles/srcery.css';
 import { IPost } from '../../interfaces/post';
 import { useRouter } from 'next/router';
 import { getViews, hitPath } from '../../libs/analytics';
@@ -20,6 +30,7 @@ import { AiOutlineTwitter, AiOutlineGithub } from 'react-icons/ai';
 import Icon from '@chakra-ui/icon';
 import { trackEvent } from '../../libs/gtag';
 import { EVENTS, EVENTS_CATEGORIES } from '../../utils/events';
+import { MDXRemote } from 'next-mdx-remote';
 
 interface Props {
 	post: IPost;
@@ -27,7 +38,7 @@ interface Props {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const arPosts = await getPosts('ar');
+	const arPosts = []; // await getPosts('ar');
 	const enPosts = await getPosts('en');
 	const slugs = [...arPosts, ...enPosts].map((post, index) => ({
 		params: { slug: post?.fileName },
@@ -52,9 +63,14 @@ export async function getStaticProps(
 
 	if (slug) {
 		const post = await getPostBySlug(slug, locale);
+
 		if (post) {
 			return {
-				props: { post, isProduction, messages: JSON.stringify(messages) },
+				props: {
+					post,
+					isProduction,
+					messages: JSON.stringify(messages),
+				},
 			};
 		}
 
@@ -70,8 +86,58 @@ export async function getStaticProps(
 	};
 }
 
+const CustomHeading = ({ as, id, ...props }) => {
+	const sizes = {
+		h1: '4xl',
+		h2: '3xl',
+		h3: '2xl',
+		h4: 'xl',
+		h5: 'lg',
+		h6: 'md',
+	};
+
+	if (id) {
+		return (
+			<Link
+				href={`#${id}`}
+				_hover={{
+					textDecoration: 'none',
+				}}
+			>
+				<NextLink href={`#${id}`}>
+					<Heading
+						my={'0.5rem'}
+						as={as}
+						id={id}
+						color={useColorModeValue('black', 'white')}
+						fontSize={sizes[as]}
+						{...props}
+						_hover={{
+							_before: {
+								content: '"#"',
+								position: 'relative',
+								marginLeft: '-1.2ch',
+								paddingRight: '0.2ch',
+							},
+						}}
+					/>
+				</NextLink>
+			</Link>
+		);
+	}
+	return <Heading as={as} {...props} />;
+};
+
+const H1 = (props) => <CustomHeading as="h1" {...props} />;
+const H2 = (props) => <CustomHeading as="h2" {...props} />;
+const H3 = (props) => <CustomHeading as="h3" {...props} />;
+const H4 = (props) => <CustomHeading as="h4" {...props} />;
+const H5 = (props) => <CustomHeading as="h5" {...props} />;
+const H6 = (props) => <CustomHeading as="h6" {...props} />;
+
 function BlogIndex(props: Props): ReactElement {
 	const { post, isProduction } = props;
+	console.log({ post, isProduction });
 	const router = useRouter();
 	const [pageVisits, setPageVisits] = useState<number>(0);
 	const t = useTranslations('Post');
@@ -181,7 +247,31 @@ function BlogIndex(props: Props): ReactElement {
 							) : null}
 						</Flex>
 					</Stack>
-					<MarkdownWrapper content={post.content} />
+					{/* <MarkdownWrapper content={post.content} /> */}
+					<MDXRemote
+						{...post.content}
+						components={{
+							ul: (props) => <Box as="ul" pt={2} pl={4} ml={2} {...props} />,
+							ol: (props) => <Box as="ol" pt={2} pl={4} ml={2} {...props} />,
+							li: (props) => <Box as="li" pb={1} {...props} />,
+							h1: H1,
+							h2: H2,
+							h3: H3,
+							h4: H4,
+							h5: H5,
+							h6: H6,
+							pre: (props) => (
+								<Box my={4}>
+									<pre {...props} />
+								</Box>
+							),
+							// code: (props) => (
+							// 	<Badge ms="0 !important" {...props}>
+							// 		{props.children}
+							// 	</Badge>
+							// ),
+						}}
+					/>
 					<Flex justify="center" direction="column" mt={16} mb={-8}>
 						<Flex justify="center" direction="row" style={{ gap: '0 8px' }}>
 							<TwitterShareButton
@@ -227,23 +317,6 @@ function BlogIndex(props: Props): ReactElement {
 								</Button>
 							</div>
 						</Flex>
-						
-						<script src="https://giscus.app/client.js"
-        data-repo="zeyadetman/zeyadetman.com"
-        data-repo-id="MDEwOlJlcG9zaXRvcnk0MDU4NjIyODk="
-        data-category="Announcements"
-        data-category-id="DIC_kwDOGDD3kc4COmmU"
-        data-mapping="pathname"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="light"
-        data-lang="en"
-        data-loading="lazy"
-        crossorigin="anonymous"
-        async>
-</script>
-
 						<Newsletter />
 					</Flex>
 				</>

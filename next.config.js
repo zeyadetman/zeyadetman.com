@@ -1,6 +1,13 @@
 const withPlugins = require('next-compose-plugins');
 const withPWA = require('next-pwa');
 const runtimeCaching = require('next-pwa/cache');
+const mdxOptions = (...args) =>
+	import('./mdxConfig.js').then(({ default: fetch }) => fetch(...args));
+
+const withMDX = require('@next/mdx')({
+	extension: /\.mdx?$/,
+	options: { ...mdxOptions },
+});
 
 const nextConfig = {
 	webpack: (config) => {
@@ -54,6 +61,9 @@ module.exports = withPlugins(
 				dest: 'public',
 				runtimeCaching,
 			},
+		}),
+		withMDX({
+			pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
 		}),
 	],
 	nextConfig

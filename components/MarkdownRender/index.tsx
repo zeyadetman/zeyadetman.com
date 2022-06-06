@@ -16,7 +16,6 @@ interface Props {
 
 function MarkdownWrapper(props: Props): ReactElement {
 	const { content } = props;
-	const h2Color = useColorModeValue('black', 'white');
 
 	return (
 		<ReactMarkdown
@@ -46,34 +45,6 @@ function MarkdownWrapper(props: Props): ReactElement {
 						<Link href={href} {...props}>
 							{children}
 						</Link>
-					);
-				},
-				h2({ children }) {
-					return (
-						<Heading
-							as="h2"
-							fontSize="xl"
-							mt="8"
-							mb="6"
-							color={h2Color}
-							fontWeight="bold"
-						>
-							{children}
-						</Heading>
-					);
-				},
-				h3({ children }) {
-					return (
-						<Heading
-							as="h3"
-							fontSize="md"
-							mt="8"
-							mb="6"
-							color={h2Color}
-							fontWeight="bold"
-						>
-							{children}
-						</Heading>
 					);
 				},
 				p({ children }) {

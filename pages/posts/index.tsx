@@ -15,7 +15,7 @@ import {
 import { Badge, Box, HStack, Link } from '@chakra-ui/layout';
 import NextLink from 'next/link';
 import { SearchIcon } from '@chakra-ui/icons';
-import { getPosts } from '../../libs/posts';
+import { getPosts } from '../../libs/posts.mjs.mjs';
 import MarkdownWrapper from '../../components/MarkdownRender';
 import { IPost } from '../../interfaces/post';
 import { GetStaticPropsResult } from 'next';
