@@ -3,6 +3,7 @@ import { SystemStyleObject } from "@chakra-ui/theme-tools";
 const baseStyle: SystemStyleObject = {
   fontFamily: "heading",
   fontWeight: 400,
+  letterSpacing: "0.1px",
 };
 
 const sizes: Record<string, SystemStyleObject> = {
