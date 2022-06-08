@@ -1,3 +1,4 @@
+import Heading from "components/Heading";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -16,6 +17,12 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+        <Heading type="h1">ZeWyad</Heading>
+        <Heading type="h2">Zewyad</Heading>
+        <Heading type="h3">Zeyad</Heading>
+        <Heading type="h4">Zeyad</Heading>
+        <Heading type="h5">Zeyad</Heading>
+        <Heading type="h6">Zeyad</Heading>
 
         <p className={styles.description}>
           Get started by editing{" "}
