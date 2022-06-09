@@ -14,7 +14,7 @@ function Layout(props: Props) {
     <Center>
       <VStack maxW={["5xl"]} my={6} spacing={[12, 6]}>
         <Header />
-        <Box as="main" minH={"calc(100vh - 350px)"}>
+        <Box as="main" minH={"calc(100vh - 350px)"} w="100%">
           {children}
         </Box>
         <Footer />

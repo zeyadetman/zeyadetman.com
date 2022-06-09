@@ -5,6 +5,8 @@ import theme from "theme";
 import { NextPage } from "next";
 import { ReactNode, ReactElement } from "react";
 import Layout from "components/Layout";
+import { MDXProvider } from "@mdx-js/react";
+import mdxComponentsMapping from "mdxConfig/components";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -19,7 +21,9 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <ChakraProvider theme={theme}>
-      {getLayout(<Component {...pageProps} />)}
+      <MDXProvider components={mdxComponentsMapping}>
+        {getLayout(<Component {...pageProps} />)}
+      </MDXProvider>
     </ChakraProvider>
   );
 }

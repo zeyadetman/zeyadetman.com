@@ -20,5 +20,10 @@ export const customStyles = {
     ".meImage": {
       filter: "grayscale(0.8)",
     },
+    ".autolink-svg": {
+      "&:hover": {
+        opacity: 0.5,
+      },
+    },
   }),
 };

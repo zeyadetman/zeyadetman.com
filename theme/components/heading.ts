@@ -4,6 +4,9 @@ const baseStyle: SystemStyleObject = {
   fontFamily: "heading",
   fontWeight: 400,
   letterSpacing: "0.1px",
+  display: "flex",
+  alignItems: "center",
+  gap: "0.5rem",
 };
 
 const sizes: Record<string, SystemStyleObject> = {
