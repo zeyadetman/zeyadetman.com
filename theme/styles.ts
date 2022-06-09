@@ -17,5 +17,8 @@ export const customStyles = {
       color: "inherit",
       textDecoration: "none",
     },
+    ".meImage": {
+      filter: "grayscale(0.8)",
+    },
   }),
 };

@@ -22,7 +22,7 @@ function NavList(props: Props) {
       as={HStack}
       justifyContent="center"
       gap={[4, 8]}
-      my={[4, 8]}
+      mt={[4, 8]}
       py={[2, 4]}
       borderY="1px solid"
       flexWrap={"wrap"}
