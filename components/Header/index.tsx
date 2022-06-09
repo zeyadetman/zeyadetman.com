@@ -11,7 +11,7 @@ function Header(props: Props) {
   const {} = props;
 
   return (
-    <header>
+    <Box as="header" w="100%">
       <VStack spacing={4} textAlign="center">
         <Heading type="h1">
           <Link href="/">{config.name}</Link>
@@ -21,7 +21,7 @@ function Header(props: Props) {
         </Heading>
       </VStack>
       <NavList />
-    </header>
+    </Box>
   );
 }
 

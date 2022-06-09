@@ -1,12 +1,9 @@
 import mdxComponentsMapping from "mdxConfig/components";
 import React from "react";
 import { MDXRemote } from "next-mdx-remote";
-import {
-  GetStaticPaths,
-  GetStaticPropsContext,
-  GetStaticPropsResult,
-} from "next";
+import { GetStaticPaths, GetStaticPropsContext } from "next";
 import { getPostBySlug, getPosts } from "utils/posts";
+import { Box } from "@chakra-ui/react";
 
 interface Props {
   post: any;
@@ -61,7 +58,11 @@ function PostPage(props: Props) {
 
   console.log({ post });
 
-  return <MDXRemote {...post.content} components={mdxComponentsMapping} />;
+  return (
+    <Box className="mainPost">
+      <MDXRemote {...post.content} components={mdxComponentsMapping} />
+    </Box>
+  );
 }
 
 export default PostPage;

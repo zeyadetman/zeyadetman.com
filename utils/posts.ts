@@ -30,6 +30,7 @@ async function getPosts(): Promise<any[]> {
 
       return {
         content: await serialize(content, {
+          // @ts-ignore
           mdxOptions: {
             ...mdxOptions,
           },

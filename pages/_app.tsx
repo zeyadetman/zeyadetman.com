@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 import "@fontsource/raleway/400.css";
+import "@fontsource/sanchez/400.css";
 import theme from "theme";
 import { NextPage } from "next";
 import { ReactNode, ReactElement } from "react";

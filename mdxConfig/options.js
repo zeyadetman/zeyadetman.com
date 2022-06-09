@@ -10,7 +10,7 @@ export const mdxOptions = {
     [
       rehypeAutolinkHeadings,
       {
-        behavior: "prepend",
+        behavior: "append",
         content: [
           s(
             "svg.autolink-svg",
@@ -28,5 +28,6 @@ export const mdxOptions = {
         ],
       },
     ],
+    rehypeExternalLinks,
   ],
 };

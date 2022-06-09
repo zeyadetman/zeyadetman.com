@@ -12,9 +12,9 @@ function Layout(props: Props) {
 
   return (
     <Center>
-      <VStack maxW={["5xl"]} my={6} spacing={[12, 6]}>
+      <VStack maxW={["4xl"]} my={6} spacing={[12, 6]}>
         <Header />
-        <Box as="main" minH={"calc(100vh - 350px)"} w="100%">
+        <Box as="main" minH={"calc(100vh - 350px)"} w="90%">
           {children}
         </Box>
         <Footer />

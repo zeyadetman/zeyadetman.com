@@ -25,5 +25,8 @@ export const customStyles = {
         opacity: 0.5,
       },
     },
+    ".mainPost *": {
+      fontFamily: `'Sanchez', sans-serif`,
+    },
   }),
 };
