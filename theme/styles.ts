@@ -28,5 +28,8 @@ export const customStyles = {
     ".mainPost *": {
       fontFamily: `'Sanchez', sans-serif`,
     },
+    ".color-mode-respected": {
+      ...(props.colorMode === "dark" ? { filter: "invert(1)" } : {}),
+    },
   }),
 };

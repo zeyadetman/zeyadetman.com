@@ -13,12 +13,13 @@ const Home: NextPage = () => {
       justifyContent="center"
       spacing="8"
     >
-      <Box pos="relative" width="100%" h="48">
+      <Box pos="relative" width="100%" h="32">
         <Image
           src="/assets/illustrations/home.svg"
           alt="Home"
           layout="fill"
           objectFit="contain"
+          className="color-mode-respected"
         />
       </Box>
       <Heading type="h2" size="md">

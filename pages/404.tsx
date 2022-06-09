@@ -23,6 +23,7 @@ function Custom404(props: Props) {
           alt="Empty state"
           layout="fill"
           objectFit="contain"
+          className="color-mode-respected"
         />
       </Box>
       <Heading type="h2" size="md">

@@ -6,6 +6,7 @@ import {
   Link,
   ListIcon,
   List,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { ISocialLink } from "interfaces/ISocialLink";
 
@@ -15,6 +16,7 @@ interface Props {
 
 function SocialLinks(props: Props) {
   const { socialLinks } = props;
+  const iconColor = useColorModeValue("gray", "white");
 
   return (
     <Box>
@@ -34,7 +36,7 @@ function SocialLinks(props: Props) {
               overflow={"hidden"}
               whiteSpace={"nowrap"}
             >
-              <ListIcon as={icon} color="gray" />
+              <ListIcon as={icon} color={iconColor} />
               <Link href={href} isExternal>
                 {value}
               </Link>

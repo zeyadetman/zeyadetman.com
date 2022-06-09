@@ -1,4 +1,13 @@
-import { Box, Center, HStack, List, ListItem, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  HStack,
+  List,
+  ListItem,
+  Text,
+  useColorMode,
+  VStack,
+} from "@chakra-ui/react";
 import NavList from "components/Header/NavList";
 import Heading from "components/Heading";
 import Link from "components/Link";
@@ -8,6 +17,7 @@ import React from "react";
 interface Props {}
 
 function Header(props: Props) {
+  const { colorMode, setColorMode } = useColorMode();
   const {} = props;
 
   return (
@@ -19,6 +29,13 @@ function Header(props: Props) {
         <Heading type="h2" size={["sm", "md", "md", "lg"]}>
           {config.description}
         </Heading>
+        <Text
+          onClick={() => {
+            setColorMode(colorMode === "light" ? "dark" : "light");
+          }}
+        >
+          switch to {colorMode}
+        </Text>
       </VStack>
       <NavList />
     </Box>

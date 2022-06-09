@@ -16,6 +16,7 @@ function Footer(props: Props) {
             alt="Signature of the author"
             layout="fill"
             objectFit="contain"
+            className="color-mode-respected"
           />
         </Box>
       </VStack>
