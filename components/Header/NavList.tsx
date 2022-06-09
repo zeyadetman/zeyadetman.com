@@ -11,7 +11,9 @@ function NavList(props: Props) {
     return config.navList.map((item) => {
       return (
         <ListItem key={item.name}>
-          <Link href={item.path}>{item.name}</Link>
+          <Link href={item.path} isExternal={item.external}>
+            {item.name}
+          </Link>
         </ListItem>
       );
     });

@@ -12,7 +12,7 @@ function AboutLayout(props: Props) {
   const { children } = props;
 
   return (
-    <VStack spacing={4}>
+    <VStack spacing={4} m="0">
       <Box pos="relative" width="100%" height="48">
         <Image
           src="/me.png"
