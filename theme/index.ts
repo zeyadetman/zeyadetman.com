@@ -10,11 +10,11 @@ const config: ThemeConfig = {
 };
 
 const theme = extendTheme({
+  styles: customStyles,
   colors,
   components,
   config,
   fonts,
-  styles: customStyles,
 });
 
 export default theme;

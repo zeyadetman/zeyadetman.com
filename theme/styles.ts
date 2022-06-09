@@ -7,9 +7,15 @@ export const customStyles = {
   global: (props: any) => ({
     "html, body": {
       color: props.colorMode === "dark" ? "white" : "gray",
+      padding: 0,
+      margin: 0,
+    },
+    "*": {
+      boxSizing: "border-box",
     },
     a: {
-      // color: props.colorMode === 'dark' ? 'teal.300' : 'teal.500',
+      color: "inherit",
+      textDecoration: "none",
     },
   }),
 };

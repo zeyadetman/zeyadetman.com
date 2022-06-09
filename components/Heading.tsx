@@ -10,11 +10,11 @@ export interface HeadingProps extends ChakraHeadingProps {
 
 const sizes = {
   h1: "4xl",
-  h2: "3xl",
-  h3: "2xl",
-  h4: "xl",
-  h5: "lg",
-  h6: "md",
+  h2: "2xl",
+  h3: "xl",
+  h4: "lg",
+  h5: "md",
+  h6: "sm",
 };
 
 const Heading = ({ type, children, ...props }: HeadingProps) => {

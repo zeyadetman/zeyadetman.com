@@ -1,4 +1,4 @@
-import { Center, VStack } from "@chakra-ui/react";
+import { Box, Center, VStack } from "@chakra-ui/react";
 import Footer from "components/Footer";
 import Header from "components/Header";
 import React from "react";
@@ -11,11 +11,12 @@ function Layout(props: Props) {
   const { children } = props;
 
   return (
-    <Center h="100vh">
-      <VStack>
+    <Center>
+      <VStack maxW={["5xl"]} my={6}>
         <Header />
-        asd
-        <main>{children}</main>
+        <Box minH={"50vh"}>
+          <main>{children}</main>
+        </Box>
         <Footer />
       </VStack>
     </Center>
