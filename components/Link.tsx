@@ -16,7 +16,12 @@ function Link(props: Props) {
   const { children, href, isExternal, chackraProps, ...restProps } = props;
   if (isExternal) {
     return (
-      <ChakraLink href={href} {...chackraProps}>
+      <ChakraLink
+        href={href}
+        target="_blank"
+        rel="nonopener noreferrer"
+        {...chackraProps}
+      >
         {children}
       </ChakraLink>
     );

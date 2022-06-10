@@ -6,8 +6,10 @@ import {
   Input,
   InputGroup,
   InputRightAddon,
+  Text,
   VStack,
 } from "@chakra-ui/react";
+import Heading from "components/Heading";
 import ListPosts from "components/ListPosts";
 import type { GetStaticPropsContext } from "next";
 import Image from "next/image";
@@ -71,6 +73,12 @@ const Home = (props: Props) => {
           className="color-mode-respected"
         />
       </Box>
+      <Heading type="h2" size="lg" display="flex" alignItems="baseline">
+        I&apos;m writing about Technology and Life.{" "}
+        <Text fontStyle="italic" fontSize="xs">
+          AR/EN
+        </Text>
+      </Heading>
       <HStack w="full">
         <SearchInput setSearchText={setValue} searchText={value} />
       </HStack>
