@@ -29,6 +29,19 @@ export default {
         borderColor: theme.colors.black,
       },
     }),
+    twitter: {
+      bg: "#1d9bf0",
+      color: "#fff",
+      _hover: { bg: "#1e9cf1dd", color: "#fff" },
+      size: "sm",
+    },
+    github: {
+      size: "sm",
+      bgColor: "#24292f",
+      color: "#fff",
+      _hover: { bgColor: "#24292fdd", color: "#fff" },
+      _focus: { borderColor: "#24292f" },
+    },
     ghost: {
       _hover: {
         bg: "transparent",

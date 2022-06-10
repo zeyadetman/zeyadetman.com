@@ -5,7 +5,7 @@ tags:
   - technical
 comments: true
 layout: post
-date: '2020-05-30'
+date: "2020-05-30"
 ---
 
 Hello, In this post I’ll share with you How I've been using Google Sheets to track some of important things, Replacing almost all other productivity apps. In the beginning I want to note that not all things will be interesting to you, but I think you’ll find inspiration to do your own, and this is the goal of this post btw.
@@ -13,7 +13,7 @@ Not all following sheets created by me, and I’ll mention this in their section
 
 ## Money (Savings and Expenses)
 
-<img src="https://i.imgur.com/DdZzm6n.png" width="700px" alt="Money sample" />
+![Money sample](https://i.imgur.com/DdZzm6n.png)
 
 There’s a bunch of mobile apps to track your savings and expenses, I tried most of them, but any was customized as i want, so I found a great Money Tracking sheet that you have to give it a [try from here.](https://docs.google.com/spreadsheets/d/1l9l5JH4b9g7zqKTlylqWIhHnfWlBJzP2vqj9ET9K_Ok)
 
@@ -24,12 +24,12 @@ Okay, what I’ve done is adding a daily `USDtoEGP` exchange rate to a sheet —
 
 A sample for this sheet
 
-<img src="https://i.imgur.com/8jVQ9gU.png" width="700px" alt="usd to egp sample" />
+![usd to egp sample](https://i.imgur.com/8jVQ9gU.png)
 
 1. You have to create a google sheet to populate the data into it.
 2. Open your sheet then select tools > script editor. You’ll end up with something like this.
 
-   <img src="https://i.imgur.com/dketxDK.png" width="700px" alt="code editor" />
+   ![code editor](https://i.imgur.com/dketxDK.png)
 
 3. Here's my code to get the `USD to EGP` Exchange Rate from Google Finance
 
@@ -59,21 +59,20 @@ first, To get `sheetID`, if your sheet url is `https://docs.google.com/spreadshe
 
 ### Metal tracker
 
-<img src="https://i.imgur.com/SpZrXfR.png" width="700px" alt="gold price sample" />
+![gold price sample](https://i.imgur.com/SpZrXfR.png)
 
 For the Metal tracker, As I told you before I didn't find a free solution to get an instant price for gold, So I created a little script using [`puppeteer`](https://github.com/puppeteer/puppeteer) to scrape a website to get the data through api, then calling it in the script, and here's my final `gs` script:
 
 ```javascript
 function goldPrice() {
-  const spreedSheet = SpreadsheetApp.openById('<sheetID>').getSheetByName(
-    'goldprice',
-  );
+  const spreedSheet =
+    SpreadsheetApp.openById("<sheetID>").getSheetByName("goldprice");
   const today = new Date();
 
-  const response = UrlFetchApp.fetch('<API_ENDPOINT>');
-  const price = JSON.parse(response.getContentText())['price'];
+  const response = UrlFetchApp.fetch("<API_ENDPOINT>");
+  const price = JSON.parse(response.getContentText())["price"];
 
-  const row = [today.toUTCString(), 1, 'Gram', 'Equals', price];
+  const row = [today.toUTCString(), 1, "Gram", "Equals", price];
   spreedSheet.appendRow(row);
 }
 ```
@@ -84,14 +83,14 @@ Whatever you want to do, You'll find a way in google sheets.
 
 ## Jobs
 
-<img src="https://i.imgur.com/QeEiBDI.png" width="700px" alt="Job tracking" />
+![Job tracking](https://i.imgur.com/QeEiBDI.png)
 
 Job tracking is another thing you may want to track in your life, you got the job or not, what was the offer, when you started, when you left, things like this will be cool to know what's your situation in your career, what're the campanies you know, ...etc. for this I found a [nice sheet to track this.](https://docs.google.com/spreadsheets/d/1eyJVRfGc5kGz5cfBYZpANosd4JRfWHc98BlD95Vsiog)
 Also there's a tricks to do more, you can connect this sheet with your gmail, and add a new column to the emails recieved from the company, or what you want, But I'm using Gmail labels for kinda stuff.
 
 ## Twitter Archive
 
-<img src="https://i.imgur.com/I6K8wTi.png" width="700px" alt="twitter archive sheet" />
+![twitter archive sheet](https://i.imgur.com/I6K8wTi.png)
 
 If you're using Twitter to learn or getting updates/tricks/important tweets of specific field/topic to retrieve them again, you will need to search in your tweets, re-tweets, or likes one day, So I'm using `IFTTT` to fill a sheet from whatever i do on twitter. Here's what can you do. [Google sheet](https://ifttt.com/google_sheets) and [Twitter](https://ifttt.com/twitter).
 

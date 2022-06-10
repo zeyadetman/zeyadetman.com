@@ -16,17 +16,7 @@ async function getPosts(): Promise<any[]> {
       console.log(filename, "in");
       const filePath = path.join(postsDirectory, filename);
       const fileContents = fs.readFileSync(filePath, "utf8");
-      const { content, data, excerpt } = matter(fileContents, {
-        // @ts-ignore
-        // eslint-disable-next-line
-        excerpt: (file: any): void => {
-          console.log(file);
-          file.excerpt = file.content
-            .split("\n")
-            .slice(0, 4 ? 4 + 1 : 4)
-            .join(" ");
-        },
-      });
+      const { content, data } = matter(fileContents);
 
       return {
         content: await serialize(content, {

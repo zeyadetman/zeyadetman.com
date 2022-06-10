@@ -1,6 +1,8 @@
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   username: "zeyadetman",
+  baseUrl: "https://zeyadetman.com",
+  githubRepo: "https://github.com/zeyadetman/zeyadetman.com",
   firstName: "Zeyad",
   name: "Zeyad Etman",
   email: "zeyad.etman@gmail.com",
