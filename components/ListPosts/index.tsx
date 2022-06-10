@@ -14,7 +14,9 @@ function ListPosts(props: Props) {
       return (
         <ListItem key={slug} w="fit-content">
           <Link href={`/posts/${slug}`}>
-            <Heading type="h4">{data.title}</Heading>
+            <Heading type="h4" fontSize="2xl">
+              {data.title}
+            </Heading>
           </Link>
           <HStack>
             <Text fontSize="sm" as="time" dateTime={data.date}>

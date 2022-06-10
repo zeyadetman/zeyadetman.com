@@ -28,6 +28,5 @@ export const mdxOptions = {
         ],
       },
     ],
-    rehypeExternalLinks,
   ],
 };

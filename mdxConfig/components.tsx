@@ -1,30 +1,46 @@
-import { Code, Link } from "@chakra-ui/react";
+import { Box, Code, Link, Text } from "@chakra-ui/react";
 import Heading from "components/Heading";
 import theme from "react-syntax-highlighter/dist/cjs/styles/prism/vs";
 import SyntaxHighlighter from "react-syntax-highlighter";
 
 const mdxComponentsMapping = {
-  h2: (props: any) => <Heading {...props} type="h2" my={4} />,
-  h3: (props: any) => <Heading {...props} type="h3" my={3} />,
-  h4: (props: any) => <Heading {...props} type="h4" my={2} />,
-  h5: (props: any) => <Heading {...props} type="h5" my={2} />,
+  h2: (props: any) => (
+    <Heading {...props} type="h2" my={3} fontWeight="semibold" />
+  ),
+  h3: (props: any) => (
+    <Heading {...props} type="h3" my={2} fontWeight="semibold" />
+  ),
+  h4: (props: any) => (
+    <Heading {...props} type="h4" my={2} fontWeight="semibold" />
+  ),
+  h5: (props: any) => (
+    <Heading {...props} type="h5" my={2} fontWeight="semibold" />
+  ),
   a: (props: any) => (
     <Link {...props} target="_blank" rel="noopener noreferrer" />
   ),
+  p: (props: any) => <Text {...props} letterSpacing="wide" lineHeight="1.7" />,
+  li: (props: any) => <Text as="li" {...props} my="3" />,
+  ul: (props: any) => (
+    <Box as="ul" {...props} listStylePos="inside" listStyleType="square" />
+  ),
+  ol: (props: any) => <Box as="ol" {...props} listStylePos="inside" />,
   code: ({ className, ...props }: any) => {
     const match = /language-(\w+)/.exec(className || "");
     const lang = match?.[1] === "js" ? "javascript" : match?.[1];
 
     return match ? (
-      <SyntaxHighlighter
-        language={lang}
-        PreTag="div"
-        {...props}
-        wrapLongLines
-        style={theme}
-      />
+      <Box my={4}>
+        <SyntaxHighlighter
+          language={lang}
+          PreTag="div"
+          {...props}
+          wrapLongLines
+          style={theme}
+        />
+      </Box>
     ) : (
-      <Code {...props} />
+      <Code {...props} variant="inline" />
     );
   },
 };

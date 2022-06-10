@@ -3,7 +3,7 @@ import React from "react";
 import { MDXRemote } from "next-mdx-remote";
 import { GetStaticPaths, GetStaticPropsContext } from "next";
 import { getPostBySlug, getPosts } from "utils/posts";
-import { Box } from "@chakra-ui/react";
+import { Badge, Box, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 
 interface Props {
   post: any;
@@ -53,15 +53,38 @@ export async function getStaticProps(
 }
 
 function PostPage(props: Props) {
-  console.log("hiii");
   const { post } = props;
 
   console.log({ post });
 
   return (
-    <Box className="mainPost">
-      <MDXRemote {...post.content} components={mdxComponentsMapping} />
-    </Box>
+    <VStack spacing={6}>
+      <Box textAlign="center">
+        <Heading>{post.data.title}</Heading>
+        <HStack justifyContent={"center"} wrap="wrap" spacing="4">
+          <Text fontSize="sm" as="time" dateTime={post.data.date}>
+            {post.data.date}
+          </Text>
+          <Text fontSize="sm">{post.readingTime.text}</Text>
+          <HStack>
+            {post.data.tags.map((tag: string) => (
+              <Badge
+                key={tag}
+                variant="outline"
+                fontSize="10"
+                bg="#ffc700"
+                color="black"
+              >
+                {tag}
+              </Badge>
+            ))}
+          </HStack>
+        </HStack>
+      </Box>
+      <Box className="mainPost">
+        <MDXRemote {...post.content} components={mdxComponentsMapping} />
+      </Box>
+    </VStack>
   );
 }
 
