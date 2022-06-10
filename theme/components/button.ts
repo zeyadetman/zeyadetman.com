@@ -1,6 +1,8 @@
+import { StyleFunctionProps } from "@chakra-ui/theme-tools";
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  baseStyle: ({ theme }: any) => ({
+  baseStyle: ({ theme }: StyleFunctionProps) => ({
     borderRadius: "0px",
   }),
   sizes: {
@@ -13,7 +15,7 @@ export default {
     },
   },
   variants: {
-    solid: ({ theme }: any) => ({
+    solid: ({ theme }: StyleFunctionProps) => ({
       borderColor: theme.colors.black,
       color: theme.colors.white,
       bg: theme.colors.black,

@@ -4,4 +4,6 @@ export default {
   black: "#2B282C",
   gray: "#515050",
   lightGray: "#eaeaea",
+  darkGray: "#373737",
+  red: "#CF1827", // red classic
 };

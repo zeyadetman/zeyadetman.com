@@ -1,5 +1,6 @@
-/* eslint-disable import/no-anonymous-default-export */
+import { StyleFunctionProps } from "@chakra-ui/theme-tools";
 
+/* eslint-disable import/no-anonymous-default-export */
 export default {
   baseStyle: {
     fontFamily: `'Sanchez', sans-serif`,
@@ -14,7 +15,7 @@ export default {
     },
   },
   variants: {
-    outline: ({ theme, colorMode }: any) => ({
+    outline: ({ theme, colorMode }: StyleFunctionProps) => ({
       field: {
         background: theme.colors.white,
         border: "1px solid",

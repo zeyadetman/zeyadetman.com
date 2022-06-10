@@ -59,7 +59,7 @@ function PostPage(props: Props) {
 
   return (
     <VStack spacing={6}>
-      <Box textAlign="center">
+      <VStack textAlign="center" spacing={2}>
         <Heading>{post.data.title}</Heading>
         <HStack justifyContent={"center"} wrap="wrap" spacing="4">
           <Text fontSize="sm" as="time" dateTime={post.data.date}>
@@ -80,7 +80,7 @@ function PostPage(props: Props) {
             ))}
           </HStack>
         </HStack>
-      </Box>
+      </VStack>
       <Box className="mainPost">
         <MDXRemote {...post.content} components={mdxComponentsMapping} />
       </Box>

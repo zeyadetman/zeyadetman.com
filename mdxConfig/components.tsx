@@ -17,7 +17,12 @@ const mdxComponentsMapping = {
     <Heading {...props} type="h5" my={2} fontWeight="semibold" />
   ),
   a: (props: any) => (
-    <Link {...props} target="_blank" rel="noopener noreferrer" />
+    <Link
+      {...props}
+      target="_blank"
+      rel="noopener noreferrer"
+      variant="postLink"
+    />
   ),
   p: (props: any) => <Text {...props} letterSpacing="wide" lineHeight="1.7" />,
   li: (props: any) => <Text as="li" {...props} my="3" />,
@@ -25,6 +30,8 @@ const mdxComponentsMapping = {
     <Box as="ul" {...props} listStylePos="inside" listStyleType="square" />
   ),
   ol: (props: any) => <Box as="ol" {...props} listStylePos="inside" />,
+  img: (props: any) => <Box as="img" {...props} my="4" mx="auto" />,
+
   code: ({ className, ...props }: any) => {
     const match = /language-(\w+)/.exec(className || "");
     const lang = match?.[1] === "js" ? "javascript" : match?.[1];

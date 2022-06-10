@@ -39,7 +39,11 @@ function ListPosts(props: Props) {
     });
   };
 
-  return <List w="full">{renderPosts()}</List>;
+  return (
+    <List w="full" spacing={6}>
+      {renderPosts()}
+    </List>
+  );
 }
 
 export default ListPosts;

@@ -1,6 +1,9 @@
-import type { SystemStyleFunction } from "@chakra-ui/theme-tools";
+import type {
+  SystemStyleFunction,
+  StyleFunctionProps,
+} from "@chakra-ui/theme-tools";
 
-const baseStyle: SystemStyleFunction = ({ theme, colorMode }) => ({
+const baseStyle: SystemStyleFunction = ({ theme }: StyleFunctionProps) => ({
   background: theme.colors.black,
   color: theme.colors.white,
   w: "fit-content",
