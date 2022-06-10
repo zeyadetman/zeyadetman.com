@@ -24,7 +24,9 @@ function Header(props: Props) {
     <Box as="header" w="100%">
       <VStack spacing={4} textAlign="center">
         <Heading type="h1">
-          <Link href="/">{config.name}</Link>
+          <Link href="/" chackraProps={{ _hover: { textDecoration: "none" } }}>
+            {config.name}
+          </Link>
         </Heading>
         <Heading type="h2" size={["sm", "md", "md", "lg"]}>
           {config.description}

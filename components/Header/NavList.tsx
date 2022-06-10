@@ -26,7 +26,7 @@ function NavList(props: Props) {
       gap={[4, 8]}
       mt={[4, 8]}
       py={[2, 4]}
-      borderY="1px solid"
+      borderY="1px solid #ddd"
       flexWrap={"wrap"}
     >
       {renderNavList()}

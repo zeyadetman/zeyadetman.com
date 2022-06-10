@@ -1,22 +1,30 @@
 import React from "react";
 import NextLink, { LinkProps } from "next/link";
-import { Link as ChakraLink } from "@chakra-ui/react";
+import {
+  Link as ChakraLink,
+  LinkProps as ChakraLinkProps,
+} from "@chakra-ui/react";
 
 interface Props extends LinkProps {
   children: React.ReactNode;
   href: string;
   isExternal?: boolean;
+  chackraProps?: ChakraLinkProps;
 }
 
 function Link(props: Props) {
-  const { children, href, isExternal, ...restProps } = props;
+  const { children, href, isExternal, chackraProps, ...restProps } = props;
   if (isExternal) {
-    return <ChakraLink href={href}>{children}</ChakraLink>;
+    return (
+      <ChakraLink href={href} {...chackraProps}>
+        {children}
+      </ChakraLink>
+    );
   }
 
   return (
     <NextLink href={href} {...restProps}>
-      <ChakraLink>{children}</ChakraLink>
+      <ChakraLink {...chackraProps}>{children}</ChakraLink>
     </NextLink>
   );
 }

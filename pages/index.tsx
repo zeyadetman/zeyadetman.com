@@ -1,9 +1,64 @@
-import { Box, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  HStack,
+  Input,
+  InputGroup,
+  InputRightAddon,
+  VStack,
+} from "@chakra-ui/react";
 import Heading from "components/Heading";
-import type { NextPage } from "next";
+import ListPosts from "components/ListPosts";
+import type {
+  GetStaticPropsContext,
+  GetStaticPropsResult,
+  NextPage,
+} from "next";
 import Image from "next/image";
+import { getPosts } from "utils/posts";
 
-const Home: NextPage = () => {
+interface Props {
+  posts: any[];
+}
+
+export async function getStaticProps(context: GetStaticPropsContext) {
+  const posts = await getPosts();
+
+  return {
+    props: {
+      posts,
+    },
+  };
+}
+
+const SearchInput = () => {
+  return (
+    <FormControl>
+      <FormLabel htmlFor="searchInput">Search all posts.</FormLabel>
+      <InputGroup size="sm">
+        <Input id="searchInput" type="text" placeholder="Search..." />
+        <InputRightAddon
+          _hover={{
+            //TODO: disable when search is empty
+            cursor: "pointer",
+            bg: "black",
+            color: "white",
+            border: "1px solid black",
+          }}
+        >
+          Search
+        </InputRightAddon>
+      </InputGroup>
+    </FormControl>
+  );
+};
+
+const Home = (props: Props) => {
+  const { posts } = props;
+  console.log({ posts });
+
   return (
     <VStack
       minH="inherit"
@@ -13,7 +68,7 @@ const Home: NextPage = () => {
       justifyContent="center"
       spacing="8"
     >
-      <Box pos="relative" width="100%" h="32">
+      <Box pos="relative" w="full" h="32">
         <Image
           src="/assets/illustrations/home.svg"
           alt="Home"
@@ -22,9 +77,10 @@ const Home: NextPage = () => {
           className="color-mode-respected"
         />
       </Box>
-      <Heading type="h2" size="md">
-        Home Page!
-      </Heading>
+      <HStack w="full">
+        <SearchInput />
+      </HStack>
+      <ListPosts posts={posts} />
     </VStack>
   );
 };
