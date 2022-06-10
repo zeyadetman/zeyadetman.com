@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   FormControl,
   FormLabel,
   HStack,
@@ -9,14 +8,10 @@ import {
   InputRightAddon,
   VStack,
 } from "@chakra-ui/react";
-import Heading from "components/Heading";
 import ListPosts from "components/ListPosts";
-import type {
-  GetStaticPropsContext,
-  GetStaticPropsResult,
-  NextPage,
-} from "next";
+import type { GetStaticPropsContext } from "next";
 import Image from "next/image";
+import { useState } from "react";
 import { getPosts } from "utils/posts";
 
 interface Props {
@@ -34,22 +29,32 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 }
 
 const SearchInput = () => {
+  const [value, setValue] = useState("");
+
   return (
     <FormControl>
       <FormLabel htmlFor="searchInput">Search all posts.</FormLabel>
       <InputGroup size="sm">
-        <Input id="searchInput" type="text" placeholder="Search..." />
-        <InputRightAddon
-          _hover={{
-            //TODO: disable when search is empty
-            cursor: "pointer",
-            bg: "black",
-            color: "white",
-            border: "1px solid black",
+        <Input
+          id="searchInput"
+          type="text"
+          onChange={(e) => {
+            setValue(e.target.value);
           }}
-        >
-          Search
-        </InputRightAddon>
+          placeholder="Search..."
+        />
+        {value && (
+          <InputRightAddon
+            _hover={{
+              cursor: "pointer",
+              bg: "black",
+              color: "white",
+              border: "1px solid black",
+            }}
+          >
+            Search
+          </InputRightAddon>
+        )}
       </InputGroup>
     </FormControl>
   );
@@ -57,7 +62,6 @@ const SearchInput = () => {
 
 const Home = (props: Props) => {
   const { posts } = props;
-  console.log({ posts });
 
   return (
     <VStack

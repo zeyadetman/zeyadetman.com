@@ -13,7 +13,6 @@ async function getPosts(): Promise<any[]> {
 
   const posts = filenames
     .map(async (filename: string) => {
-      console.log(filename, "in");
       const filePath = path.join(postsDirectory, filename);
       const fileContents = fs.readFileSync(filePath, "utf8");
       const { content, data } = matter(fileContents);

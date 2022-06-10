@@ -3,7 +3,6 @@ const withPlugins = require("next-compose-plugins");
 const mdxOptions = (...args) =>
   import("./mdxConfig/options.js").then(({ default: fetch }) => fetch(...args));
 
-console.log(mdxOptions);
 const withMDX = require("@next/mdx")({
   extension: /\.mdx?$/,
   options: {

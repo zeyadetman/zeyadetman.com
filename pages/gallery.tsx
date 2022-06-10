@@ -30,7 +30,6 @@ export async function getStaticProps({
     })
   ).json();
 
-  console.log(photos.data.user.photos.edges);
   const images = photos.data.user.photos?.edges?.reverse().map((edge: any) => {
     return {
       id: edge?.node?.id,

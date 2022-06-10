@@ -14,11 +14,15 @@ function ListPosts(props: Props) {
       return (
         <ListItem key={slug} w="fit-content">
           <Link href={`/posts/${slug}`}>
-            <Heading type="h4" fontSize="2xl">
+            <Heading
+              type="h4"
+              fontSize="2xl"
+              style={{ direction: data.lang === "ar" ? "rtl" : "ltr" }}
+            >
               {data.title}
             </Heading>
           </Link>
-          <HStack>
+          <HStack wrap={"wrap"}>
             <Text fontSize="sm" as="time" dateTime={data.date}>
               {data.date}
             </Text>

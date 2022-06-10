@@ -24,7 +24,7 @@ interface Props {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getPosts();
-  console.log({ posts });
+
   const slugs = posts.map((post: any, index: number) => ({
     params: { slug: post?.fileName },
   }));
@@ -55,12 +55,12 @@ function PostPage(props: Props) {
   const router = useRouter();
   const { post } = props;
 
-  console.log({ post });
-
   return (
     <VStack spacing={6}>
       <VStack textAlign="center" spacing={2}>
-        <Heading>{post.data.title}</Heading>
+        <Heading style={{ direction: post.data.lang === "ar" ? "rtl" : "ltr" }}>
+          {post.data.title}
+        </Heading>
         <HStack justifyContent={"center"} wrap="wrap" spacing="4">
           <Text fontSize="sm" as="time" dateTime={post.data.date}>
             {post.data.date}
