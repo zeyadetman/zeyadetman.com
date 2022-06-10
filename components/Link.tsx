@@ -23,7 +23,7 @@ function Link(props: Props) {
   }
 
   return (
-    <NextLink href={href} {...restProps}>
+    <NextLink href={href} {...restProps} passHref>
       <ChakraLink {...chackraProps}>{children}</ChakraLink>
     </NextLink>
   );

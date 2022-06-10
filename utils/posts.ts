@@ -24,6 +24,7 @@ async function getPosts(): Promise<any[]> {
             ...mdxOptions,
           },
         }),
+        text: content,
         data,
         fileName: path.parse(filePath).name,
         slug: path.parse(filePath).name,

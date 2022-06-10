@@ -11,7 +11,7 @@ import {
 import ListPosts from "components/ListPosts";
 import type { GetStaticPropsContext } from "next";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getPosts } from "utils/posts";
 
 interface Props {
@@ -28,9 +28,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   };
 }
 
-const SearchInput = () => {
-  const [value, setValue] = useState("");
-
+const SearchInput = ({ setSearchText, searchText }: any) => {
   return (
     <FormControl>
       <FormLabel htmlFor="searchInput">Search all posts.</FormLabel>
@@ -39,22 +37,10 @@ const SearchInput = () => {
           id="searchInput"
           type="text"
           onChange={(e) => {
-            setValue(e.target.value);
+            setSearchText(e.target.value);
           }}
           placeholder="Search..."
         />
-        {value && (
-          <InputRightAddon
-            _hover={{
-              cursor: "pointer",
-              bg: "black",
-              color: "white",
-              border: "1px solid black",
-            }}
-          >
-            Search
-          </InputRightAddon>
-        )}
       </InputGroup>
     </FormControl>
   );
@@ -62,16 +48,20 @@ const SearchInput = () => {
 
 const Home = (props: Props) => {
   const { posts } = props;
+  const [postsList, updatePostsList] = useState(posts);
+  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    const updatedPosts = posts.filter((post: any) => {
+      return post.text.includes(value);
+    });
+
+    updatePostsList(updatedPosts);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   return (
-    <VStack
-      minH="inherit"
-      minW="inherit"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      spacing="8"
-    >
+    <VStack minH="inherit" minW="inherit" spacing="8">
       <Box pos="relative" w="full" h="32">
         <Image
           src="/assets/illustrations/home.svg"
@@ -82,9 +72,9 @@ const Home = (props: Props) => {
         />
       </Box>
       <HStack w="full">
-        <SearchInput />
+        <SearchInput setSearchText={setValue} searchText={value} />
       </HStack>
-      <ListPosts posts={posts} />
+      <ListPosts posts={postsList} />
     </VStack>
   );
 };

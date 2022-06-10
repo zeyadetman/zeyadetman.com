@@ -43,10 +43,12 @@ function ListPosts(props: Props) {
     });
   };
 
-  return (
+  return posts.length ? (
     <List w="full" spacing={6}>
       {renderPosts()}
     </List>
+  ) : (
+    <Text>No posts found</Text>
   );
 }
 
