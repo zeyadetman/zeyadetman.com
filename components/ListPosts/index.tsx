@@ -15,8 +15,14 @@ function ListPosts(props: Props) {
         <ListItem
           key={slug}
           display="flex"
-          justifyContent="space-between"
-          flexDirection={["column", "row", "row", "row"]}
+          justifyContent={[
+            "center",
+            "center",
+            "space-between",
+            "space-between",
+          ]}
+          alignItems={["flex-start", "flex-start", "center", "center"]}
+          flexDirection={["column", "column", "row", "row"]}
         >
           <Link href={`/posts/${slug}`}>
             <Heading
