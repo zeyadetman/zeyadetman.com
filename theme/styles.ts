@@ -4,9 +4,16 @@ export const fonts = {
 };
 
 export const customStyles = {
-  global: (props: any) => ({
+  global: ({ theme, colorMode }: any) => ({
     "html, body": {
-      color: props.colorMode === "dark" ? "white" : "gray",
+      color:
+        colorMode === "dark"
+          ? theme.colors.whiteDarkMode
+          : theme.colors.blueClassic,
+      backgroundColor:
+        colorMode === "dark"
+          ? theme.colors.blueClassic
+          : theme.colors.whiteClassic,
       padding: 0,
       margin: 0,
     },
@@ -18,7 +25,7 @@ export const customStyles = {
       textDecoration: "none",
     },
     ".meImage": {
-      filter: "grayscale(0.8)",
+      filter: "grayscale(0.4)",
     },
     ".autolink-svg": {
       "&:hover": {
@@ -29,7 +36,7 @@ export const customStyles = {
       fontFamily: `'Sanchez', sans-serif`,
     },
     ".color-mode-respected": {
-      ...(props.colorMode === "dark" ? { filter: "invert(1)" } : {}),
+      ...(colorMode === "dark" ? { filter: "invert(1)" } : {}),
     },
   }),
 };

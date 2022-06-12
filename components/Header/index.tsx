@@ -3,6 +3,7 @@ import NavList from "components/Header/NavList";
 import Heading from "components/Heading";
 import Link from "components/Link";
 import config from "config";
+import Image from "next/image";
 import React from "react";
 import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
 
@@ -19,6 +20,20 @@ function Header(props: Props) {
           <Link href="/" chackraProps={{ variant: "title" }}>
             {config.name}
           </Link>
+          <Box
+            pos="relative"
+            w="14"
+            h="14"
+            display={["none", "inline-block", "inline-block", "inline-block"]}
+          >
+            <Image
+              src="/logo.png"
+              alt="Home"
+              layout="fill"
+              objectFit="contain"
+              className="color-mode-respected"
+            />
+          </Box>
         </Heading>
         <Heading type="h2" letterSpacing="wide" size={["sm", "md", "md", "lg"]}>
           {config.description}{" "}

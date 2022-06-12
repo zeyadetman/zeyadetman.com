@@ -24,12 +24,28 @@ const mdxComponentsMapping = {
       variant="postLink"
     />
   ),
-  p: (props: any) => <Text {...props} letterSpacing="wide" lineHeight="1.7" />,
+  p: (props: any) => (
+    <Text
+      {...props}
+      letterSpacing="wide"
+      lineHeight="1.7"
+      wordBreak="break-word"
+      textAlign="justify"
+    />
+  ),
   li: (props: any) => <Text as="li" {...props} my="3" />,
   ul: (props: any) => (
-    <Box as="ul" {...props} listStylePos="inside" listStyleType="square" />
+    <Box
+      as="ul"
+      {...props}
+      listStylePos="inside"
+      listStyleType="square"
+      wordBreak="break-all"
+    />
   ),
-  ol: (props: any) => <Box as="ol" {...props} listStylePos="inside" />,
+  ol: (props: any) => (
+    <Box as="ol" {...props} listStylePos="inside" wordBreak="break-all" />
+  ),
   img: (props: any) => <Box as="img" {...props} my="4" mx="auto" />,
 
   code: ({ className, ...props }: any) => {

@@ -1,4 +1,4 @@
-import { Badge, HStack, List, ListItem, Text } from "@chakra-ui/react";
+import { HStack, List, ListItem, Text } from "@chakra-ui/react";
 import Heading from "components/Heading";
 import Link from "components/Link";
 import React from "react";
@@ -12,39 +12,36 @@ function ListPosts(props: Props) {
   const renderPosts = () => {
     return posts.map(({ data, slug }) => {
       return (
-        <ListItem key={slug} w="fit-content">
+        <ListItem
+          key={slug}
+          display="flex"
+          justifyContent="space-between"
+          flexDirection={["column", "row", "row", "row"]}
+        >
           <Link href={`/posts/${slug}`}>
             <Heading
               type="h4"
-              fontSize="2xl"
-              style={{ direction: data.lang === "ar" ? "rtl" : "ltr" }}
+              fontSize="xl"
+              style={{
+                ...(data.lang === "ar"
+                  ? { direction: "rtl", float: "left" }
+                  : {}),
+              }}
             >
               {data.title}
             </Heading>
           </Link>
-          <HStack wrap={"wrap"}>
-            <Text fontSize="sm" as="time" dateTime={data.date}>
-              {data.date}
-            </Text>
-            {data.tags.map((tag: string) => (
-              <Badge
-                key={tag}
-                variant="outline"
-                fontSize="10"
-                bg="#ffc700"
-                color="black"
-              >
-                {tag}
-              </Badge>
-            ))}
-          </HStack>
+
+          <Text fontSize="sm" as="time" opacity="0.6" dateTime={data.date}>
+            {data.date}
+          </Text>
         </ListItem>
       );
     });
   };
 
   return posts.length ? (
-    <List w="full" spacing={6}>
+    <List w="full" spacing={4}>
       {renderPosts()}
     </List>
   ) : (

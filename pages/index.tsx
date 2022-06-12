@@ -64,9 +64,9 @@ const Home = (props: Props) => {
 
   return (
     <VStack minH="inherit" minW="inherit" spacing="8">
-      <Box pos="relative" w="full" h="32">
+      <Box pos="relative" w="full" h="48">
         <Image
-          src="/assets/illustrations/home.svg"
+          src="/logo.png"
           alt="Home"
           layout="fill"
           objectFit="contain"

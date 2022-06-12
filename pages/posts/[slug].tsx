@@ -12,11 +12,13 @@ import {
   Heading,
   HStack,
   Icon,
+  Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import config from "config";
 import { useRouter } from "next/router";
+import { ArticleJsonLd, NextSeo } from "next-seo";
 
 interface Props {
   post: any;
@@ -56,63 +58,98 @@ function PostPage(props: Props) {
   const { post } = props;
 
   return (
-    <VStack spacing={6}>
-      <VStack textAlign="center" spacing={2}>
-        <Heading style={{ direction: post.data.lang === "ar" ? "rtl" : "ltr" }}>
-          {post.data.title}
-        </Heading>
-        <HStack justifyContent={"center"} wrap="wrap" spacing="4">
-          <Text fontSize="sm" as="time" dateTime={post.data.date}>
-            {post.data.date}
-          </Text>
-          <Text fontSize="sm">{post.readingTime.text}</Text>
-          <HStack>
-            {post.data.tags.map((tag: string) => (
-              <Badge
-                key={tag}
-                variant="outline"
-                fontSize="10"
-                bg="#ffc700"
-                color="black"
-              >
-                {tag}
-              </Badge>
-            ))}
-          </HStack>
-        </HStack>
-      </VStack>
-      <Box className="mainPost">
-        <MDXRemote {...post.content} components={mdxComponentsMapping} />
-      </Box>
-      <HStack spacing={4}>
-        <TwitterShareButton
-          title={post.data.title}
-          via={config.username}
-          url={`${config.baseUrl}${router.asPath}`}
-          key="twitter-share-button"
-        >
-          <Button key="twitter-btn" variant="twitter">
-            <Icon as={AiOutlineTwitter} me={1} mb={0.5} fontSize="lg" />
-            Tweet
-          </Button>
-        </TwitterShareButton>
+    <>
+      <NextSeo
+        title={`${post.data.title}`}
+        description={post.excerpt}
+        canonical={`${config.baseUrl}${router.asPath}`}
+        openGraph={{
+          url: `${config.baseUrl}${router.asPath}`,
+          title: `${post.data.title}`,
+          description: post.excerpt,
+          images: [
+            {
+              url: "/static/images/logo.jpeg",
+              width: 200,
+              height: 200,
+              alt: "Logo",
+              type: "image/jpeg",
+            },
+          ],
+        }}
+      />
 
-        <div>
-          <Button
-            key="github-edit-button"
-            onClick={() => {
-              window.open(
-                `${config.githubRepo}/posts/${post.fileName}.mdx`,
-                "_blank"
-              );
-            }}
+      <VStack spacing={6}>
+        <VStack textAlign="center" spacing={2}>
+          <Heading
+            style={{ direction: post.data.lang === "ar" ? "rtl" : "ltr" }}
           >
-            <Icon as={AiOutlineGithub} me={1} mb={0.5} fontSize="lg" />
-            Edit on GitHub
-          </Button>
-        </div>
-      </HStack>
-    </VStack>
+            {post.data.title}
+          </Heading>
+          <HStack justifyContent={"center"} wrap="wrap" spacing="4">
+            <Text
+              fontSize="sm"
+              as="time"
+              dateTime={post.data.date}
+              opacity="0.6"
+            >
+              {post.data.date}
+            </Text>
+            <Text fontSize="sm" opacity="0.6">
+              {post.readingTime.text}
+            </Text>
+            <HStack wrap="wrap">
+              {post.data.tags.map((tag: string) => (
+                <Badge
+                  key={tag}
+                  variant="outline"
+                  fontSize="10"
+                  bg="#ffc700"
+                  color="black"
+                >
+                  {tag}
+                </Badge>
+              ))}
+            </HStack>
+          </HStack>
+        </VStack>
+        <Box className="mainPost">
+          <MDXRemote {...post.content} components={mdxComponentsMapping} />
+        </Box>
+        <Stack
+          flexDirection={["column", "row", "row", "row"]}
+          alignItems={["center", "baseline", "baseline", "baseline"]}
+          gap={[0, 2, 2, 2]}
+        >
+          <TwitterShareButton
+            title={post.data.title}
+            via={config.username}
+            url={`${config.baseUrl}${router.asPath}`}
+            key="twitter-share-button"
+          >
+            <Button key="twitter-btn" variant="twitter">
+              <Icon as={AiOutlineTwitter} me={1} mb={0.5} fontSize="lg" />
+              Tweet
+            </Button>
+          </TwitterShareButton>
+
+          <div>
+            <Button
+              key="github-edit-button"
+              onClick={() => {
+                window.open(
+                  `${config.githubRepo}/posts/${post.fileName}.mdx`,
+                  "_blank"
+                );
+              }}
+            >
+              <Icon as={AiOutlineGithub} me={1} mb={0.5} fontSize="lg" />
+              Edit on GitHub
+            </Button>
+          </div>
+        </Stack>
+      </VStack>
+    </>
   );
 }
 
