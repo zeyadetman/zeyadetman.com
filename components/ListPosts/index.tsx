@@ -1,4 +1,4 @@
-import { HStack, List, ListItem, Text } from "@chakra-ui/react";
+import { List, ListItem, Text } from "@chakra-ui/react";
 import Heading from "components/Heading";
 import Link from "components/Link";
 import React from "react";

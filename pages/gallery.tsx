@@ -1,8 +1,6 @@
 import React, { ReactElement, useState } from "react";
 import {
-  Stack,
   Text,
-  Heading,
   Box,
   HStack,
   Flex,

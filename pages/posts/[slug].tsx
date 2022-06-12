@@ -1,5 +1,5 @@
 import mdxComponentsMapping from "mdxConfig/components";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MDXRemote } from "next-mdx-remote";
 import { GetStaticPaths, GetStaticPropsContext } from "next";
 import { getPostBySlug, getPosts } from "utils/posts";
@@ -18,10 +18,12 @@ import {
 } from "@chakra-ui/react";
 import config from "config";
 import { useRouter } from "next/router";
-import { ArticleJsonLd, NextSeo } from "next-seo";
+import { NextSeo } from "next-seo";
+import { getViews, hitPath } from "utils/analytics";
 
 interface Props {
   post: any;
+  isProduction: boolean;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -55,7 +57,30 @@ export async function getStaticProps(
 
 function PostPage(props: Props) {
   const router = useRouter();
-  const { post } = props;
+  const [pageVisits, setPageVisits] = useState(0);
+  const { post, isProduction } = props;
+
+  useEffect(() => {
+    if (post) {
+      const updatePathViews = async () => {
+        const views: number = await hitPath(post.fileName);
+        setPageVisits(views);
+      };
+
+      const getPathViews = async () => {
+        const views: number = await getViews(post.fileName);
+        setPageVisits(views);
+      };
+
+      if (post.fileName) {
+        if (isProduction) {
+          updatePathViews();
+        } else {
+          getPathViews();
+        }
+      }
+    }
+  }, [isProduction, post]);
 
   return (
     <>
@@ -86,32 +111,43 @@ function PostPage(props: Props) {
           >
             {post.data.title}
           </Heading>
-          <HStack justifyContent={"center"} wrap="wrap" spacing="4">
-            <Text
-              fontSize="sm"
-              as="time"
-              dateTime={post.data.date}
-              opacity="0.6"
+          <VStack spacing={2}>
+            <HStack justifyContent={"center"} wrap="wrap" spacing="4">
+              <Text
+                fontSize="sm"
+                as="time"
+                dateTime={post.data.date}
+                opacity="0.7"
+              >
+                {post.data.date}
+              </Text>
+              <Text fontSize="sm" opacity="0.7">
+                {new Intl.NumberFormat().format(pageVisits)} Views
+              </Text>
+              <Text fontSize="sm" opacity="0.7">
+                {post.readingTime.text}
+              </Text>
+            </HStack>
+            <Stack
+              flexDirection="row"
+              justifyContent="center"
+              alignItems="baseline"
+              flexWrap="wrap"
+              gap="2"
             >
-              {post.data.date}
-            </Text>
-            <Text fontSize="sm" opacity="0.6">
-              {post.readingTime.text}
-            </Text>
-            <HStack wrap="wrap">
               {post.data.tags.map((tag: string) => (
                 <Badge
                   key={tag}
                   variant="outline"
                   fontSize="10"
-                  bg="#ffc700"
+                  bg="yellow"
                   color="black"
                 >
                   {tag}
                 </Badge>
               ))}
-            </HStack>
-          </HStack>
+            </Stack>
+          </VStack>
         </VStack>
         <Box className="mainPost">
           <MDXRemote {...post.content} components={mdxComponentsMapping} />

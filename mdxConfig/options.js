@@ -1,7 +1,6 @@
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeExternalLinks from "rehype-external-links";
-import { h, s } from "hastscript";
+import { s } from "hastscript";
 
 export const mdxOptions = {
   remarkPlugins: [],

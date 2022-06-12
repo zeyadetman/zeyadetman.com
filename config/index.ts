@@ -2,6 +2,7 @@
 export default {
   username: "zeyadetman",
   baseUrl: "https://zeyadetman.com",
+  namespace: "zeyadetman-blog",
   githubRepo: "https://github.com/zeyadetman/zeyadetman.com",
   firstName: "Zeyad",
   name: "Zeyad Etman",

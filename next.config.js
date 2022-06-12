@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const withPlugins = require("next-compose-plugins");
+const withPWA = require("next-pwa");
 const mdxOptions = (...args) =>
   import("./mdxConfig/options.js").then(({ default: fetch }) => fetch(...args));
 
@@ -26,4 +27,9 @@ module.exports = withPlugins([
     pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   }),
   nextConfig,
+  withPWA({
+    pwa: {
+      dest: "public",
+    },
+  }),
 ]);

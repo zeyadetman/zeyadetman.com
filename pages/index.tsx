@@ -5,7 +5,6 @@ import {
   HStack,
   Input,
   InputGroup,
-  InputRightAddon,
   Text,
   VStack,
 } from "@chakra-ui/react";

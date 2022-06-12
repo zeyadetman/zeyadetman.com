@@ -10,4 +10,5 @@ export default {
   whiteDarkMode: "#d6d9d1", // white dark mode
   blueClassic: "#002d42",
   brownClassic: "#2c2931",
+  yellow: "#ffc700",
 };

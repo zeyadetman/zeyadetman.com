@@ -9,7 +9,7 @@ import {
   FiLinkedin,
   FiMail,
 } from "react-icons/fi";
-import { FaStackOverflow, FaReddit, FaBlog, FaTwitter } from "react-icons/fa";
+import { FaStackOverflow, FaReddit } from "react-icons/fa";
 import { ISocialLink } from "interfaces/ISocialLink";
 
 const socialLinks: ISocialLink[] = [
