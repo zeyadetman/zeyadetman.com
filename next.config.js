@@ -23,13 +23,13 @@ const nextConfig = {
 };
 
 module.exports = withPlugins([
-  withMDX({
-    pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
-  }),
-  nextConfig,
   withPWA({
     pwa: {
       dest: "public",
     },
   }),
+  withMDX({
+    pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+  }),
+  nextConfig,
 ]);

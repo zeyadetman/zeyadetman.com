@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>Articles by Zeyad Etman</title>
+        <link>https://zeyadetman.com</link>
+        <description>Thoughts about software development and Life</description>
+        <lastBuildDate>Sun, 12 Jun 2022 03:26:28 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
+        <copyright>zeyadetman</copyright>
+        <item>
+            <title><![CDATA[ازاي تويتر بيهندل ال emojis]]></title>
+            <link>https://zeyadetman.com/posts/how-can-twitter-handle-emojis</link>
+            <guid>https://zeyadetman.com/posts/how-can-twitter-handle-emojis</guid>
+            <pubDate>Sat, 06 Nov 2021 00:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[
+<div dir="rtl">
+تعالوا نحكي فالثريد دي ازاي تويتر بيهندل ال emojis.
+ال emojis دي زيها زي اي حاجة انت بتكتبها من الكيبورد عبارة عن unicode بيتحول لشكل character معين، زي حرف "أ" مثلًا او "A" او اي حاجة فاي لغة، بس مش كل الحروف طبعًا ليها نفس عدد ال unicodes chars يعني.
+يعني ممكن تلاقي حرف في لغة تويتر بيحسبه بواحد وحرف في لغة تانية تويتر بيحسبه بحرفين من ال 280، ده بيرجع لان عشان ال character ده يترسم فالتويتة بتاعتك بياخد 2 unicodes مش واحد - بالمناسبة تويتر بيعمل normalize لل unicodes لو الحرف بياخد اكتر من unicode - المهم نرجع لل emojis فرضًا ال emoji ده ليه unicode كدة U+1f4bb فتويتر عشان تعرضه بتضطر تعمله serve as an image مش بتستني ال operating system/ browser يعرضه عشان مش كل ال OS هتعرض كل ال emojis بنفس الطريقة او هتعرضهم اصلا، فهو بياخد ال unicode ويحوله ل codepoint hex فبيبقي كدة 1f4bb
+
+بعدين hex codepoint ده بيروح ع url بي serve ال emojis as svg زي كدة
+`https://twemoji.maxcdn.com/v/latest/svg/${codepoint}.svg`
+
+فبيكون كدة https://twemoji.maxcdn.com/v/latest/svg/1f4bb.svg وبكدة يكون عرف يعرض ال emoji on whatever device/OS/Browser you're running
+
+لو مثلًا ال emoji بيتكون من 2 unicode characters فتويتر بي join بين ال codepoints بتوعهم ب dash - عشان ال path بتاعهم يكون valid
+
+## ليه بعض المرات لما تنزل ايموجيز جديدة لل ios ما تظهر في الأندرويد
+
+ده بسبب ان ال emojis مش cross platform، فكل OS بتهندل ال unicodes بطريقة مختلفة، زيها بالظبط زى ال fonts، كل حرف ليه unicode معين بس كل font بيرسمه بشكل معين عشان كدة لو هتستخدم ال emojis on web فالافضل تستخدمهم كصور مش ك unicode عشان تضمن يتعرضوا فكل مكان
+
+[المصدر](https://github.com/twitter/twemoji-parser/blob/937079b964bd07381350ac2ea966e5c78c2a39ea/src/index.js#L20)
+
+</div>
+]]></content:encoded>
+            <author>zeyad.etman@gmail.com (Zeyad Etman)</author>
+        </item>
+        <item>
+            <title><![CDATA[How I built my portfolio using NextJS, Typescript, and Chakra UI]]></title>
+            <link>https://zeyadetman.com/posts/how-i-built-my-portfolio-using-nextjs-typescript-chakraui</link>
+            <guid>https://zeyadetman.com/posts/how-i-built-my-portfolio-using-nextjs-typescript-chakraui</guid>
+            <pubDate>Sun, 24 Oct 2021 00:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[
+In this post I’ll go with you in a detailed way on how i created my blog/portfolio from scratch using NextJS and Chakra UI, from creating the pages and posts markdown files to displaying them as html files, And how I handled newsletter service, and deploying the project on Vercel, Handling custom domains. So this post will good for you if you want to know more about anything that I’ve implemented here on my blog.
+
+**[Here's the source code for this site.](https://github.com/zeyadetman/zeyadetman.com)**
+
+## NextJS + Typescript + Chakra UI
+
+[`NextJS`](https://nextjs.org/) is one of the strongest framework to build a production project. I've used some features like SSG or pre-render pages at build time, API routes, file-system routing, fast refresh, configuration and deployments are super easy.
+
+To get started just write this [`npx create-next-app@latest --ts`](https://nextjs.org/docs/api-reference/create-next-app).
+
+The structure of the portfolio goes like that:
+
+```
+.
+├── components
+│   ├── Admin
+│   ├── CareerStack
+│   ├── ColorModeIcon
+│   ├── Footer
+│   ├── Layout
+│   ├── MarkdownRender
+│   ├── Navbar
+│   └── Newsletter
+├── configs
+├── interfaces
+├── libs
+├── pages
+│   ├── api
+│   │   └── auth
+│   └── posts
+├── public
+│   └── static
+│       ├── images
+│       └── sounds
+├── styles
+│   └── theme
+└── utils
+```
+
+<br />
+NextJS uses the `pages` folder to handle the app routes, as you may know if you created
+a file called `pages/hello.tsx` you can open it by visiting `your-app.com/hello`
+and that's super cool. So I created a folder called pages to handle the routes for
+the app. Also I created another folder called `components` to handle the react components
+that will be used across the pages.
+
+Another feature of using NextJS is creating API routes, To do so you can create this folder `pages/api` and then create your apis inside it.
+
+If you're building your projects with javascript, then you have to try [`typescript`](https://www.typescriptlang.org/), Typescript will definitely help you documenting your code as you go, Also it forces you to use the right type so this will decrease the bugs and speed up your productivity while you're coding.
+
+Here's the styling part, I use [`chakra-ui`](https://chakra-ui.com/) for creating reactjs components and styles without writing css. Also Chakra ui is handling the app color mode, and much more in the styling part. You can customize the theme, declaring the default values for the app you can check this folder for further information about this `styles/theme`.
+
+In the mode icon that appears at the top of the site, I've used two things to get this icon based on the current weather of your location. In your first visiting the app, I'm getting your location from `https://geolocation-db.com/json/` then store it in the cookies with `max-age=3600` expired after 60minutes. When i got your location, I got also the location's weather, then display the icon based on weather. I implemented the logic in this file `components/ColorModeIcon/index.tsx`.
+
+## Name pronunciation
+
+You probably have heard the pronunciation of my name when you clicked on the sound icon next to my name on the home page.
+
+For this sound i just used [`Vocalizer`](https://github.com/atifazam/vocalizer) and downloaded my name's sound.
+Added it to webpack config to identify the file extension and location `next.config.js`
+
+```javascript
+config.module.rules.push({
+  test: /\.mp3$/,
+  use: {
+    loader: "file-loader",
+    options: {
+      publicPath: "/_next/static/sounds/",
+      outputPath: "static/sounds/",
+      name: "[name].[ext]",
+      esModule: false,
+    },
+  },
+});
+```
+
+And used it like below inside the `onClick` event handler for the icon:
+
+```javascript
+const audio = new Audio("/static/sounds/zeyad_ar.mp3");
+audio.play();
+```
+
+## Analytics
+
+Analytics is one of the most important parts for any product that users could use. I use Analytics here to just
+track page views, but in the future i may use it for event tracking like clicking on subscription button
+(Room for improvement).
+
+To achieve this, I use Google Analytics and [countapi-js](https://github.com/mlomb/countapi-js).
+
+I faced a problem here while using `countapi-js` because all of my old analytics have been tracked by Google analytics not `countapi-js`, and the target is delievering the actual pageviews for all pages, So i collect the old analytics from GA via this tool https://ga-dev-tools.web.app/query-explorer/
+
+```
+metrics= ga:pageviews
+dimensions= ga:pagePath
+```
+
+After that I created a function to create a key in `countapi-js` set the key to page path and the default value is the GA pagePath page views count.
+
+```javascript
+countapi.create({
+  namespace: site.namespace,
+  key: pagePath,
+  value: pageViews,
+});
+```
+
+For GA, I just added its initialization to `_document.tsx` file and using it via this line `gtag.pageview(url);` in the `_app.tsx` to track all pages listening to router changes.
+
+So in the final producation version, The site is running with two tracking services GA and `countapi-js` and they're running independently. But I depend on `countapi-js` to view page views and it delivers the actual count as GA.
+
+## Posts
+
+Here's the most complicated part of the site, The Blog. But Nextjs made it so simple to organize and retrieve posts, In this section i'll go with you how i organized the blog posts files, not how i handled the markdown files, will explain this in the next section. So, Let's get started.
+
+One of the biggest features in NextJS is [Dynamic Routes](https://nextjs.org/docs/routing/dynamic-routes). I created two files to handle the structure of the blogs `pages/posts/index.tsx` and `pages/posts/[slug].tsx` to handle the posts list, and the post page respectively.
+
+I created a folder `blogs` in the project root for the blogs `.md` files, and in `libs/posts.ts` file, I created two helper functions `getPosts(): Promise<IPost[]>` and `getPostBySlug(slug: string): Promise<null | IPost>` - will explain more in the next section -, And used them in `pages/posts/index.tsx` and `pages/posts/[slug].tsx` in `getStaticProps()` Because we need this data to be updated in build time (rebuilding the site) and that make sense.
+
+To know more about nextjs rendering/generating pages/data, look at this [site](https://static-next-willemliu.vercel.app/).
+
+And here's how I use Next Link component with Chakra UI Link to do client-side routing, note that we're using `passHref` prop to pass href to the Link component. In this way we guarantee that the `[slug].ts` is reading the slug correctly using `router.query.slug`.
+
+```javascript
+// pages/posts/index.tsx
+
+<NextLink href={`/posts/${fileName}`} passHref>
+  <Link {...props}>{post.title}</Link>
+</NextLink>
+```
+
+To handle the `404` in the not existing post urls, I use `getStaticPaths()` with `fallback: false`, Here's its code:
+
+```javascript
+export const getStaticPaths: GetStaticPaths = async () => {
+  const postsSlugs = await getPosts();
+  const slugs = postsSlugs.map((post) => ({
+    params: { slug: post?.fileName },
+  }));
+
+  return {
+    paths: slugs, // predefined posts urls
+    fallback: false, // any paths not returned by getStaticPaths will result in a 404 page
+  };
+};
+```
+
+That's pretty much for this section, let's go with the next one, rendering markdown files.
+
+## Rendering Markdown files
+
+From the previous section, you should know that we're handling the post rendering in the `pages/posts/[slug].tsx`, So in this section we'll discuss the journey from writing the markdown files to rendering it as html file.
+
+Libraries I've used to achieve this:
+
+- [gray-matter](https://www.npmjs.com/package/gray-matter): Converts a string with front-matter to object.
+- [reading-time](https://www.npmjs.com/package/reading-time): How long an article will take to read.
+- [react-markdown](https://www.npmjs.com/package/react-markdown): Markdown component for React using remark.
+- [react-syntax-highlighter](https://www.npmjs.com/package/react-syntax-highlighter): Syntax highlighting component for React.
+- [rehype-raw](https://www.npmjs.com/package/rehype-raw): parse the tree again (and raw nodes). Keeping positional info OK.
+- [remark-gfm](https://www.npmjs.com/package/remark-gfm): remark plugin to support GitHub Flavored Markdown.
+- [remark-lint](https://www.npmjs.com/package/remark-lint): remark plugin to lint Markdown code style.
+
+Now we've this folder `./blogs/` containing markdown files with front-matter and we need to convert these files to array of objects, sorted by date.
+
+The below code snippet is to get the filenames.
+
+```javascript
+// libs/posts.ts
+
+const { serverRuntimeConfig } = getConfig();
+const postsDirectory = path.join(serverRuntimeConfig.PROJECT_ROOT, "blogs");
+const filenames = fs.readdirSync(postsDirectory);
+```
+
+Then I iterate over them to get the file contents using `gray-matter` and its readingTime estimation using `reading-time`
+
+```javascript
+// libs/posts.ts
+
+const posts = filenames.map((filename: string) => {
+  const filePath = path.join(postsDirectory, filename);
+  const fileContents = fs.readFileSync(filePath, "utf8");
+  const { content, data, excerpt } = matter(fileContents, {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    // eslint-disable-next-line
+    excerpt: (file: any): void => {
+      file.excerpt = file.content
+        .split("\n")
+        .slice(
+          0,
+          site.post?.excerpt?.noOfLines ? site.post?.excerpt?.noOfLines + 1 : 4
+        )
+        .join(" ");
+    },
+  });
+
+  return {
+    content,
+    excerpt,
+    data,
+    fileName: path.parse(filePath).name,
+    readingTime: readingTime(content),
+  };
+});
+
+const postsSortedByDate = posts.sort(
+  (a, b) => +new Date(b.data.date) - +new Date(a.data.date)
+);
+```
+
+At this point we've the list of posts as objects. That's super cool! Let's continue, Now we need a react component to render the post content in html page without breaking the styles/markup language.
+
+To do this, I've created a component `MarkdownWrapper` using `react-markdown` wrapper, Here's what i've done:
+
+- For render `img` tag, I replaced it by `next/image` component, to handle image optimization on blog post images, Also i just added some styles to force the responsiveness of the rendered images
+
+```javascript
+// components/MarkdownRender/index.tsx
+
+img({ src, alt }) {
+  return (
+    <Box width="100%" className="post-image-container">
+      <Image
+        src={src || ''}
+        alt={alt}
+        layout="fill"
+        className="image"
+      />
+    </Box>
+  );
+},
+```
+
+```css
+/* styles/globals.css */
+
+.post-image-container {
+  width: 100%;
+}
+
+.post-image-container > div {
+  position: unset !important;
+}
+
+.post-image-container .image {
+  object-fit: contain;
+  width: 100% !important;
+  position: relative !important;
+  height: unset !important;
+}
+```
+
+There's an important note here, Don't forget to update images domains in the `next.config.js` file.
+
+- For code rendering, I use `react-syntax-highlighter` and `vscDarkPlus` theme like below
+
+```javascript
+// components/MarkdownRender/index.tsx
+
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+
+code({ inline, className, children, ...props }) {
+  const match = /language-(\w+)/.exec(className || '');
+  const lang = match?.[1] === 'js' ? 'javascript' : match?.[1];
+  return !inline && match ? (
+    <SyntaxHighlighter
+      style={vscDarkPlus}
+      PreTag="div"
+      showLineNumbers
+      showInlineLineNumbers
+      language={lang}
+      customStyle={{ marginBottom: '2rem' }}
+    >
+      {String(children).replace(/\n$/, '') || ''}
+    </SyntaxHighlighter>
+  ) : (
+    <Code {...props}>{children}</Code>
+  );
+},
+```
+
+That's all for this section. You can know more just looking at this file `components/MarkdownRender/index.tsx`.
+
+## RSS and Newsletter
+
+Okay, Here we have to do two things, first we need a `rss.xml` file generated from our posts files, second a newsletter service to send my new emails to followers - I hope you're one of them - And this service is https://www.getrevue.co/ It's free and promote the newsletter to your twitter profile.
+
+So first thing we need to do is generating the `rss.xml` file, so we can list your blog posts as issues in your getrevue account.
+
+To generate the `rss.xml` I used [`feed`](https://www.npmjs.com/package/feed) in `generateRSSFeed()` located here `libs/feed.ts` and calling it in a `getStaticProps()` function located in `pages/posts/index.tsx` to re-generate that file in build time.
+
+After building and deploying the code I got this url https://www.zeyadetman.com/rss.xml with all posts metadata, Heading to https://www.getrevue.co/app/integrations/rss, And add the production url to `ADD A FEED` input. This will reflect in the issues page on getrevue account.
+
+I highly recommend enabling Show newsletter on Twitter profile https://www.getrevue.co/app/integrations/twitter.
+
+Right now we've just configured the newsletter service and RSS feeds. Another thing you may noticed if you want to add their subscription form into your blog, It requires users to confirm subscription from their emails. You can disable this by using getrevue api with `double_opt_in: false` creating a custom form.
+
+I used [`react-hook-form`](https://www.npmjs.com/package/react-hook-form) to create the form, Also created an api to handle the request
+
+```javascript
+// pages/api/subscribers.ts
+
+const subscribeHandler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+): Promise<NextApiResponse<Data> | void> => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: "Email is required" });
+  }
+
+  const result = await fetch("https://www.getrevue.co/api/v2/subscribers", {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${process.env.GETREVUE_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, double_opt_in: false }), // to disable the confirmation email
+  });
+
+  const data = await result.json();
+
+  if (!result.ok) {
+    return res.status(500).json({ error: data.error.email[0] });
+  }
+
+  return res.status(201).json({ error: "" });
+};
+```
+
+And used it simply like this
+
+```javascript
+// components/Newsletter/index.tsx
+
+const { status } = await fetch("/api/subscribers", {
+  method: "POST",
+  body: JSON.stringify({
+    email: data.email,
+  }),
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+```
+
+To read more about handling the subscription form look at this file `components/Newsletter/index.tsx`, Also to know more about handling https in the custom domains for your getrevue, Please read the deployment section.
+
+## Deployment
+
+The final part is going production.
+Until now I have implemented the app, and want to go production, I use [`vercel`](https://vercel.com/) it's the easist way to deploy your nextjs app.
+
+Create new project, add the github repo of your project, don't forget to add the environment variables.
+
+I'll keep this blog updated whenver I add a new feature to the blog. Just subscribe to the newsletter and I'll notify you via email.
+
+### Here's some resources that helped me:
+
+- [Custom Domains](https://vercel.com/docs/concepts/projects/custom-domains#): This helps me link my godaddy custom domain to vercel deployment.
+- [How to make your custom domain secure with SSL](http://help.getrevue.co/en/articles/4465817-how-to-make-your-custom-domain-secure-with-ssl): This helps me creating `https://feed.zeyadetman.com` and added it to getrevue custom domain.
+- [How I Added an RSS Feed to My Next.js Site](https://ashleemboyer.com/how-i-added-an-rss-feed-to-my-nextjs-site): This helped me generating the rss.xml page.
+- [How to Set up GoDaddy Domain with Vercel](https://kswanie21.medium.com/how-to-set-up-godaddy-domain-with-vercel-f42430ed4f6).
+
+### Inspired Blogs:
+
+- [https://francoisbest.com/](https://francoisbest.com/)
+- [https://leerob.io/](https://leerob.io/)
+]]></content:encoded>
+            <author>zeyad.etman@gmail.com (Zeyad Etman)</author>
+        </item>
+        <item>
+            <title><![CDATA[How I've been using Google Sheets as a personal assistant]]></title>
+            <link>https://zeyadetman.com/posts/how-ive-been-using-google-sheets-as-personal-assistant</link>
+            <guid>https://zeyadetman.com/posts/how-ive-been-using-google-sheets-as-personal-assistant</guid>
+            <pubDate>Sat, 30 May 2020 00:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[
+Hello, In this post I’ll share with you How I've been using Google Sheets to track some of important things, Replacing almost all other productivity apps. In the beginning I want to note that not all things will be interesting to you, but I think you’ll find inspiration to do your own, and this is the goal of this post btw.
+Not all following sheets created by me, and I’ll mention this in their sections.
+
+## Money (Savings and Expenses)
+
+![Money sample](https://i.imgur.com/DdZzm6n.png)
+
+There’s a bunch of mobile apps to track your savings and expenses, I tried most of them, but any was customized as i want, so I found a great Money Tracking sheet that you have to give it a [try from here.](https://docs.google.com/spreadsheets/d/1l9l5JH4b9g7zqKTlylqWIhHnfWlBJzP2vqj9ET9K_Ok)
+
+## Exchange Rate and Metals Tracking
+
+You may need to be updated about currency conversion to your local currency, or you may be interested in following metal prices like silver or gold, So instead of searching and memorize the prices, or getting another app, I created a 'cronjob' or a trigger to get the data I want, then update the target sheet. To do this, Google sheets Allows us to write scripts into sheets or any G-suite app, you’re writing basically javascript with some additional helpers to access G-suite things in easy direct way, like access sheets with name, edit them, things like that, to know more about App Script [click here](https://developers.google.com/apps-script).
+Okay, what I’ve done is adding a daily `USDtoEGP` exchange rate to a sheet — Thanks to [GOOGLEFINANCE](https://support.google.com/docs/answer/3093281) — , and in another sheet page getting the price of gold daily — I’ve not found a free api to do this so I scraped a website to work around this — in the next few lines I’ll explain how to do this in a super easy few lines of `gs` code.
+
+A sample for this sheet
+
+![usd to egp sample](https://i.imgur.com/8jVQ9gU.png)
+
+1. You have to create a google sheet to populate the data into it.
+2. Open your sheet then select tools > script editor. You’ll end up with something like this.
+
+   ![code editor](https://i.imgur.com/dketxDK.png)
+
+3. Here's my code to get the `USD to EGP` Exchange Rate from Google Finance
+
+```javascript
+function getUsdToEgpRate() {
+  const spreedSheet = SpreadsheetApp.openById(<sheetID>).getSheetByName('usdtoegp');
+  const today = new Date();
+  const todayFormatted = `${today.getFullYear()}, ${today.getMonth() + 1}, ${today.getDate()}`;
+  const row = [
+    today.toUTCString(),
+    1,
+    'USD',
+    'Equals',
+    `=REGEXREPLACE(TO_TEXT(index(GOOGLEFINANCE("CURRENCY:USDEGP", "price", date(${todayFormatted})), 2, 2)), "٫", ".")`,
+    'EGP'
+  ];
+  spreedSheet.appendRow(row);
+}
+```
+
+I want to say two things here:
+first, To get `sheetID`, if your sheet url is `https://docs.google.com/spreadsheets/d/blabla/edit` then `blabla` is your `sheetID`. second, Why I used `REGEXREPLACE` to convert comma to dot to easily do calculations on its value.
+
+4. Try to run this code, It should work!
+5. To create a trigger to run this script as a cronjob, you'll see a timer icon called `triggers` click on it then do whatever you want.
+   Super Easy, Ha?
+
+### Metal tracker
+
+![gold price sample](https://i.imgur.com/SpZrXfR.png)
+
+For the Metal tracker, As I told you before I didn't find a free solution to get an instant price for gold, So I created a little script using [`puppeteer`](https://github.com/puppeteer/puppeteer) to scrape a website to get the data through api, then calling it in the script, and here's my final `gs` script:
+
+```javascript
+function goldPrice() {
+  const spreedSheet =
+    SpreadsheetApp.openById("<sheetID>").getSheetByName("goldprice");
+  const today = new Date();
+
+  const response = UrlFetchApp.fetch("<API_ENDPOINT>");
+  const price = JSON.parse(response.getContentText())["price"];
+
+  const row = [today.toUTCString(), 1, "Gram", "Equals", price];
+  spreedSheet.appendRow(row);
+}
+```
+
+You may notice that in the code above i didn't write the scraping code, the reason that I've a repository to just handle like stuff in an external place, you can write it in your own way, BTW I used [`Heroku`](http://heroku.com/) to deploy the scraping code that written in NodeJS.
+
+Whatever you want to do, You'll find a way in google sheets.
+
+## Jobs
+
+![Job tracking](https://i.imgur.com/QeEiBDI.png)
+
+Job tracking is another thing you may want to track in your life, you got the job or not, what was the offer, when you started, when you left, things like this will be cool to know what's your situation in your career, what're the campanies you know, ...etc. for this I found a [nice sheet to track this.](https://docs.google.com/spreadsheets/d/1eyJVRfGc5kGz5cfBYZpANosd4JRfWHc98BlD95Vsiog)
+Also there's a tricks to do more, you can connect this sheet with your gmail, and add a new column to the emails recieved from the company, or what you want, But I'm using Gmail labels for kinda stuff.
+
+## Twitter Archive
+
+![twitter archive sheet](https://i.imgur.com/I6K8wTi.png)
+
+If you're using Twitter to learn or getting updates/tricks/important tweets of specific field/topic to retrieve them again, you will need to search in your tweets, re-tweets, or likes one day, So I'm using `IFTTT` to fill a sheet from whatever i do on twitter. Here's what can you do. [Google sheet](https://ifttt.com/google_sheets) and [Twitter](https://ifttt.com/twitter).
+
+## IFTTT Things
+
+If you don't know `IFTTT` then you have to give it a try, it works in this way > if this then that, in more details words (whenever this happens, then do that), I'm using it to keep tracking of new phone contacts in a sheet, and a little other things as well.
+
+I didn't mention everything in this post, I want to inspire you how can you track most of your daily/occasionally stuff. And my sheet templates recommendations as well. I'll update the post whenever I found a good thing to say.
+]]></content:encoded>
+            <author>zeyad.etman@gmail.com (Zeyad Etman)</author>
+        </item>
+        <item>
+            <title><![CDATA[JavaScript and Object Keys]]></title>
+            <link>https://zeyadetman.com/posts/javascript-and-object-keys</link>
+            <guid>https://zeyadetman.com/posts/javascript-and-object-keys</guid>
+            <pubDate>Mon, 06 Jan 2020 00:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[
+Hello 👋 In this post we will try to use objects in a different wrong way 😃 by implement a frequency array in javascript.
+But before we dive into this, We will discover what's the frequency array?
+
+## Frequency Array on a sorted array
+
+For example, If you have an array like this `const arr = [1,2,2,3,3,4];` and you want to count occurrences of each element, then you can iterate over the values and store them as keys of object and its value increasing according to the number of occurrences in the remainig array. And this is called a frequency array. The code below go through what I'm saying (Please Don't do this again):
+
+```js
+const arr = [1, 2, 2, 3, 3, 4];
+const result = {};
+for (let i = 0; i < arr.length; i++) {
+  if (arr[i] in result) result[arr[i]]++;
+  else result[arr[i]] = 1;
+}
+
+console.log(result); // {1: 1, 2: 2, 3: 2, 4: 1}
+```
+
+Wow! that's cool and Right! But No. That's wrong! Why??
+
+You're write this code and seems that works well, but try to add `-1` to the first of your array, then you'll discover that the final result is `{1: 1, 2: 2, 3: 2, 4: 1, -1: 1}`, Wait... But Why? You're wondering why the `-1` is in the end of the result object and you know the object in javascript sorting the keys by default. (Ummm not exactly!)
+Objects' Keys in Javascript are `strings` and `symbols` only, you can't use any primitive values as keys except `strings` and `symbols` So the keys in your result aren't `numbers`, they're parsed to `strings` before storing as keys in object, but `"-1" < "1" === true` so still why `-1` moved to the end?!
+
+_Note: `Symbol` Can be a key for objects, but it doesn't work like `strings`. [Read more...](https://2ality.com/2014/12/es6-symbols.html)_
+
+## How Javascript objects order their keys?
+
+Keys in Javascript objects are three types, +integer-like (0,1,2,3), strings, and symbols. And the order goes:
+
+1. +Integer-like in ascending order. `-1` like our previous example or negatives in general aren't valid as an index, there's no `-1` index, So they're ordered as `strings`.
+2. Strings in order of created, without any sort or comparison.
+3. Symbols in order of created, without any sort or comparison.
+
+Okay, So in our previous example, we figured out what happens while getting the result, Right?
+But what if we want to get the right order?
+
+## new Map()
+
+To achieve our frequency array respecting keys insertion order we can use `new Map()` which allows keys to be anytype, so the code for this will be like this:
+
+```js
+const arr = [-1, 1, 2, 3, 4, 3, 2];
+var result = new Map();
+for (let i = 0; i < arr.length; i++) {
+  if (result.has(arr[i])) {
+    result.set(arr[i], result.get(arr[i]) + 1);
+  } else result.set(arr[i], 1);
+}
+
+console.log(result); //Map(5) {-1 => 1, 1 => 1, 2 => 2, 3 => 2, 4 => 1}
+```
+
+Then we can iterate over it using `forEach` method.
+
+## Resources
+
+- [Symbols in ECMAScript 6](https://2ality.com/2014/12/es6-symbols.html)
+- [14.4.2 Traversal order of properties](https://exploringjs.com/es6/ch_oop-besides-classes.html#_traversal-order-of-properties)
+- [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
+]]></content:encoded>
+            <author>zeyad.etman@gmail.com (Zeyad Etman)</author>
+        </item>
+        <item>
+            <title><![CDATA[Another way to write your JavaScript]]></title>
+            <link>https://zeyadetman.com/posts/another-way-to-write-your-javascript</link>
+            <guid>https://zeyadetman.com/posts/another-way-to-write-your-javascript</guid>
+            <pubDate>Mon, 09 Sep 2019 00:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[
+Hi all, in this post I'll share with you some frontend code, that we can write it in another way,
+And everything is working well, doesn't break the rules or putting smells in code, is cool.
+
+## 1. Generate an array of sequential numbers `[1, 2, 3, ...., n]`
+
+If we want to generate an array like this `[1, 2, 3, 4, 5, 6, ...., n]`, We can write code using `new Array()` with
+[`Array.fill()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/fill)
+so it'll be
+
+```javascript
+const N = 10;
+new Array(N).fill().map((_, indx) => indx + 1); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+```
+
+[Why `new Array(N).map()` doesn't work?](https://docs.google.com/document/d/1FBxDuUJmUt_udO9ofJGXF4GAM2ZoiWI-PTEeq9Gbf1w/edit#heading=h.yf7gjfvrq7gx)
+
+Cool, But if we're working on a large array of sequential numbers, Is this method will be the best?
+Mmmm, No! because `new Array()` creates [a holey array](https://v8.dev/blog/elements-kinds)
+which is slow compared to [packed arrays](https://v8.dev/blog/elements-kinds). So we can avoid this and re-write this method
+using [`Array.from()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from)
+So the code will be
+
+```javascript
+const N = 10;
+Array.from({ length: N }, (_, indx) => indx + 1); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+```
+
+<figure>
+  ![new array()](https://i.imgur.com/UWkajiz.png)
+  <i>
+    <figcaption>
+      source:{" "}
+      [https://slidr.io/mathiasbynens/v8-internals-for-javascript-developers#102](https://slidrio-decks.global.ssl.fastly.net/1259/original.pdf?1521622174)
+      {" slide: 102"}
+    </figcaption>
+  </i>
+</figure>
+
+you can check the holey array in your Chrome Console, so if we write this `new Array(10)` your console will display
+`[empty × 10]` which is an array of empty values.
+
+More Resources:
+
+1. [https://v8.dev/blog/elements-kinds](https://v8.dev/blog/elements-kinds)
+2. [https://stackoverflow.com/questions/3746725/how-to-create-an-array-containing-1-n](https://stackoverflow.com/questions/3746725/how-to-create-an-array-containing-1-n)
+
+## 2. Number formatting
+
+Sometimes you want to write a money with specific currency `EGP 1000` or a size of something `50 kB` one of the ways to write it,
+simply `const money = '1000 EGP'`. But there's a nicer way to write formatted numbers using [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat). So this strings will be
+
+```javascript
+const money = new Intl.NumberFormat("en", {
+  style: "currency",
+  currency: "EGP",
+  useGrouping: false,
+  maximumSignificantDigits: 1,
+}).format(1000);
+// "EGP 1000"
+
+const storage = new Intl.NumberFormat("en", {
+  style: "unit",
+  unit: "kilobyte",
+}).format(50);
+// "50 kB"
+```
+
+_Note: style `units` works on chrome 77+, so you can use babel to compile it._
+
+This is so cool, if you're working on multiple locale and want to switch between them in a better and fully customized way.
+More info from [V8 Blog: Intl.NumberFormat](https://v8.dev/features/intl-numberformat)
+
+## 3. Styling NonInteracitve elements on focus
+
+You can't do this using css/html without `tabindex` and according to [MDN][1]:
+
+> Avoid using the `tabindex` attribute in conjunction with non-interactive content to make something intended to be interactive focusable by keyboard input. An example of this would be using an `<div>` element to describe a button, instead of the `<button>` element.
+
+[and w3 says:][2]
+
+> The content should be semantically described using interactive elements (`<a>`, `<button>`, `<details>`, `<input>`, `<select>`, `<textarea>`, etc.) instead.
+
+So the best practice for this is using `addEventListener()` in `JavaScript`, But if you want to use `tabindex` don't forget to add `tabindex` to inner html content.
+
+### Another solution
+
+You don't have to use `tabindex` if you just want to change the `div` border.
+you can use `:focus-within` and just change the border.
+
+```html
+<div class="search-box">
+  <Row>
+    <div class="search-box-icon"></div>
+    <input class="search-input" placeholder="search in listbox" />
+  </Row>
+</div>
+```
+
+```css
+.search-box {
+  margin-left: 1%;
+  outline: red;
+  border: 1px solid #fc3;
+}
+
+.search-input {
+  border: none;
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.search-box:focus-within {
+  border: 2px solid #53c9fc;
+}
+```
+
+[_*I published this as an answer on stackoverflow*_](https://stackoverflow.com/a/55087153/5721245)
+
+Finally, I believe that everyone of us has a style writing code, his favorite practices that they don't break the rules,
+or putting smells in code.
+
+[1]: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex#Accessibility_concerns
+[2]: https://www.w3.org/TR/html401/interact/forms.html#adef-tabindex
+]]></content:encoded>
+            <author>zeyad.etman@gmail.com (Zeyad Etman)</author>
+        </item>
+        <item>
+            <title><![CDATA[How Dropbox Knows When You’re Sharing Copyrighted Stuff?]]></title>
+            <link>https://zeyadetman.com/posts/how-dropbox-knows-when-youre-sharing-copyrighted-stuff</link>
+            <guid>https://zeyadetman.com/posts/how-dropbox-knows-when-youre-sharing-copyrighted-stuff</guid>
+            <pubDate>Fri, 30 Jun 2017 00:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[
+**Hashing.**
+
+Before i dive in:
+
+‘A’ is a criminal, he wants to rob a bank so he asked his friends ‘B’ and ‘C’ for help.
+They robbed the bank successfully but unfortunately ‘B’ had forgotten his gloves at home before the crime. The police officer got his fingerprint and after a few days from fingerprint matching, the police catch’em all.
+Same thing for files, every tiny file has its unique fingerprint from characters and numbers like “ah4213jn234bmn53b” and even if you change the location or name or things like that the fingerprint not change at all - if you wanna see install this <a href="https://support.microsoft.com/en-us/help/841290/availability-and-description-of-the-file-checksum-integrity-verifier-utility" target="_blank" rel="noopener noreferrer">https://support.microsoft.com/en-us/help/841290/availability-and-description-of-the-file-checksum-integrity-verifier-utility</a> and have little fun - The dropbox has a big table with the fingerprints of the origin files and when you upload a file, a hash is generated and if its fingerprint exist the site blocked the uploaded one.
+
+<figure>
+  ![Tux, the Linux
+  mascot](https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Fingerprint.svg/702px-Fingerprint.svg.png
+  "Tux, the Linux mascot")
+  <figcaption>
+    [_source_](https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Fingerprint.svg/702px-Fingerprint.svg.png)
+  </figcaption>
+</figure>
+
+It’s the same idea to store your password and username.
+
+[Follow me on quora](https://www.quora.com/profile/Zeyad-Etman)
+]]></content:encoded>
+            <author>zeyad.etman@gmail.com (Zeyad Etman)</author>
+        </item>
+    </channel>
+</rss>
