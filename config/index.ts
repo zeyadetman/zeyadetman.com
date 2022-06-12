@@ -33,5 +33,10 @@ export default {
       path: "https://github.com/zeyadetman",
       external: true,
     },
+    {
+      name: "Wiki",
+      path: "https://wiki.zeyadetman.com",
+      external: true,
+    },
   ],
 };
