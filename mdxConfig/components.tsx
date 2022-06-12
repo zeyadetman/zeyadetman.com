@@ -1,7 +1,6 @@
 import { Box, Code, Link, Text } from "@chakra-ui/react";
 import Heading from "components/Heading";
-import theme from "react-syntax-highlighter/dist/cjs/styles/prism/vs";
-import SyntaxHighlighter from "react-syntax-highlighter";
+import HighlightCode from "components/Highlight";
 
 const mdxComponentsMapping = {
   h2: (props: any) => (
@@ -47,24 +46,10 @@ const mdxComponentsMapping = {
     <Box as="ol" {...props} listStylePos="inside" wordBreak="break-all" />
   ),
   img: (props: any) => <Box as="img" {...props} my="4" mx="auto" />,
+  pre: (props: any) => <HighlightCode {...props} />,
 
-  code: ({ className, ...props }: any) => {
-    const match = /language-(\w+)/.exec(className || "");
-    const lang = match?.[1] === "js" ? "javascript" : match?.[1];
-
-    return match ? (
-      <Box my={4}>
-        <SyntaxHighlighter
-          language={lang}
-          PreTag="div"
-          {...props}
-          wrapLongLines
-          style={theme}
-        />
-      </Box>
-    ) : (
-      <Code {...props} variant="inline" />
-    );
+  code: ({ ...props }: any) => {
+    return <Code {...props} variant="inline" />;
   },
 };
 

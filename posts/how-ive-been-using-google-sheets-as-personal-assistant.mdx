@@ -43,7 +43,15 @@ function getUsdToEgpRate() {
     1,
     'USD',
     'Equals',
-    `=REGEXREPLACE(TO_TEXT(index(GOOGLEFINANCE("CURRENCY:USDEGP", "price", date(${todayFormatted})), 2, 2)), "٫", ".")`,
+    `=REGEXREPLACE(
+      TO_TEXT(
+        index(
+          GOOGLEFINANCE(
+            "CURRENCY:USDEGP", "price", date(${todayFormatted})
+            ), 2, 2
+        )
+      ), "٫", "."
+    )`,
     'EGP'
   ];
   spreedSheet.appendRow(row);

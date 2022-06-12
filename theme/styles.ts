@@ -32,11 +32,15 @@ export const customStyles = {
         opacity: 0.5,
       },
     },
-    ".mainPost *": {
+    ".mainPost": {
       fontFamily: `'Sanchez', sans-serif`,
     },
     ".color-mode-respected": {
       ...(colorMode === "dark" ? { filter: "invert(1)" } : {}),
+    },
+    ".pre-code & .token-line": {
+      height: "1.3em",
+      lineHeight: "1.3em",
     },
   }),
 };

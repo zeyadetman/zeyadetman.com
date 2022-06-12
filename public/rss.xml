@@ -4,7 +4,7 @@
         <title>Articles by Zeyad Etman</title>
         <link>https://zeyadetman.com</link>
         <description>Thoughts about software development and Life</description>
-        <lastBuildDate>Sun, 12 Jun 2022 03:26:28 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 12 Jun 2022 05:17:32 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -460,7 +460,15 @@ function getUsdToEgpRate() {
     1,
     'USD',
     'Equals',
-    `=REGEXREPLACE(TO_TEXT(index(GOOGLEFINANCE("CURRENCY:USDEGP", "price", date(${todayFormatted})), 2, 2)), "٫", ".")`,
+    `=REGEXREPLACE(
+      TO_TEXT(
+        index(
+          GOOGLEFINANCE(
+            "CURRENCY:USDEGP", "price", date(${todayFormatted})
+            ), 2, 2
+        )
+      ), "٫", "."
+    )`,
     'EGP'
   ];
   spreedSheet.appendRow(row);
