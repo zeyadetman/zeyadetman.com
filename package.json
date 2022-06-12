@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next-remote-watch",
-    "build": "next build",
+    "build": "rm -rf dist && next build",
     "start": "next start",
     "lint": "next lint"
   },

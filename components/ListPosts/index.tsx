@@ -38,7 +38,7 @@ function ListPosts(props: Props) {
             </Heading>
           </Link>
 
-          <Text fontSize="sm" as="time" opacity="0.6" dateTime={data.date}>
+          <Text fontSize="sm" as="time" opacity="0.7" dateTime={data.date}>
             {data.date}
           </Text>
         </ListItem>
