@@ -23,13 +23,15 @@ const nextConfig = {
 };
 
 module.exports = withPlugins([
-  withPWA({
-    pwa: {
-      dest: "public",
-    },
-  }),
   withMDX({
     pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   }),
   nextConfig,
+  withPWA({
+    pwa: {
+      disable: process.env.NODE_ENV === "development",
+      register: true,
+      sw: "/sw.js",
+    },
+  }),
 ]);
