@@ -72,6 +72,7 @@ const Home = (props: Props) => {
           layout="fill"
           objectFit="contain"
           className="color-mode-respected"
+          priority
         />
       </Box>
       <Heading type="h2" size="lg" display="flex" alignItems="baseline">

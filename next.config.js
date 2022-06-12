@@ -23,10 +23,6 @@ const nextConfig = {
 };
 
 module.exports = withPlugins([
-  withMDX({
-    pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
-  }),
-  nextConfig,
   withPWA({
     pwa: {
       disable: process.env.NODE_ENV === "development",
@@ -34,4 +30,8 @@ module.exports = withPlugins([
       sw: "/sw.js",
     },
   }),
+  withMDX({
+    pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+  }),
+  nextConfig,
 ]);

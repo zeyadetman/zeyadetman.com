@@ -32,6 +32,7 @@ function Header(props: Props) {
               layout="fill"
               objectFit="contain"
               className="color-mode-respected"
+              priority
             />
           </Box>
         </Heading>
