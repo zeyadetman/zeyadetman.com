@@ -174,7 +174,7 @@ function PostPage(props: Props) {
               key="github-edit-button"
               onClick={() => {
                 window.open(
-                  `${config.githubRepo}/posts/${post.fileName}.mdx`,
+                  `${config.githubRepo}/blob/main/posts/${post.fileName}.mdx`,
                   "_blank"
                 );
               }}
