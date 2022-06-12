@@ -18,6 +18,7 @@
     "@mdx-js/loader": "^2.1.1",
     "@next/mdx": "^12.1.6",
     "countapi-js": "^1.0.2",
+    "feed": "^4.2.2",
     "framer-motion": "^6.3.11",
     "gray-matter": "^4.0.3",
     "hastscript": "^7.0.2",

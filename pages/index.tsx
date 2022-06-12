@@ -13,6 +13,7 @@ import ListPosts from "components/ListPosts";
 import type { GetStaticPropsContext } from "next";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { generateRSSFeed } from "utils/feed";
 import { getPosts } from "utils/posts";
 
 interface Props {
@@ -21,6 +22,7 @@ interface Props {
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   const posts = await getPosts();
+  generateRSSFeed(posts);
 
   return {
     props: {
