@@ -1,7 +1,15 @@
-import { Box, HStack, List, ListItem, useColorMode } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Icon,
+  List,
+  ListItem,
+  useColorMode,
+} from "@chakra-ui/react";
 import Link from "components/Link";
 import config from "config";
 import React from "react";
+import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
 
 interface Props {}
 
@@ -32,6 +40,14 @@ function NavList(props: Props) {
         flexWrap={"wrap"}
       >
         {renderNavList()}
+        <Icon
+          as={colorMode === "light" ? IoMoonOutline : IoSunnyOutline}
+          name="menu"
+          fontSize={"xl"}
+          onClick={() => {
+            setColorMode(colorMode === "light" ? "dark" : "light");
+          }}
+        />
       </List>
     </Box>
   );
