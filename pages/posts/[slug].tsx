@@ -14,12 +14,14 @@ import {
   Icon,
   Stack,
   Text,
+  useColorMode,
   VStack,
 } from "@chakra-ui/react";
 import config from "config";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 import { getViews, hitPath } from "utils/analytics";
+import Giscus from "@giscus/react";
 
 interface Props {
   post: any;
@@ -59,6 +61,7 @@ function PostPage(props: Props) {
   const router = useRouter();
   const [pageVisits, setPageVisits] = useState(0);
   const { post, isProduction } = props;
+  const { colorMode } = useColorMode();
 
   useEffect(() => {
     if (post) {
@@ -152,6 +155,20 @@ function PostPage(props: Props) {
         <Box className="mainPost">
           <MDXRemote {...post.content} components={mdxComponentsMapping} />
         </Box>
+        <Giscus
+          repo="zeyadetman/zeyadetman.com"
+          repoId="MDEwOlJlcG9zaXRvcnk0MDU4NjIyODk="
+          category="Announcements"
+          categoryId="DIC_kwDOGDD3kc4COmmU"
+          mapping="pathname"
+          strict="0"
+          reactionsEnabled="1"
+          emitMetadata="1"
+          inputPosition="top"
+          theme={colorMode === "dark" ? "dark_dimmed" : "light"}
+          lang="en"
+          loading="lazy"
+        />
         <Stack
           flexDirection={["column", "row", "row", "row"]}
           alignItems={["center", "baseline", "baseline", "baseline"]}

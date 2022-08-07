@@ -15,6 +15,7 @@
     "@emotion/styled": "^11.8.1",
     "@fontsource/raleway": "^4.5.9",
     "@fontsource/sanchez": "^4.5.8",
+    "@giscus/react": "^2.2.0",
     "@mdx-js/loader": "^2.1.1",
     "@next/mdx": "^12.1.6",
     "countapi-js": "^1.0.2",
