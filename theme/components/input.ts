@@ -19,6 +19,7 @@ export default {
       field: {
         background: theme.colors.white,
         border: "1px solid",
+        borderRadius: 0,
         padding: "12px 12px",
         color: theme.colors.black,
         boxSizing: "border-box",

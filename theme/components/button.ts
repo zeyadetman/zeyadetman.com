@@ -16,6 +16,7 @@ export default {
   },
   variants: {
     solid: ({ theme }: StyleFunctionProps) => ({
+      borderWidth: "1px",
       borderColor: theme.colors.black,
       color: theme.colors.white,
       bg: theme.colors.black,
@@ -29,12 +30,27 @@ export default {
         borderColor: theme.colors.black,
       },
     }),
-    twitter: {
-      bg: "#1d9bf0",
+    outline: ({ theme }: StyleFunctionProps) => ({
+      borderWidth: "1px",
+      borderColor: theme.colors.black,
+      color: theme.colors.black,
+      bg: theme.colors.whiteClassic,
+      _hover: {
+        bg: theme.colors.whiteClassic,
+        color: theme.colors.black,
+      },
+      _active: {
+        bg: theme.colors.gray,
+        color: theme.colors.black,
+        borderColor: theme.colors.black,
+      },
+    }),
+    twitter: ({ theme }: StyleFunctionProps) => ({
+      bg: theme.colors.twitterBlue,
       color: "#fff",
       _hover: { bg: "#1e9cf1dd", color: "#fff" },
       size: "sm",
-    },
+    }),
     github: {
       size: "sm",
       bgColor: "#24292f",

@@ -14,6 +14,7 @@ function HighlightCode({ children }: any) {
       maxWidth="800px"
       margin="0 auto"
       minWidth="240px"
+      dir="ltr"
     >
       <Highlight
         {...defaultProps}

@@ -1,0 +1,191 @@
+---
+title: Create your own design system in ReactJS | بالعربي
+date: "2022-04-21"
+lang: ar
+tags:
+  - technical
+  - design system
+  - reactjs
+  - frontend
+layout: post
+author: zeyadetman
+comments: true
+isThread: true
+threadUrl: https://twitter.com/zeyadetman/status/1517156830362968065?s=20&t=TAv41PZY8OObKrk06PJ3Vw
+---
+
+<div dir="rtl">
+فى الثريد دى هتكلم عن ازاى بطبّق ال design system فى الفرونت اند.
+
+الثريد دى هتساعدك لو انت fullstack او فرونت اند وهتلاقى فيه implementation.
+
+انا بفضّل استخدم [styled system concept](https://styled-system.com/) عن حاجة زى [tailwind css](https://tailwindcss.com/) مثلًا، فال styled system انت بس بتعمل ال theme configs وبتستخدم ال components من غير ما تغير فيها styles تانى، كل اللى بتعمله انك بت import ال component من ال lib وخلاص وهو بي render بال styles.
+
+فى كذا ui framework بيستخدموا ال concept ده زى [material ui](https://mui.com/) و [theme ui](https://theme-ui.com/) و [chakra ui](https://chakra-ui.com/) بس ممكن تلاقى اختلافات بسيطة فال implementation، انا فى الثريد دى هقولكم ازاى نعمل Button ب chakra ui.
+
+## اختيار ال Theme
+
+اول حاجة هنختار design system من figma community وليكن ده [ال design الجميل ده](https://www.figma.com/community/file/1075811850250564922).
+
+## Project Setup
+
+بعد كدة هنبدأ نعمل setup للبروجكت [https://chakra-ui.com/getting-started](https://chakra-ui.com/getting-started).
+
+```jsx
+// src/index.tsx
+import { ChakraProvider } from "@chakra-ui/react";
+import "@fontsource/patrick-hand/400.css";
+import * as ReactDOMClient from "react-dom/client";
+
+import App from "./App";
+import theme from "./theme";
+
+const rootElement = document.getElementById("root");
+const root = ReactDOMClient.createRoot(rootElement);
+
+root.render(
+  <StrictMode>
+    <ChakraProvider theme={theme}>
+      <App />
+    </ChakraProvider>
+  </StrictMode>
+);
+```
+
+## Theme Customization
+
+بس وبعدين نبدأ ن customize ال theme حسب ال design system بتاع figma اللى اخترناه [https://chakra-ui.com/docs/styled-system/theming/customize-theme](https://chakra-ui.com/docs/styled-system/theming/customize-theme) واول حاجة ال foundations نعملها الاول بس
+
+```jsx
+// theme/foundations/index.ts
+
+export default {
+  colors: {
+    black: "#333",
+    darkGray: "#7D7D7D",
+    gray: "#B4B4B4",
+    lightGray: "#EEE",
+  },
+  fonts: {
+    heading: "Patrick Hand, sans-serif",
+    body: "Patrick Hand, sans-serif",
+  },
+  fontSizes: {
+    md: "1rem",
+    lg: "1.2rem",
+  },
+};
+```
+
+وبعدين نعمل ال components وده مثال لل button
+
+```jsx
+// theme/components/index.tsx
+
+export default {
+  Button: {
+    baseStyle: ({ theme }: any) => ({
+      _disabled: {
+        opacity: 1,
+        cursor: "not-allowed",
+        boxShadow: "none",
+        border: "4px solid",
+        borderColor: theme.colors.black,
+        bgColor: theme.colors.gray,
+        color: theme.colors.black,
+        _hover: {
+          borderColor: theme.colors.black,
+          bgColor: theme.colors.gray,
+          color: theme.colors.black,
+        },
+      },
+      _hover: {
+        _disabled: {
+          borderColor: theme.colors.black,
+          bgColor: theme.colors.gray,
+          color: theme.colors.black,
+        },
+      },
+    }),
+    sizes: {
+      md: {
+        border: "none",
+        boxSizing: "border-box",
+        borderColor: "black",
+        padding: "12px 24px",
+        fontSize: "lg",
+      },
+    },
+    variants: {
+      outline: ({ theme }: any) => ({
+        border: "4px solid",
+        borderColor: theme.colors.black,
+        color: theme.colors.black,
+        bg: theme.colors.white,
+        _hover: {
+          bg: theme.colors.lightGray,
+          color: theme.colors.black,
+        },
+        _active: {
+          bg: theme.colors.gray,
+          color: theme.colors.black,
+          borderColor: theme.colors.black,
+        },
+      }),
+      solid: ({ theme }: any) => ({
+        border: "4px solid",
+        borderColor: theme.colors.black,
+        color: theme.colors.white,
+        bg: theme.colors.black,
+        _hover: {
+          bg: theme.colors.darkGray,
+          color: theme.colors.white,
+        },
+        _active: {
+          bg: theme.colors.gray,
+          color: theme.colors.white,
+          borderColor: theme.colors.black,
+        },
+      }),
+      ghost: {
+        _hover: {
+          bg: "transparent",
+        },
+        _active: {
+          bg: "transparent",
+        },
+        _focus: {
+          bg: "transparent",
+        },
+      },
+    },
+  },
+};
+```
+
+فال function اللي فوق انت بسهولة جدًا تقدر ت access كل ال theme وتقدر تستخدم اللي عايزه يعني.
+
+## النتيجة
+
+<iframe
+  src="https://codesandbox.io/embed/design-system-7g4s85?fontsize=14&hidenavigation=1&theme=dark&view=preview"
+  style={{
+    width: "100%",
+    height: "500px",
+    margin: "5px auto",
+    border: 0,
+    borderRadius: "4px",
+    overflow: "hidden",
+  }}
+  title="design-system"
+  allow=""
+  sandbox="allow-forms  allow-same-origin allow-scripts"
+></iframe>
+
+بس بقى ده كدة ال Button component بنفس الديزاين سيستم وتقدر تستخدمه فالبروجكت كله من غير ما تكتب styles تانى وال files بتاعتك هتكون مركزة اكتر على ال logic.
+
+بس انت تقدر تعمل كدة مع باقي ال components وتقدر تغير وتستخدم styles global.
+
+[ده لينك الثريد علي تويتر.](https://twitter.com/zeyadetman/status/1517156830362968065?s=20&t=TAv41PZY8OObKrk06PJ3Vw)
+
+</div>

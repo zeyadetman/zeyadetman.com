@@ -109,9 +109,7 @@ function PostPage(props: Props) {
 
       <VStack spacing={6}>
         <VStack textAlign="center" spacing={2}>
-          <Heading
-            style={{ direction: post.data.lang === "ar" ? "rtl" : "ltr" }}
-          >
+          <Heading dir={post.data.lang === "ar" ? "rtl" : "ltr"}>
             {post.data.title}
           </Heading>
           <VStack spacing={2}>
@@ -138,16 +136,18 @@ function PostPage(props: Props) {
               flexWrap="wrap"
               gap="2"
             >
-              {post.data.tags.map((tag: string) => (
+              {post?.data?.isThread && (
                 <Badge
-                  key={tag}
-                  variant="outline"
-                  fontSize="10"
-                  bg="yellow"
-                  color="black"
+                  variant="thread"
+                  onClick={() => {
+                    window.open(post.data.threadUrl, "_blank");
+                  }}
                 >
-                  {tag}
+                  thread
                 </Badge>
+              )}
+              {post.data.tags.map((tag: string) => (
+                <Badge key={tag}>{tag}</Badge>
               ))}
             </Stack>
           </VStack>

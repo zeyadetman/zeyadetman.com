@@ -1,16 +1,17 @@
 import {
   Box,
+  Button,
+  ButtonGroup,
   FormControl,
   FormLabel,
   HStack,
   Input,
   InputGroup,
-  Text,
   VStack,
 } from "@chakra-ui/react";
 import Heading from "components/Heading";
 import ListPosts from "components/ListPosts";
-import type { GetStaticPropsContext } from "next";
+import { Language } from "config";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { generateRSSFeed } from "utils/feed";
@@ -20,7 +21,7 @@ interface Props {
   posts: any[];
 }
 
-export async function getStaticProps(context: GetStaticPropsContext) {
+export async function getStaticProps() {
   const posts = await getPosts();
   generateRSSFeed(posts);
 
@@ -31,7 +32,23 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   };
 }
 
-const SearchInput = ({ setSearchText, searchText }: any) => {
+const SearchInput = ({
+  setSearchText,
+  langsSelected,
+  updateLangsSelected,
+}: any) => {
+  const updateLangsList = (newLang: string) => {
+    if (langsSelected.includes(newLang)) {
+      const restLanguages = langsSelected.filter(
+        (lang: string) => lang !== newLang
+      );
+
+      updateLangsSelected(restLanguages);
+    } else {
+      updateLangsSelected([...langsSelected, newLang]);
+    }
+  };
+
   return (
     <FormControl>
       <FormLabel htmlFor="searchInput">Search all posts.</FormLabel>
@@ -45,6 +62,32 @@ const SearchInput = ({ setSearchText, searchText }: any) => {
           placeholder="Search..."
         />
       </InputGroup>
+      <ButtonGroup
+        size="sm"
+        isAttached
+        display="flex"
+        justifyContent="flex-end"
+      >
+        <Button
+          borderTop="none"
+          onClick={() => {
+            updateLangsList(Language.AR);
+          }}
+          variant={langsSelected.includes(Language.AR) ? "solid" : "outline"}
+        >
+          AR
+        </Button>
+        <Button
+          borderTop="none"
+          onClick={() => {
+            updateLangsList(Language.EN);
+          }}
+          variant={langsSelected.includes(Language.EN) ? "solid" : "outline"}
+          ms="0px !important"
+        >
+          EN
+        </Button>
+      </ButtonGroup>
     </FormControl>
   );
 };
@@ -52,16 +95,25 @@ const SearchInput = ({ setSearchText, searchText }: any) => {
 const Home = (props: Props) => {
   const { posts } = props;
   const [postsList, updatePostsList] = useState(posts);
+  const [langsSelected, updateLangsSelected] = useState<string[]>([]);
   const [value, setValue] = useState("");
 
   useEffect(() => {
     const updatedPosts = posts.filter((post: any) => {
-      return post.text.includes(value);
+      const lang = post?.data?.lang
+        ? post?.data?.lang.toUpperCase()
+        : Language.EN;
+      if (
+        post.text.includes(value) &&
+        (langsSelected.length === 0 || langsSelected.includes(lang))
+      ) {
+        return post.text.includes(value);
+      }
     });
 
     updatePostsList(updatedPosts);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+  }, [value, langsSelected]);
 
   return (
     <VStack minH="inherit" minW="inherit" spacing="8">
@@ -76,13 +128,14 @@ const Home = (props: Props) => {
         />
       </Box>
       <Heading type="h2" size="lg" display="flex" alignItems="baseline">
-        I&apos;m writing about Technology and Life.{" "}
-        <Text fontStyle="italic" fontSize="xs">
-          AR/EN
-        </Text>
+        I&apos;m writing about Technology and Life.
       </Heading>
       <HStack w="full">
-        <SearchInput setSearchText={setValue} searchText={value} />
+        <SearchInput
+          setSearchText={setValue}
+          langsSelected={langsSelected}
+          updateLangsSelected={updateLangsSelected}
+        />
       </HStack>
       <ListPosts posts={postsList} />
     </VStack>

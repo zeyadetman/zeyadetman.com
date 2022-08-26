@@ -4,34 +4,227 @@
         <title>Articles by Zeyad Etman</title>
         <link>https://zeyadetman.com</link>
         <description>Thoughts about software development and Life</description>
-        <lastBuildDate>Sun, 07 Aug 2022 14:35:18 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 26 Aug 2022 18:46:15 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>zeyadetman</copyright>
         <item>
-            <title><![CDATA[ازاي تويتر بيهندل ال emojis]]></title>
-            <link>https://zeyadetman.com/posts/how-can-twitter-handle-emojis</link>
-            <guid>https://zeyadetman.com/posts/how-can-twitter-handle-emojis</guid>
-            <pubDate>Sat, 06 Nov 2021 00:00:00 GMT</pubDate>
+            <title><![CDATA[Create your own design system in ReactJS | بالعربي]]></title>
+            <link>https://zeyadetman.com/posts/design-system-react-ar</link>
+            <guid>https://zeyadetman.com/posts/design-system-react-ar</guid>
+            <pubDate>Thu, 21 Apr 2022 00:00:00 GMT</pubDate>
             <content:encoded><![CDATA[
 <div dir="rtl">
-تعالوا نحكي فالثريد دي ازاي تويتر بيهندل ال emojis.
-ال emojis دي زيها زي اي حاجة انت بتكتبها من الكيبورد عبارة عن unicode بيتحول لشكل character معين، زي حرف "أ" مثلًا او "A" او اي حاجة فاي لغة، بس مش كل الحروف طبعًا ليها نفس عدد ال unicodes chars يعني.
-يعني ممكن تلاقي حرف في لغة تويتر بيحسبه بواحد وحرف في لغة تانية تويتر بيحسبه بحرفين من ال 280، ده بيرجع لان عشان ال character ده يترسم فالتويتة بتاعتك بياخد 2 unicodes مش واحد - بالمناسبة تويتر بيعمل normalize لل unicodes لو الحرف بياخد اكتر من unicode - المهم نرجع لل emojis فرضًا ال emoji ده ليه unicode كدة U+1f4bb فتويتر عشان تعرضه بتضطر تعمله serve as an image مش بتستني ال operating system/ browser يعرضه عشان مش كل ال OS هتعرض كل ال emojis بنفس الطريقة او هتعرضهم اصلا، فهو بياخد ال unicode ويحوله ل codepoint hex فبيبقي كدة 1f4bb
+فى الثريد دى هتكلم عن ازاى بطبّق ال design system فى الفرونت اند.
 
-بعدين hex codepoint ده بيروح ع url بي serve ال emojis as svg زي كدة
-`https://twemoji.maxcdn.com/v/latest/svg/${codepoint}.svg`
+الثريد دى هتساعدك لو انت fullstack او فرونت اند وهتلاقى فيه implementation.
 
-فبيكون كدة https://twemoji.maxcdn.com/v/latest/svg/1f4bb.svg وبكدة يكون عرف يعرض ال emoji on whatever device/OS/Browser you're running
+انا بفضّل استخدم [styled system concept](https://styled-system.com/) عن حاجة زى [tailwind css](https://tailwindcss.com/) مثلًا، فال styled system انت بس بتعمل ال theme configs وبتستخدم ال components من غير ما تغير فيها styles تانى، كل اللى بتعمله انك بت import ال component من ال lib وخلاص وهو بي render بال styles.
 
-لو مثلًا ال emoji بيتكون من 2 unicode characters فتويتر بي join بين ال codepoints بتوعهم ب dash - عشان ال path بتاعهم يكون valid
+فى كذا ui framework بيستخدموا ال concept ده زى [material ui](https://mui.com/) و [theme ui](https://theme-ui.com/) و [chakra ui](https://chakra-ui.com/) بس ممكن تلاقى اختلافات بسيطة فال implementation، انا فى الثريد دى هقولكم ازاى نعمل Button ب chakra ui.
 
-## ليه بعض المرات لما تنزل ايموجيز جديدة لل ios ما تظهر في الأندرويد
+## اختيار ال Theme
 
-ده بسبب ان ال emojis مش cross platform، فكل OS بتهندل ال unicodes بطريقة مختلفة، زيها بالظبط زى ال fonts، كل حرف ليه unicode معين بس كل font بيرسمه بشكل معين عشان كدة لو هتستخدم ال emojis on web فالافضل تستخدمهم كصور مش ك unicode عشان تضمن يتعرضوا فكل مكان
+اول حاجة هنختار design system من figma community وليكن ده [ال design الجميل ده](https://www.figma.com/community/file/1075811850250564922).
 
-[المصدر](https://github.com/twitter/twemoji-parser/blob/937079b964bd07381350ac2ea966e5c78c2a39ea/src/index.js#L20)
+## Project Setup
+
+بعد كدة هنبدأ نعمل setup للبروجكت [https://chakra-ui.com/getting-started](https://chakra-ui.com/getting-started).
+
+```jsx
+// src/index.tsx
+import { ChakraProvider } from "@chakra-ui/react";
+import "@fontsource/patrick-hand/400.css";
+import * as ReactDOMClient from "react-dom/client";
+
+import App from "./App";
+import theme from "./theme";
+
+const rootElement = document.getElementById("root");
+const root = ReactDOMClient.createRoot(rootElement);
+
+root.render(
+  <StrictMode>
+    <ChakraProvider theme={theme}>
+      <App />
+    </ChakraProvider>
+  </StrictMode>
+);
+```
+
+## Theme Customization
+
+بس وبعدين نبدأ ن customize ال theme حسب ال design system بتاع figma اللى اخترناه [https://chakra-ui.com/docs/styled-system/theming/customize-theme](https://chakra-ui.com/docs/styled-system/theming/customize-theme) واول حاجة ال foundations نعملها الاول بس
+
+```jsx
+// theme/foundations/index.ts
+
+export default {
+  colors: {
+    black: "#333",
+    darkGray: "#7D7D7D",
+    gray: "#B4B4B4",
+    lightGray: "#EEE",
+  },
+  fonts: {
+    heading: "Patrick Hand, sans-serif",
+    body: "Patrick Hand, sans-serif",
+  },
+  fontSizes: {
+    md: "1rem",
+    lg: "1.2rem",
+  },
+};
+```
+
+وبعدين نعمل ال components وده مثال لل button
+
+```jsx
+// theme/components/index.tsx
+
+export default {
+  Button: {
+    baseStyle: ({ theme }: any) => ({
+      _disabled: {
+        opacity: 1,
+        cursor: "not-allowed",
+        boxShadow: "none",
+        border: "4px solid",
+        borderColor: theme.colors.black,
+        bgColor: theme.colors.gray,
+        color: theme.colors.black,
+        _hover: {
+          borderColor: theme.colors.black,
+          bgColor: theme.colors.gray,
+          color: theme.colors.black,
+        },
+      },
+      _hover: {
+        _disabled: {
+          borderColor: theme.colors.black,
+          bgColor: theme.colors.gray,
+          color: theme.colors.black,
+        },
+      },
+    }),
+    sizes: {
+      md: {
+        border: "none",
+        boxSizing: "border-box",
+        borderColor: "black",
+        padding: "12px 24px",
+        fontSize: "lg",
+      },
+    },
+    variants: {
+      outline: ({ theme }: any) => ({
+        border: "4px solid",
+        borderColor: theme.colors.black,
+        color: theme.colors.black,
+        bg: theme.colors.white,
+        _hover: {
+          bg: theme.colors.lightGray,
+          color: theme.colors.black,
+        },
+        _active: {
+          bg: theme.colors.gray,
+          color: theme.colors.black,
+          borderColor: theme.colors.black,
+        },
+      }),
+      solid: ({ theme }: any) => ({
+        border: "4px solid",
+        borderColor: theme.colors.black,
+        color: theme.colors.white,
+        bg: theme.colors.black,
+        _hover: {
+          bg: theme.colors.darkGray,
+          color: theme.colors.white,
+        },
+        _active: {
+          bg: theme.colors.gray,
+          color: theme.colors.white,
+          borderColor: theme.colors.black,
+        },
+      }),
+      ghost: {
+        _hover: {
+          bg: "transparent",
+        },
+        _active: {
+          bg: "transparent",
+        },
+        _focus: {
+          bg: "transparent",
+        },
+      },
+    },
+  },
+};
+```
+
+فال function اللي فوق انت بسهولة جدًا تقدر ت access كل ال theme وتقدر تستخدم اللي عايزه يعني.
+
+## النتيجة
+
+<iframe
+  src="https://codesandbox.io/embed/design-system-7g4s85?fontsize=14&hidenavigation=1&theme=dark&view=preview"
+  style={{
+    width: "100%",
+    height: "500px",
+    margin: "5px auto",
+    border: 0,
+    borderRadius: "4px",
+    overflow: "hidden",
+  }}
+  title="design-system"
+  allow=""
+  sandbox="allow-forms  allow-same-origin allow-scripts"
+></iframe>
+
+بس بقى ده كدة ال Button component بنفس الديزاين سيستم وتقدر تستخدمه فالبروجكت كله من غير ما تكتب styles تانى وال files بتاعتك هتكون مركزة اكتر على ال logic.
+
+بس انت تقدر تعمل كدة مع باقي ال components وتقدر تغير وتستخدم styles global.
+
+[ده لينك الثريد علي تويتر.](https://twitter.com/zeyadetman/status/1517156830362968065?s=20&t=TAv41PZY8OObKrk06PJ3Vw)
+
+</div>
+]]></content:encoded>
+            <author>zeyad.etman@gmail.com (Zeyad Etman)</author>
+        </item>
+        <item>
+            <title><![CDATA[A new strategy to build side projects]]></title>
+            <link>https://zeyadetman.com/posts/my-strategy-building-side-projects-ar</link>
+            <guid>https://zeyadetman.com/posts/my-strategy-building-side-projects-ar</guid>
+            <pubDate>Sat, 16 Apr 2022 00:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[
+<div dir="rtl">
+انا اعتمدت flow كويس لما بعمل fullstack app من الصفر جربته مرتين وفى المرتين ال output طلع احسن واسرع من اى flow او process تانى جربتها. ده طبعًا لو هتعمل ال app لوحدك ك micro saas او side project.
+
+## Backend setup
+
+اول حاجة ببدأ بال backend:
+
+1.  بعمل [postman collection](https://www.postman.com/collection/) فيها كل ال APIs اللى هحتاجها well documented ومتقسمة جوا folders.
+2.  بكتب tests لل APIs دى فى postman عشان يبقى عندى تصور كامل لل scenarios.
+3.  بحدد ال technologies اللى ه implement بيها ال APIs.
+4.  بكتب ال schemas على حسب ال postman collection اللى عاملها وبعدين ب implement ال apis بنفس الاسماء وال unit tests من اللى كاتبه فى postman.
+5.  بعد ما بخلص كل ده، بعمل CI/CD.
+
+## Frontend setup
+
+بعد ما بخلص جزء ال backend بدخل على ال frontend:
+
+1. اول حاجة بعملها هو wireframe فيه ال user flow وبستخدم [balsamiq](https://balsamiq.com/) عشان اعمله.
+2. انا بفضّل استخدم ui framework مبنية على styled system وحاليًا بفضّل [chakra ui](https://github.com/chakra-ui/awesome-chakra-ui).
+3. بدخل على [figma community](https://www.figma.com/community/category/design-systems) واختار ديزاين سيستم مناسب للى هعمله.
+4. ممكن ابدل الخطوتين اللى قبل دول ب ui framework ال design system فيها كويس ومناسب زى carbon ui مثلًا.
+5. بجهز الديزاين سيستم وال components اللى هستخدمها وا follow ال wireframes.
+6. بشوف هستخدم انهى packages وبعدين ببدأ implementation.
+7. بخلص وبعمل CI/CD connected بالbackend.
+
+ساعات بستخدم [git submodules](https://github.blog/2016-02-01-working-with-submodules/) بيبقى ال root folder فيه ال data بتاعة ال app لو فى notes او كدة، وجواه الاتنين repos بتوع ال frontend وال backend
 
 </div>
 ]]></content:encoded>
@@ -416,6 +609,34 @@ I'll keep this blog updated whenver I add a new feature to the blog. Just subscr
 
 - [https://francoisbest.com/](https://francoisbest.com/)
 - [https://leerob.io/](https://leerob.io/)
+]]></content:encoded>
+            <author>zeyad.etman@gmail.com (Zeyad Etman)</author>
+        </item>
+        <item>
+            <title><![CDATA[ازاي تويتر بيهندل ال emojis]]></title>
+            <link>https://zeyadetman.com/posts/how-can-twitter-handle-emojis</link>
+            <guid>https://zeyadetman.com/posts/how-can-twitter-handle-emojis</guid>
+            <pubDate>Thu, 27 Aug 2020 00:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[
+<div dir="rtl">
+تعالوا نحكي فالثريد دي ازاي تويتر بيهندل ال emojis.
+ال emojis دي زيها زي اي حاجة انت بتكتبها من الكيبورد عبارة عن unicode بيتحول لشكل character معين، زي حرف "أ" مثلًا او "A" او اي حاجة فاي لغة، بس مش كل الحروف طبعًا ليها نفس عدد ال unicodes chars يعني.
+يعني ممكن تلاقي حرف في لغة تويتر بيحسبه بواحد وحرف في لغة تانية تويتر بيحسبه بحرفين من ال 280، ده بيرجع لان عشان ال character ده يترسم فالتويتة بتاعتك بياخد 2 unicodes مش واحد - بالمناسبة تويتر بيعمل normalize لل unicodes لو الحرف بياخد اكتر من unicode - المهم نرجع لل emojis فرضًا ال emoji ده ليه unicode كدة U+1f4bb فتويتر عشان تعرضه بتضطر تعمله serve as an image مش بتستني ال operating system/ browser يعرضه عشان مش كل ال OS هتعرض كل ال emojis بنفس الطريقة او هتعرضهم اصلا، فهو بياخد ال unicode ويحوله ل codepoint hex فبيبقي كدة 1f4bb
+
+بعدين hex codepoint ده بيروح ع url بي serve ال emojis as svg زي كدة
+`https://twemoji.maxcdn.com/v/latest/svg/${codepoint}.svg`
+
+فبيكون كدة https://twemoji.maxcdn.com/v/latest/svg/1f4bb.svg وبكدة يكون عرف يعرض ال emoji on whatever device/OS/Browser you're running
+
+لو مثلًا ال emoji بيتكون من 2 unicode characters فتويتر بي join بين ال codepoints بتوعهم ب dash - عشان ال path بتاعهم يكون valid
+
+## ليه بعض المرات لما تنزل ايموجيز جديدة لل ios ما تظهر في الأندرويد
+
+ده بسبب ان ال emojis مش cross platform، فكل OS بتهندل ال unicodes بطريقة مختلفة، زيها بالظبط زى ال fonts، كل حرف ليه unicode معين بس كل font بيرسمه بشكل معين عشان كدة لو هتستخدم ال emojis on web فالافضل تستخدمهم كصور مش ك unicode عشان تضمن يتعرضوا فكل مكان
+
+[المصدر](https://github.com/twitter/twemoji-parser/blob/937079b964bd07381350ac2ea966e5c78c2a39ea/src/index.js#L20)
+
+</div>
 ]]></content:encoded>
             <author>zeyad.etman@gmail.com (Zeyad Etman)</author>
         </item>

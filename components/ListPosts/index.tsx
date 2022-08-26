@@ -1,4 +1,4 @@
-import { List, ListItem, Text } from "@chakra-ui/react";
+import { Badge, HStack, List, ListItem, Text } from "@chakra-ui/react";
 import Heading from "components/Heading";
 import Link from "components/Link";
 import React from "react";
@@ -24,20 +24,25 @@ function ListPosts(props: Props) {
           alignItems={["flex-start", "flex-start", "center", "center"]}
           flexDirection={["column", "column", "row", "row"]}
         >
-          <Link href={`/posts/${slug}`}>
-            <Heading
-              type="h4"
-              fontSize="xl"
-              style={{
-                ...(data.lang === "ar"
-                  ? { direction: "rtl", float: "left" }
-                  : {}),
-              }}
-            >
-              {data.title}
-            </Heading>
-          </Link>
-
+          <HStack
+            flexDir={data.lang === "ar" ? "row-reverse" : "row"}
+            columnGap={2}
+          >
+            {data.isThread && (
+              <Badge variant="thread" _hover={{ cursor: "" }}>
+                thread
+              </Badge>
+            )}
+            <Link href={`/posts/${slug}`}>
+              <Heading
+                type="h4"
+                fontSize="xl"
+                dir={data.lang === "ar" ? "rtl" : "ltr"}
+              >
+                {data.title}
+              </Heading>
+            </Link>
+          </HStack>
           <Text fontSize="sm" as="time" opacity="0.7" dateTime={data.date}>
             {data.date}
           </Text>

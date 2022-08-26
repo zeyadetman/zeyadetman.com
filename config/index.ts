@@ -1,3 +1,8 @@
+export enum Language {
+  AR = "AR",
+  EN = "EN",
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   username: "zeyadetman",
@@ -39,4 +44,5 @@ export default {
       external: true,
     },
   ],
+  languages: [Language.AR, Language.EN],
 };

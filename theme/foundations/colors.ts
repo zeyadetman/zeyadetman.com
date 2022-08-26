@@ -2,6 +2,7 @@
 export default {
   white: "#fff",
   whiteClassic: "#fbf0e54f",
+  twitterBlue: "#1d9bf0",
   black: "#2B282C",
   gray: "#515050",
   lightGray: "#eaeaea",
