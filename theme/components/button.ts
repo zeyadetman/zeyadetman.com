@@ -15,13 +15,13 @@ export default {
     },
   },
   variants: {
-    solid: ({ theme }: StyleFunctionProps) => ({
+    solid: ({ theme, colorMode }: StyleFunctionProps) => ({
       borderWidth: "1px",
       borderColor: theme.colors.black,
       color: theme.colors.white,
       bg: theme.colors.black,
       _hover: {
-        bg: theme.colors.gray,
+        bg: colorMode === "dark" ? theme.colors.gray : theme.colors.darkGray,
         color: theme.colors.white,
       },
       _active: {
@@ -30,11 +30,12 @@ export default {
         borderColor: theme.colors.black,
       },
     }),
-    outline: ({ theme }: StyleFunctionProps) => ({
+    outline: ({ theme, colorMode }: StyleFunctionProps) => ({
       borderWidth: "1px",
-      borderColor: theme.colors.black,
-      color: theme.colors.black,
-      bg: theme.colors.whiteClassic,
+      borderColor:
+        colorMode === "dark" ? theme.colors.white : theme.colors.black,
+      color: colorMode === "dark" ? theme.colors.white : theme.colors.black,
+      bg: "transparent",
       _hover: {
         bg: theme.colors.whiteClassic,
         color: theme.colors.black,

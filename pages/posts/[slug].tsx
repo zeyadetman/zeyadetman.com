@@ -147,7 +147,9 @@ function PostPage(props: Props) {
                 </Badge>
               )}
               {post.data.tags.map((tag: string) => (
-                <Badge key={tag}>{tag}</Badge>
+                <Badge key={tag} variant="solid">
+                  {tag}
+                </Badge>
               ))}
             </Stack>
           </VStack>
