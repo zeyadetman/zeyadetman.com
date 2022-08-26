@@ -33,7 +33,12 @@ function ListPosts(props: Props) {
                 thread
               </Badge>
             )}
-            <Link href={`/posts/${slug}`}>
+            <Link
+              href={`/posts/${slug}`}
+              chackraProps={{
+                ms: "0px !important",
+              }}
+            >
               <Heading
                 type="h4"
                 fontSize="xl"
