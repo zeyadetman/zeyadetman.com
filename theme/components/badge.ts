@@ -5,6 +5,7 @@ export default {
   baseStyle: ({ theme }: StyleFunctionProps) => ({
     variant: "outline",
     fontSize: "10",
+    fontWeight: [400, 400, 600, 600],
     color: "black",
     bgColor: "yellow",
   }),
