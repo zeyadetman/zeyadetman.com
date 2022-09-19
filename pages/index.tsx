@@ -7,6 +7,7 @@ import {
   HStack,
   Input,
   InputGroup,
+  Flex,
   VStack,
 } from "@chakra-ui/react";
 import Heading from "components/Heading";
@@ -16,6 +17,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { generateRSSFeed } from "utils/feed";
 import { getPosts } from "utils/posts";
+import { BiRss } from "react-icons/bi";
+import Link from "components/Link";
 
 interface Props {
   posts: any[];
@@ -51,7 +54,14 @@ const SearchInput = ({
 
   return (
     <FormControl>
-      <FormLabel htmlFor="searchInput">Search all posts.</FormLabel>
+      <Flex alignItems="center">
+        <FormLabel htmlFor="searchInput" mr="0">
+          Search all posts.
+        </FormLabel>
+        <Link href="/rss.xml">
+          <BiRss fontSize="28px" />
+        </Link>
+      </Flex>
       <InputGroup size="sm">
         <Input
           id="searchInput"
