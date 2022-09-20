@@ -39,8 +39,8 @@ export default {
       external: true,
     },
     {
-      name: "Wiki",
-      path: "https://wiki.zeyadetman.com",
+      name: "Notes",
+      path: "https://notes.zeyadetman.com",
       external: true,
     },
   ],
