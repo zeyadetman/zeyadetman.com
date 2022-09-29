@@ -4,11 +4,230 @@
         <title>Articles by Zeyad Etman</title>
         <link>https://zeyadetman.com</link>
         <description>Thoughts about software development and Life</description>
-        <lastBuildDate>Mon, 19 Sep 2022 03:43:26 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 29 Sep 2022 05:15:31 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>zeyadetman</copyright>
+        <item>
+            <title><![CDATA[Building personal assistant bot with telegram]]></title>
+            <link>https://zeyadetman.com/posts/building-personal-assistant-bot-with-telegram</link>
+            <guid>https://zeyadetman.com/posts/building-personal-assistant-bot-with-telegram</guid>
+            <pubDate>Thu, 29 Sep 2022 00:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[
+<figure>
+  <img
+    src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/06f15b9b-f930-4389-98d6-9a1350406344/d3csubx-ef400f4d-f1d5-4ad0-ad79-397f2a0d9d7a.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzA2ZjE1YjliLWY5MzAtNDM4OS05OGQ2LTlhMTM1MDQwNjM0NFwvZDNjc3VieC1lZjQwMGY0ZC1mMWQ1LTRhZDAtYWQ3OS0zOTdmMmEwZDlkN2EuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.dhXt5qZ_EDROz5mHocVMiecOxis-ZeIYPzghstUSml0"
+    alt="Bot Arm"
+  />
+  <figcaption>
+    [source](https://www.deviantart.com/eskimomittens/art/Diesel-Punk-Arm-202899597)
+  </figcaption>
+</figure>
+
+In this post I’ll document what I’ve done to build [a telegram bot](https://core.telegram.org/bots/api) that helps me track most of useful things i know, do, willing to share with public.
+
+## Motivation
+
+I’ve created a wiki to share my bookmarks, links, articles, tools, …etc, but **the problem was** when you find good link or anything and want to add it to the wiki, in this situation I was open [Gitbook](https://www.gitbook.com/) dashboard, and searching for the document that i want to add to, then push and sync. That was taking a lot of time, and i had have to do this from my laptop super boring, isn’t it?
+
+The problem appears strongly when reading a book and add comments or notes, and want to track it or share it, similar thing to my IMDB reviews. All of this was annoying me to add to it, so I decided to build a bot that can collect these things and add them whenever I tell him to do so.
+
+## Features
+
+Okay, now I’ve a problem with an idea to solve it. The first thing i was supposed to do is listing the main commands for this bot to understand.
+
+- `/syncIMDB` List all Movies/TV Series/Video Games ratings from IMDB.
+- `/syncNotion` Publishing pages to [notes.zeyadetman.com](http://notes.zeyadetman.com) from Notion.
+
+## Starting the Bot Implementation
+
+So while I was thinking about how can i organize the bot object and its behaviors, I ended up with implement the [Decorator design pattern](https://refactoring.guru/design-patterns/decorator).
+
+**Decorator design pattern:** In this pattern you have 4 main things:
+
+1. The main interface for your component and basic methods “without implementation”, in my case it’s the Bot.
+2. The main concrete component that implements the default behavior of component behaviors.
+3. The base decorator that act like a wrapper for concrete decorators.
+4. The concrete decorator is to call the object and alter it.
+
+**Why?** I have a monolithic class (Bot) with a bunch of behaviors and actions, like commands, configurations, messages, …etc, so i want to divide them into smaller classes that each class contains one behavior or action.
+
+I split the main features into multiple concrete decorators.
+
+- One to handle the [`BotCommands`](https://core.telegram.org/api/bots/commands) , every command starting with `/`
+
+```tsx
+export class BotWithCommands extends DecoratorBot {
+  private setCommands(bot) {
+    bot.command("syncIMDB", syncIMDB);
+    bot.start(start);
+    bot.help(help);
+  }
+
+  public launch() {
+    this.setCommands(this.bot);
+    super.launch();
+  }
+}
+```
+
+- One to handle `BotEvents` or [inline queries](https://core.telegram.org/api/bots/inline).
+
+```tsx
+import { DecoratorBot } from "../decorator";
+import { documentEvent } from "./document";
+
+export class BotWithEvents extends DecoratorBot {
+  private setEvents(bot) {
+    bot.on("document", documentEvent);
+    bot.on("sticker", (ctx: any) => ctx.reply("👍"));
+  }
+
+  public launch() {
+    this.setEvents(this.bot);
+    super.launch();
+  }
+}
+```
+
+You can [read the code](https://github.com/zeyadetman/ben-personal-assistant) to understand more about the implementation and the idea for these decorators.
+
+The final structure was something like this
+
+```bash
+.
+├── commands
+│   ├── help.ts
+│   ├── index.ts
+│   ├── start.ts
+│   ├── syncIMDB.ts
+│   └── syncNotion.ts
+├── decorator
+│   └── index.ts
+├── events
+│   ├── document.ts
+│   └── index.ts
+├── index.ts
+├── types
+└── utils
+    ├── constants.ts
+    ├── convert-name.ts
+    └── writeFileToGithub.ts
+```
+
+### `/syncIMDB` Create a list of my movies ratings
+
+This was the first thing i handled in the bot. The problem is I need to show a list of all my movies ratings, I use IMDB to track this, but IMDB doesn’t offer apis to get my ratings, So the solution that i use is exporting the ratings manually, and send this file to the bot telling him to update this file to [re-format it](https://github.com/zeyadetman/ben-personal-assistant/blob/7528d28b6b860c819eadf321d616c3986dd0e4c4/src/commands/syncIMDB.ts#L14) into [a json file](https://github.com/zeyadetman/Notes/blob/main/src/data/imdb.json), then add this file to the notes app, and GitHub action will redeploy the app updating the movies list on my notes app with these new ratings.
+
+I use [nivo.rocks](https://nivo.rocks/) to visualize the genres and make the list more interactive. Please [read my comment](https://github.com/plouc/nivo/issues/920#issuecomment-1256857723) on how I implemented it.
+
+This was a little bit tricky especially because I’m using [docusaurus.io](https://docusaurus.io/) but you can check the code for it [from here](https://github.com/zeyadetman/Notes/edit/main/docs/watch-list/movies.mdx).
+
+I use the same json file to add more pages with the same style.
+
+- [https://notes.zeyadetman.com/watch-list/](https://notes.zeyadetman.com/watch-list/)
+- [https://notes.zeyadetman.com/games/](https://notes.zeyadetman.com/games/)
+
+## `/syncNotion` Notion integration
+
+The second thing is getting pages from notion. So the idea is creating a [database on notion](https://www.notion.so/help/intro-to-databases) that contains multiple nested pages with their slugs/paths and this command will get the database by its id and fetching all pages under this databases including nested databases, then create commits with the files on [Notes Repo on GitHub](https://github.com/zeyadetman/Notes/). That’s the idea I’ve came with.
+
+Here’s the code for it.
+
+```tsx
+const handleDatabases = async (
+  databaseId: string,
+  pagesToPublish: any,
+  parentSlug = ""
+) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { results } = await notion.databases.query({
+        database_id: databaseId,
+      });
+      const pages = results.filter((res) => res.object === "page");
+      pages.forEach(async (page: any) => {
+        if (page?.properties?.Slug?.rich_text?.[0]?.plain_text) {
+          pagesToPublish[page.properties.Slug.rich_text[0].plain_text] = {
+            slug: page.properties.Slug.rich_text[0].plain_text,
+            isPublish: page.properties?.Published?.checkbox || false,
+            path: `${parentSlug || ""}${
+              page.properties.Slug.rich_text[0].plain_text
+            }`,
+            page,
+          };
+        } else {
+          return ctx.reply("Please add a slug to the page");
+        }
+      });
+
+      for await (let page of Object.values(pagesToPublish)) {
+        const { slug, page: pageInfo } = page as any;
+        const mdblocks = await n2m.pageToMarkdown(pageInfo.id);
+        const finalMdBlocks = [];
+        mdblocks?.forEach(async (block: any, index) => {
+          if (index === mdblocks?.length - 1) {
+            return;
+          }
+          if (block.type === "child_database") {
+            const databaseId = block.parent.split("(").pop().split(")")[0];
+            pagesToPublish[slug].children = {
+              databaseId,
+              slug,
+              parentSlug: `${parentSlug || ""}${slug}`,
+            };
+          } else {
+            finalMdBlocks.push(block);
+          }
+        });
+
+        pagesToPublish[slug].mdBlocks = finalMdBlocks;
+      }
+
+      for await (let page of Object.keys(pagesToPublish)) {
+        const { children, slug } = pagesToPublish[page] as any;
+        if (children?.databaseId) {
+          pagesToPublish[slug].childs = await handleDatabases(
+            children.databaseId,
+            {},
+            `${children.parentSlug}`
+          );
+        }
+      }
+
+      console.log(util.inspect(pagesToPublish, false, null, true));
+      return resolve(pagesToPublish);
+    } catch (error) {
+      return reject(error.message);
+    }
+  });
+};
+```
+
+And that’s works great with a sample of notion database like this:
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/94980b4e-93e6-4a6b-af5c-649172746920/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T044237Z&X-Amz-Expires=86400&X-Amz-Signature=9af6a176b786d4b4219800cb848f220d9e6de2a201809f3b742464807ceac47c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+
+So if the page’s `Published` property is false, then the page will not be published to github repo, and if the page doesn’t have a `Slug` property it should gives an error, because the slug is a path of that file.
+
+The final command on telegram gave me this reply
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/0855f256-5672-4687-886f-7ba21bbfe358/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T044334Z&X-Amz-Expires=86400&X-Amz-Signature=481a5cbe7d627cb35832ae06557581d83fc40a9da651c0197ff0c1c3861ef84a&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+
+Wow! that’s totally awesome 😎
+
+<br />
+Until then I’ll let this post ends in this point and will update it whenever I add
+new feature.
+
+…to be continued
+
+<br />
+<br />
+
+_Updated at { new Date("2021-09-28").toDateString() }_
+]]></content:encoded>
+            <author>zeyad.etman@gmail.com (Zeyad Etman)</author>
+        </item>
         <item>
             <title><![CDATA[Create your own design system in ReactJS | بالعربي]]></title>
             <link>https://zeyadetman.com/posts/design-system-react-ar</link>
