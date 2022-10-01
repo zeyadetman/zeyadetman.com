@@ -4,16 +4,16 @@ import HighlightCode from "components/Highlight";
 
 const mdxComponentsMapping = {
   h2: (props: any) => (
-    <Heading {...props} type="h2" my={3} fontWeight="semibold" />
+    <Heading {...props} type="h2" mt={10} mb={2} fontWeight="semibold" />
   ),
   h3: (props: any) => (
-    <Heading {...props} type="h3" my={2} fontWeight="semibold" />
+    <Heading {...props} type="h3" mt={8} mb={2} fontWeight="semibold" />
   ),
   h4: (props: any) => (
-    <Heading {...props} type="h4" my={2} fontWeight="semibold" />
+    <Heading {...props} type="h4" mt={6} mb={1} fontWeight="semibold" />
   ),
   h5: (props: any) => (
-    <Heading {...props} type="h5" my={2} fontWeight="semibold" />
+    <Heading {...props} type="h5" mt={4} mb={1} fontWeight="semibold" />
   ),
   a: (props: any) => (
     <Link

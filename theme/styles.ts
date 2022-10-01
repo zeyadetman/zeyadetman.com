@@ -42,5 +42,22 @@ export const customStyles = {
       height: "1.3em",
       lineHeight: "1.3em",
     },
+    figure: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    "figure > img": {
+      maxWidth: "400px",
+    },
+    figcaption: {
+      textAlign: "center",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      paddingTop: 2,
+      paddingBottom: 15,
+    },
   }),
 };
