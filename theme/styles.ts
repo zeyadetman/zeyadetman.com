@@ -49,7 +49,7 @@ export const customStyles = {
       alignItems: "center",
     },
     "figure > img": {
-      maxWidth: "400px",
+      maxWidth: "340px",
     },
     figcaption: {
       textAlign: "center",
