@@ -39,6 +39,11 @@ export default {
       external: true,
     },
     {
+      name: "Books",
+      path: "https://zeyadetman.notion.site/Books-c3175b769e704c5da66182df52e4ac61",
+      external: true,
+    },
+    {
       name: "Notes",
       path: "https://notes.zeyadetman.com",
       external: true,
