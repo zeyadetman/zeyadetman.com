@@ -37,7 +37,7 @@ export default {
       color: colorMode === "dark" ? theme.colors.white : theme.colors.black,
       bg: "transparent",
       _hover: {
-        bg: theme.colors.whiteClassic,
+        bg: theme.colors.themeLight,
         color: theme.colors.black,
       },
       _active: {

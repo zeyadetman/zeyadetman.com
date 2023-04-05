@@ -4,7 +4,7 @@ import components from "theme/components";
 import colors from "theme/foundations/colors";
 
 const config: ThemeConfig = {
-  initialColorMode: "light",
+  initialColorMode: "dark",
   useSystemColorMode: false,
 };
 

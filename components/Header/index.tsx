@@ -14,7 +14,7 @@ function Header() {
     <Box as="header" w="100%">
       <VStack spacing={isMob ? 2 : 4} textAlign="center">
         {isMob && (
-          <Box pos="relative" w="20" h="20">
+          <Box className="logo-container" pos="relative" w="20" h="20">
             <Image
               src="/logo.png"
               alt="Home"
@@ -30,7 +30,7 @@ function Header() {
             {config.name}
           </Link>
           {!isMob && (
-            <Box pos="relative" w="14" h="14">
+            <Box className="logo-container" pos="relative" w="14" h="14">
               <Image
                 src="/logo.png"
                 alt="Home"

@@ -105,7 +105,9 @@ const SearchInput = ({
 const Home = (props: Props) => {
   const { posts } = props;
   const [postsList, updatePostsList] = useState(posts);
-  const [langsSelected, updateLangsSelected] = useState<string[]>([]);
+  const [langsSelected, updateLangsSelected] = useState<string[]>([
+    Language.EN,
+  ]);
   const [value, setValue] = useState("");
 
   useEffect(() => {
@@ -127,7 +129,7 @@ const Home = (props: Props) => {
 
   return (
     <VStack minH="inherit" minW="inherit" spacing="8">
-      <Box pos="relative" w="full" h="48">
+      <Box className="logo-container" pos="relative" w="full" h="48">
         <Image
           src="/logo.png"
           alt="Home"
