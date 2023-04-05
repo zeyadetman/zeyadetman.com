@@ -4,11 +4,276 @@
         <title>Articles by Zeyad Etman</title>
         <link>https://zeyadetman.com</link>
         <description>Thoughts about software development and Life</description>
-        <lastBuildDate>Thu, 29 Sep 2022 05:15:31 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 05 Apr 2023 05:23:23 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>zeyadetman</copyright>
+        <item>
+            <title><![CDATA[Improving User Experience with Optimistic Updates]]></title>
+            <link>https://zeyadetman.com/posts/optimistic-updates</link>
+            <guid>https://zeyadetman.com/posts/optimistic-updates</guid>
+            <pubDate>Wed, 29 Mar 2023 00:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[
+In this post, I'll share some thoughts about improving user experience/interactivity for your app with one simple technique called **Optimistic Updates**.
+
+<br />
+In simple words, **Optimistic Updates** is updating the UI depending on the optimistic
+response without waiting for the actual response from the server that may return
+with an error.
+<br />
+
+Let's go with an example that demonstrates the goal of that and how can we implement it.
+
+## The Like button on Twitter
+
+![](https://techcrunch.com/wp-content/uploads/2015/11/twitter-heart.gif?w=480)
+
+Imagine that you could be assigned a task to implement a like feature on user tweets, The task is when someone clicked on the like icon, you should make an HTTP request to the server to add it to users' likes, also do a UI change to make this icon active. Keep in mind that the request may fail (ex. user deleted it, your session is expired,...etc).
+
+<br />
+
+The slow way to implement this feature is first doing the request, waiting for the response, then update the UI based on the response. Why when the user clicked on the like icon he expects that he liked the tweet and everything has gone well, but the UI hasn't reflected that there's a lag between the user clicks and the HTTP response. This lag could be solved by the **Optimistic Update**.
+
+<br />
+
+In the **Optimistic Update** solution, we'll update the UI directly based on the optimistic response based on user input, and make the HTTP call, then when the response gives us everything is ok, then no extra work from our side, otherwise, we'll roll back the UI change to the state before the user clicks.
+
+<br />
+
+Check out the behavior here from [Apollo GrahpQL Client](https://www.apollographql.com/docs/react/performance/optimistic-ui) Docs, you'll notice the adding item to the list displayed it directly before the app get a response, while editing a list item is not doing the same.
+
+<iframe
+  src="https://codesandbox.io/embed/github/apollographql/docs-examples/tree/main/full-stack/todo-list/todo-list-client?fontsize=14&hidenavigation=1&theme=dark"
+  style={{
+    width: "100%",
+    height: "500px",
+    margin: "5px auto",
+    border: 0,
+    borderRadius: "4px",
+    overflow: "hidden",
+  }}
+  title="design-system"
+  allow=""
+  sandbox="allow-forms  allow-same-origin allow-scripts"
+></iframe>
+
+<br />
+
+### What if the user clicks on a button multiple times in a use case like medium.com clap button?
+
+<br />
+
+![](https://raw.githubusercontent.com/EddieAbbondanzio/clapbutton/master/images/example.gif)
+
+We can do the **Optimistic Update** as well, but we can add a debounce functionality to it.
+
+<br />
+**Debounce** means calling a function but after waiting some time until the user
+finishes his interactivity. The benefit here is doing as minimum as possible of HTTP
+requests, we just send the final user clicks to the backend but keep the UI updated
+with the optimistic value.
+<br />
+
+In conclusion, **Optimistic Update**s can greatly improve the user experience of your
+app by reducing lag and increasing interactivity. By implementing this simple technique,
+you can update the UI instantly based on user input, without waiting for a response
+from the server. This can help your app feel more responsive and increase user engagement.
+Additionally, adding a **debounce** functionality can reduce the number of HTTP requests
+and make your app even more efficient. So next time you're working on an interactive
+feature for your app, consider implementing optimistic updates to take your user
+experience to the next level.
+
+<br />
+Resources:
+
+- [https://swr.vercel.app/docs/mutation#optimistic-updates](https://swr.vercel.app/docs/mutation#optimistic-updates)
+- [https://tanstack.com/query/v4/docs/react/guides/optimistic-updates](https://tanstack.com/query/v4/docs/react/guides/optimistic-updates)
+
+Published it on [hashnode](https://zeyadetman.hashnode.dev/optimistic-updates) and [medium.com](https://medium.com/@zeyadetman/improving-user-experience-with-optimistic-updates-a-simple-technique-to-implement-interactive-7bf103f7b34d)
+]]></content:encoded>
+            <author>zeyad.etman@gmail.com (Zeyad Etman)</author>
+        </item>
+        <item>
+            <title><![CDATA[Customize MUI theme with TypeScript]]></title>
+            <link>https://zeyadetman.com/posts/mui-design-system</link>
+            <guid>https://zeyadetman.com/posts/mui-design-system</guid>
+            <pubDate>Wed, 23 Nov 2022 00:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[
+[Read more on design system from my notes](https://notes.zeyadetman.com/frontend/design-systems)
+
+Ok, this is a quick tutorial on how to customize the default theme in [mui v5](https://mui.com/material-ui/getting-started/overview/). we'll just customize the button component.
+
+Project Template [here](https://github.com/zeyadetman/ts-mui-nextjs-storybook-boilerplate)
+
+## First thing, let's create our folder structure.
+Our folder structure is one of the basic setup we will do on our tutorial. it helps us to know where we will write our code in an organized way.
+Ok, so I prefer this structure while setup any theming whatever the ui framework I use.
+
+```bash
+.
+└── theme/
+    ├── foundations/
+    │   ├── palette.ts
+    │   ├── typography.ts
+    │   ├── ...
+    │   └── index.ts
+    ├── components/
+    │   ├── button.ts
+    │   ├── ...
+    │   └── index.ts
+    └── index.ts
+```
+
+Now, we have two main folder, the first one will be `foundations` folder, and it used for basic theme variables, and the other one is `components` for components theming.
+In each folder we created `index.ts` file to export all from it.
+
+## *Next,*  let's build the theme from the end to beginning.
+
+open the `theme/index.ts` to import our `foundations` and `components` that structure our theme
+
+```ts
+import { components } from "theme/components";
+import { foundations } from "./foundations";
+import { createTheme, ThemeOptions } from "@mui/material";
+
+const themeOptions: Omit<ThemeOptions, "components"> = {
+  ...foundations,
+};
+
+export const theme: ThemeOptions = createTheme({
+  ...themeOptions,
+  components: {
+    ...components,
+  },
+});
+
+```
+
+No magic, ha?
+`ThemeOptions` will perfectly handles the types for the passed properties. We excluded the `components` from `themeOptions` vars and passed it inside the `createTheme` function, you can modify it to update it directly inside the variable.
+
+![](/assets/Pasted%20image%2020221123060835.png) Based on mui, Here's the `ThemeOptions` interface, this will make our writing code is super easy and straightforward. How?
+We need to customize the `theme` colors for example, it called `palette` and its type is `PaletteOptions` 
+
+So here's our `theme/foundations/palette.ts`
+
+```ts
+import { PaletteOptions } from "@mui/material";
+
+export const palette: PaletteOptions = {
+  common: {
+    white: "#fff",
+    black: "#000",
+  },
+  primary: {
+    main: "#33A3FF",
+    light: "#53B1FD66",
+  },
+};
+```
+
+And because we've used the correct Interface so the editor will help us continue writing the remain properties
+
+![](/assets/Pasted%20image%2020221123061345.png) 
+
+**The Question** will be, What if I need to add a new color schema.
+**The Answer** is Simple as this
+
+```ts
+declare module "@mui/material/styles" {
+  export interface PaletteOptions {
+    blue?: PaletteColorOptions;
+  }
+}
+```
+
+How did I know about `PaletteColorOptions` ? it's not a magic, I clicked on `PaletteOptions` and checked the type for the already existing colors schema.
+
+![](/assets/Pasted%20image%2020221123061927.png)
+
+Ok, until now everything is super easy right?
+
+## What about customizing the components theme?
+
+Ok ok, the MUI Button component located [here](https://mui.com/material-ui/react-button/) and they call it [`MuiButton`](https://mui.com/material-ui/api/button/#component-name).
+But let's create the `components` object that will be exported inside the `createTheme`.
+
+and it's simple as this `theme/components/index.ts`
+
+```ts
+import { Components } from "@mui/material";
+
+export const components: Components = {};
+```
+
+after that TS will help you writing your components.
+
+![](/assets/Pasted%20image%2020221123062847.png)
+
+First thing, let's create our type for the `MuiButton` component theme, open the `theme/components/button.ts`
+
+```ts
+type muiButton = {
+  defaultProps?: ComponentsProps["MuiButton"];
+  styleOverrides?: ComponentsOverrides<Theme>["MuiButton"];
+  variants?: ComponentsVariants["MuiButton"];
+};
+```
+
+We got it from the `.d.ts` file located in the mui package files inside the `node_modules` folder. No magic!
+
+[Note: Feel free to use interfaces or types for this.](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces)
+
+After that let's create our custom theme for `MuiButton` 
+
+```ts
+declare module "@mui/material/Button" {
+  export interface ButtonPropsVariantOverrides {
+    isActive: true;
+  }
+}
+
+export const MuiButton: muiButton = {
+  variants: [
+    {
+      props: { variant: "isActive" },
+      style: ({
+        theme,
+      }: {
+        theme: Theme;
+      }) => {
+
+        return {
+          color: theme.palette.common.white,
+        };
+      },
+    },
+  ],
+};
+```
+
+1. I created a new variant for the `Button` you can use it inside your code.
+2. TS will be your guide while customizing the component.
+
+*Note: I added `export` word before `interface ButtonPropsVariantOverrides` to avoid the eslint rule* [`unused-imports/no-unused-vars`](https://github.com/sweepline/eslint-plugin-unused-imports/blob/master/docs/rules/no-unused-imports.md)
+
+Now, We need to wrap our app with this theme
+
+```tsx
+import { theme } from "theme";
+
+<ThemeProvider theme={theme}>
+	{children}
+</ThemeProvider>
+```
+
+Tada! 🎉 
+
+Project Template [here](https://github.com/zeyadetman/ts-mui-nextjs-storybook-boilerplate)
+]]></content:encoded>
+            <author>zeyad.etman@gmail.com (Zeyad Etman)</author>
+        </item>
         <item>
             <title><![CDATA[Building personal assistant bot with telegram]]></title>
             <link>https://zeyadetman.com/posts/building-personal-assistant-bot-with-telegram</link>
@@ -206,12 +471,12 @@ const handleDatabases = async (
 ```
 
 And that’s works great with a sample of notion database like this:
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/94980b4e-93e6-4a6b-af5c-649172746920/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T044237Z&X-Amz-Expires=86400&X-Amz-Signature=9af6a176b786d4b4219800cb848f220d9e6de2a201809f3b742464807ceac47c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+![](/assets/telegram-bot-img1.PNG)
 
 So if the page’s `Published` property is false, then the page will not be published to github repo, and if the page doesn’t have a `Slug` property it should gives an error, because the slug is a path of that file.
 
 The final command on telegram gave me this reply
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/0855f256-5672-4687-886f-7ba21bbfe358/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T044334Z&X-Amz-Expires=86400&X-Amz-Signature=481a5cbe7d627cb35832ae06557581d83fc40a9da651c0197ff0c1c3861ef84a&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+![](/assets/telegram-bot-img2.PNG)
 
 Wow! that’s totally awesome 😎
 
