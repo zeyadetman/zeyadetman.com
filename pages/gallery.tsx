@@ -1,16 +1,9 @@
 import React, { ReactElement, useState } from "react";
-import {
-  Text,
-  Box,
-  HStack,
-  Flex,
-  Icon,
-  VStack,
-} from "@chakra-ui/react";
+import { Text, Box, HStack, Flex, Icon, VStack } from "@chakra-ui/react";
 import { Img } from "@chakra-ui/react";
 import { useColorModeValue } from "@chakra-ui/color-mode";
 import { GetStaticPropsContext, GetStaticPropsResult } from "next";
-import GalleryContainer from "react-photo-gallery";
+import PhotoAlbum from "react-photo-album";
 import { FiX, FiMapPin, FiFileText } from "react-icons/fi";
 
 export async function getStaticProps({
@@ -58,12 +51,13 @@ function Gallery(props: any): ReactElement {
     <>
       <Box mt="12">
         <VStack width="full" display={selectedImage ? "none" : ""}>
-          <GalleryContainer
+          <PhotoAlbum
             photos={images.map((i: any) => ({
               ...i,
               src: i.image.url,
             }))}
             direction={"row"}
+            layout="rows"
             renderImage={(record) => {
               return (
                 // eslint-disable-next-line
