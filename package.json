@@ -35,7 +35,7 @@
     "react-dom": "18.1.0",
     "react-icons": "^4.4.0",
     "react-photo-album": "^2.3.0",
-    "react-share": "^4.4.0",
+    "react-share": "^4.4.1",
     "reading-time": "^1.5.0",
     "rehype-autolink-headings": "^6.1.1",
     "rehype-slug": "^5.0.1"
