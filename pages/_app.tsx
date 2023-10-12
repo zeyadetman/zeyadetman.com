@@ -11,6 +11,7 @@ import mdxComponentsMapping from "mdxConfig/components";
 import config from "config";
 import { DefaultSeo } from "next-seo";
 import Head from "next/head";
+import { Analytics } from "@vercel/analytics/react";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -87,6 +88,8 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           {getLayout(<Component {...pageProps} />)}
         </MDXProvider>
       </ChakraProvider>
+
+      <Analytics />
     </>
   );
 }

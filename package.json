@@ -18,6 +18,7 @@
     "@giscus/react": "^2.2.0",
     "@mdx-js/loader": "^2.1.1",
     "@next/mdx": "^12.1.6",
+    "@vercel/analytics": "^1.1.0",
     "countapi-js": "^1.0.2",
     "feed": "^4.2.2",
     "framer-motion": "^6.3.11",
