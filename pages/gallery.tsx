@@ -56,9 +56,8 @@ function Gallery(props: any): ReactElement {
               ...i,
               src: i.image.url,
             }))}
-            direction={"row"}
             layout="rows"
-            renderImage={(record) => {
+            renderPhoto={(record) => {
               return (
                 // eslint-disable-next-line
                 // @ts-ignore
@@ -68,11 +67,7 @@ function Gallery(props: any): ReactElement {
                     selectImage(record.photo);
                   }}
                   {...record.photo}
-                  style={{
-                    margin: record.margin,
-                    border: "2px solid #eee",
-                    padding: "8px 12px",
-                  }}
+                  style={record.imageProps.style}
                 />
               );
             }}
