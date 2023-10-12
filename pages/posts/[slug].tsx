@@ -1,5 +1,5 @@
 import mdxComponentsMapping from "mdxConfig/components";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { MDXRemote } from "next-mdx-remote";
 import { GetStaticPaths, GetStaticPropsContext } from "next";
 import { getPostBySlug, getPosts } from "utils/posts";
@@ -20,7 +20,6 @@ import {
 import config from "config";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
-import { getViews, hitPath } from "utils/analytics";
 import Giscus from "@giscus/react";
 
 interface Props {
@@ -59,31 +58,8 @@ export async function getStaticProps(
 
 function PostPage(props: Props) {
   const router = useRouter();
-  const [pageVisits, setPageVisits] = useState(0);
-  const { post, isProduction } = props;
+  const { post } = props;
   const { colorMode } = useColorMode();
-
-  useEffect(() => {
-    if (post) {
-      const updatePathViews = async () => {
-        const views: number = await hitPath(post.fileName);
-        setPageVisits(views);
-      };
-
-      const getPathViews = async () => {
-        const views: number = await getViews(post.fileName);
-        setPageVisits(views);
-      };
-
-      if (post.fileName) {
-        if (isProduction) {
-          updatePathViews();
-        } else {
-          getPathViews();
-        }
-      }
-    }
-  }, [isProduction, post]);
 
   return (
     <>
@@ -121,9 +97,6 @@ function PostPage(props: Props) {
                 opacity="0.7"
               >
                 {post.data.date}
-              </Text>
-              <Text fontSize="sm" opacity="0.7">
-                {new Intl.NumberFormat().format(pageVisits)} Views
               </Text>
               <Text fontSize="sm" opacity="0.7">
                 {post.readingTime.text}
