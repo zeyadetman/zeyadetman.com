@@ -1,4 +1,4 @@
-import { Box, useColorMode, useMediaQuery, VStack } from "@chakra-ui/react";
+import { Box, useMediaQuery, VStack } from "@chakra-ui/react";
 import NavList from "components/Header/NavList";
 import Heading from "components/Heading";
 import Link from "components/Link";
@@ -7,7 +7,6 @@ import Image from "next/image";
 import React from "react";
 
 function Header() {
-  const { colorMode, setColorMode } = useColorMode();
   const [isMob] = useMediaQuery("(max-width: 480px)");
 
   return (

@@ -11,11 +11,8 @@ import config from "config";
 import React from "react";
 import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
 
-interface Props {}
-
-function NavList(props: Props) {
+function NavList() {
   const { colorMode, setColorMode } = useColorMode();
-  const {} = props;
   const renderNavList = () => {
     return config.navList.map((item) => {
       return (

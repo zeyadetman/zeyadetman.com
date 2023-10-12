@@ -29,8 +29,8 @@ export default {
       path: "/gallery",
     },
     {
-      name: "Twitter",
-      path: "https://twitter.com/zeyadetman",
+      name: "LinkedIn",
+      path: "https://linkedin.com/in/zeyadetman",
       external: true,
     },
     {
