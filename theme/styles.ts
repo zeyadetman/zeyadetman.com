@@ -37,7 +37,7 @@ export const customStyles = {
       maxWidth: "200px",
       borderRadius: "20px",
       backgroundImage:
-        "linear-gradient( 45deg, hsl(355deg 76% 57%) 0%, hsl(5deg 79% 60%) 11%, hsl(12deg 83% 61%) 22%, hsl(18deg 87% 63%) 33%, hsl(23deg 89% 65%) 44%, hsl(28deg 91% 67%) 56%, hsl(32deg 93% 70%) 67%, hsl(37deg 94% 73%) 78%, hsl(41deg 96% 77%) 89%, hsl(47deg 100% 81%) 100% )",
+        "linear-gradient(45deg,hsl(0deg 0% 80%) 0%, hsl(344deg 0% 82%) 11%, hsl(344deg 0% 84%) 22%, hsl(344deg 0% 86%) 33%, hsl(344deg 0% 89%) 44%, hsl(344deg 0% 91%) 56%, hsl(344deg 0% 93%) 67%, hsl(344deg 0% 95%) 78%, hsl(344deg 0% 98%) 89%, hsl(0deg 0% 100%) 100%)",
       "& .color-mode-respected": {
         filter: "invert(0)",
       },
