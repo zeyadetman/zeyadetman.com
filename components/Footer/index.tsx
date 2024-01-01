@@ -11,7 +11,7 @@ function Footer(props: Props) {
   return (
     <footer>
       <VStack shouldWrapChildren>
-        <Box pos="relative" w="28" h="10" mt={6}>
+        <Box pos="relative" w="28" h="10" mt={6} mb={12}>
           <Link href={`https://twitter.com/${config.username}`}>
             <Image
               src="/signature.png"
