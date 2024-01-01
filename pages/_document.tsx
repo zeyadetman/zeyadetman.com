@@ -12,7 +12,7 @@ export default class Document extends NextDocument {
           <Main />
           <NextScript />
 
-          <script src="https://stand-with-palestine.pages.dev/stand-with-palestine-widget.js" async></script>
+          <script src="https://stand-with-palestine.pages.dev/widget.js" async></script>
         </body>
       </Html>
     );
