@@ -11,6 +11,8 @@ export default class Document extends NextDocument {
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
           <Main />
           <NextScript />
+
+          <script src="https://stand-with-palestine.pages.dev/stand-with-palestine-widget.js"></script>
         </body>
       </Html>
     );
