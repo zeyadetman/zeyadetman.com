@@ -21,10 +21,12 @@ export default function Blog({
         {listPosts({ query: searchParams.q }).map((post) => (
           <article key={post._id} className="card post-viewer">
             <Link href={post.slug} className="no-underline">
-              <h3 className="text-primary-content text-[1rem] decoration-none">
+              <h3 className="text-primary-content text-[1rem] decoration-none my-0">
                 {post.title}
               </h3>
-              {post.date && <p className="text-xs">{formatDate(post.date)}</p>}
+              {post.date && (
+                <p className="text-xs my-0">{formatDate(post.date)}</p>
+              )}
             </Link>
           </article>
         ))}

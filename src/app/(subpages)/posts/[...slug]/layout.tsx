@@ -3,5 +3,5 @@ export default function PostLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div style={{ color: "blue" }}>{children}</div>;
+  return <article className="full-article">{children}</article>;
 }

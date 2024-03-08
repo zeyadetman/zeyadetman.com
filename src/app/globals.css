@@ -11,25 +11,7 @@
     scrollbar-gutter: stable;
   }
 
-  h1,
-  .prose h1 {
-    @apply my-0 text-primary-content;
-  }
-
-  h2,
-  .prose h2 {
-    @apply my-0 text-secondary-content;
-  }
-
-  h3,
-  .prose h3,
-  p,
-  .prose p {
-    @apply my-0;
-  }
-
   input::placeholder {
-    /* Most modern browsers support this now. */
     color: var(--pc);
   }
 }
@@ -37,6 +19,14 @@
 @layer components {
   .prose * {
     @apply text-secondary-content;
+  }
+
+  .full-article .prose * {
+    @apply text-primary-content/70;
+  }
+
+  .link {
+    @apply hover:text-primary-content/80;
   }
 
   .container {
@@ -51,6 +41,22 @@
     @apply flex flex-col gap-1;
   }
 
+  .page-header h1,
+  .page-header h2,
+  .page-header h3,
+  .page-header p,
+  .page-header .prose h1,
+  .page-header .prose h2,
+  .page-header .prose h3,
+  .page-header .prose p {
+    @apply my-0;
+  }
+
+  .page-header h1,
+  .page-header .prose h1 {
+    @apply text-primary-content;
+  }
+
   .post-viewer {
     @apply py-2 px-0 cursor-pointer;
     border-top: 1px solid var(--border);
@@ -59,6 +65,15 @@
 
   .input-bordered {
     border: 1px solid var(--border);
+  }
+
+  .mockup-code {
+    @apply bg-[#a0a0a0] text-primary my-4;
+    border-radius: var(--rounded-box);
+  }
+
+  .alert {
+    @apply py-2 my-2;
   }
 }
 
