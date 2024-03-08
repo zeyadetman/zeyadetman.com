@@ -21,7 +21,17 @@ const nextConfig = {
         port: "",
         pathname: "**/**",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+        pathname: "**/**",
+      },
+      {
+        hostname: "images.unsplash.com",
+      },
     ],
+    loader: "cloudinary",
   },
 };
 

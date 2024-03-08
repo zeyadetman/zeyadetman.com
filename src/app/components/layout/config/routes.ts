@@ -19,7 +19,7 @@ export const routes: Route[] = [
   },
   {
     name: "Notes",
-    href: "/notes",
+    href: "https://notes.zeyadetman.com",
     isExternal: true,
   },
 ];

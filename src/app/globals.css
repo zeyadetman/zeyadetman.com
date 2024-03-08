@@ -22,7 +22,7 @@
   }
 
   .full-article .prose * {
-    @apply text-primary-content/70;
+    @apply text-primary-content/75;
   }
 
   .link {
@@ -67,13 +67,17 @@
     border: 1px solid var(--border);
   }
 
-  .mockup-code {
+  .full-article .mockup-code {
     @apply bg-[#a0a0a0] text-primary my-4;
     border-radius: var(--rounded-box);
   }
 
   .alert {
     @apply py-2 my-2;
+  }
+
+  .full-article .date-view {
+    @apply text-secondary-content uppercase;
   }
 }
 

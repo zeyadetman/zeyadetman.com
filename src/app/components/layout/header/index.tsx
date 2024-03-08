@@ -2,14 +2,22 @@
 
 import { renderRoutes } from "@/app/components/layout/utils/renderRoutes";
 import { List } from "@phosphor-icons/react";
+import Image from "next/image";
 
-interface HeaderProps {}
-
-export const Header = ({}: HeaderProps) => {
+export const Header = () => {
   return (
     <header className="mt-4 md:mt-8">
       <div className="navbar bg-base-100">
-        <div className="flex-1 px-4">@zeyadetman</div>
+        <div className="flex-grow px-4 w-20 h-20">
+          <Image
+            src="/logo.png"
+            className="w-full rounded-md invert-[10%]"
+            alt="logo"
+            width={50}
+            height={50}
+            priority
+          />
+        </div>
 
         <div className="drawer drawer-end">
           <input id="nav-drawer" type="checkbox" className="drawer-toggle" />
