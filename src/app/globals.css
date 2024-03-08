@@ -79,6 +79,11 @@
   .full-article .date-view {
     @apply text-secondary-content uppercase;
   }
+
+  .modal-backdrop:focus-visible,
+  *:focus-visible {
+    outline: none !important;
+  }
 }
 
 .post-viewer:hover::before {

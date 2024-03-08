@@ -13,10 +13,6 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "**",
-      },
-      {
-        protocol: "https",
         hostname: "i.imgur.com",
         port: "",
         pathname: "**/**",
@@ -25,13 +21,9 @@ const nextConfig = {
         protocol: "https",
         hostname: "images.unsplash.com",
         port: "",
-        pathname: "**/**",
-      },
-      {
-        hostname: "images.unsplash.com",
+        pathname: "**",
       },
     ],
-    loader: "cloudinary",
   },
 };
 

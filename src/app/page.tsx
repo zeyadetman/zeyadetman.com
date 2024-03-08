@@ -10,7 +10,7 @@ export default function Home() {
 
       <p className="text-sm">
         Mmmm, Ok, this is simply, my space on the internet, here, I write
-        tech/thoughts blogs, share photos I took and liked it.
+        tech/general thoughts, share photos I took and liked it.
         <br />
         <br />
       </p>

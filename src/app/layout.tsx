@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="container">
           <Header />
-          <main className="flex min-h-[calc(100vh-18rem)] flex-col justify-between px-6 ">
+          <main className="flex min-h-[calc(100vh-20rem)] flex-col justify-between px-6 ">
             {children}
           </main>
           <Footer />

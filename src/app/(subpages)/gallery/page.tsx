@@ -1,3 +1,4 @@
+import { ShowPhotos } from "@/app/components/gallery/showPhotos";
 import { Redis } from "@upstash/redis";
 import Image from "next/image";
 
@@ -34,20 +35,6 @@ const getPhotos = async () => {
   }
 };
 
-const listPhotos = async (photos: any[]) => {
-  return photos?.map(async (photo: any) => {
-    return (
-      <Image
-        src={photo.url}
-        alt={photo.description}
-        width={photo.width}
-        height={photo.height}
-        key={photo.url}
-      />
-    );
-  });
-};
-
 export default async function Gallery() {
   const photos = await getPhotos();
 
@@ -58,9 +45,7 @@ export default async function Gallery() {
         <h2>Photos.</h2>
       </div>
 
-      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4 p-4">
-        {listPhotos(photos)}
-      </div>
+      <ShowPhotos photos={photos} />
     </div>
   );
 }
