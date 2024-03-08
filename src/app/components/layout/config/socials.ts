@@ -18,7 +18,7 @@ export const socials = [
   },
   {
     name: "StackOverflow",
-    href: "https://stackoverflow.com/users/17984018/zeyadetman",
+    href: "https://stackoverflow.com/users/5721245/zeyad-etman",
     icon: StackOverflowLogo,
   },
   {

@@ -2,7 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --border: #232323;
+}
+
 @layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+
   h1,
   .prose h1 {
     @apply my-0 text-primary-content;
@@ -11,6 +19,18 @@
   h2,
   .prose h2 {
     @apply my-0 text-secondary-content;
+  }
+
+  h3,
+  .prose h3,
+  p,
+  .prose p {
+    @apply my-0;
+  }
+
+  input::placeholder {
+    /* Most modern browsers support this now. */
+    color: var(--pc);
   }
 }
 
@@ -30,4 +50,27 @@
   .page-header {
     @apply flex flex-col gap-1;
   }
+
+  .post-viewer {
+    @apply py-2 px-0 cursor-pointer;
+    border-top: 1px solid var(--border);
+    border-radius: 0;
+  }
+
+  .input-bordered {
+    border: 1px solid var(--border);
+  }
+}
+
+.post-viewer:hover::before {
+  content: "";
+  width: calc(100% + 20px);
+  height: 100%;
+  position: absolute;
+  left: -10px;
+  top: 0px;
+  background-color: var(--border);
+  filter: brightness(0.8);
+  border-radius: var(--rounded-box);
+  z-index: -1;
 }

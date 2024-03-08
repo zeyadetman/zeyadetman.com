@@ -1,0 +1,90 @@
+---
+title: Improving User Experience with Optimistic Updates
+date: "2023-03-29"
+lang: en
+tags:
+  - technical
+  - frontend
+  - UX
+  - software engineering
+layout: post
+author: zeyadetman
+comments: true
+---
+
+In this post, I'll share some thoughts about improving user experience/interactivity for your app with one simple technique called **Optimistic Updates**.
+
+<br />
+In simple words, **Optimistic Updates** is updating the UI depending on the optimistic
+response without waiting for the actual response from the server that may return
+with an error.
+<br />
+
+Let's go with an example that demonstrates the goal of that and how can we implement it.
+
+## The Like button on Twitter
+
+![](https://techcrunch.com/wp-content/uploads/2015/11/twitter-heart.gif?w=480)
+
+Imagine that you could be assigned a task to implement a like feature on user tweets, The task is when someone clicked on the like icon, you should make an HTTP request to the server to add it to users' likes, also do a UI change to make this icon active. Keep in mind that the request may fail (ex. user deleted it, your session is expired,...etc).
+
+<br />
+
+The slow way to implement this feature is first doing the request, waiting for the response, then update the UI based on the response. Why when the user clicked on the like icon he expects that he liked the tweet and everything has gone well, but the UI hasn't reflected that there's a lag between the user clicks and the HTTP response. This lag could be solved by the **Optimistic Update**.
+
+<br />
+
+In the **Optimistic Update** solution, we'll update the UI directly based on the optimistic response based on user input, and make the HTTP call, then when the response gives us everything is ok, then no extra work from our side, otherwise, we'll roll back the UI change to the state before the user clicks.
+
+<br />
+
+Check out the behavior here from [Apollo GrahpQL Client](https://www.apollographql.com/docs/react/performance/optimistic-ui) Docs, you'll notice the adding item to the list displayed it directly before the app get a response, while editing a list item is not doing the same.
+
+<iframe
+  src="https://codesandbox.io/embed/github/apollographql/docs-examples/tree/main/full-stack/todo-list/todo-list-client?fontsize=14&hidenavigation=1&theme=dark"
+  style={{
+    width: "100%",
+    height: "500px",
+    margin: "5px auto",
+    border: 0,
+    borderRadius: "4px",
+    overflow: "hidden",
+  }}
+  title="design-system"
+  allow=""
+  sandbox="allow-forms  allow-same-origin allow-scripts"
+></iframe>
+
+<br />
+
+### What if the user clicks on a button multiple times in a use case like medium.com clap button?
+
+<br />
+
+![](https://raw.githubusercontent.com/EddieAbbondanzio/clapbutton/master/images/example.gif)
+
+We can do the **Optimistic Update** as well, but we can add a debounce functionality to it.
+
+<br />
+**Debounce** means calling a function but after waiting some time until the user
+finishes his interactivity. The benefit here is doing as minimum as possible of HTTP
+requests, we just send the final user clicks to the backend but keep the UI updated
+with the optimistic value.
+<br />
+
+In conclusion, **Optimistic Update**s can greatly improve the user experience of your
+app by reducing lag and increasing interactivity. By implementing this simple technique,
+you can update the UI instantly based on user input, without waiting for a response
+from the server. This can help your app feel more responsive and increase user engagement.
+Additionally, adding a **debounce** functionality can reduce the number of HTTP requests
+and make your app even more efficient. So next time you're working on an interactive
+feature for your app, consider implementing optimistic updates to take your user
+experience to the next level.
+
+<br />
+Resources:
+
+- [https://swr.vercel.app/docs/mutation#optimistic-updates](https://swr.vercel.app/docs/mutation#optimistic-updates)
+- [https://tanstack.com/query/v4/docs/react/guides/optimistic-updates](https://tanstack.com/query/v4/docs/react/guides/optimistic-updates)
+
+Published it on [hashnode](https://zeyadetman.hashnode.dev/optimistic-updates) and [medium.com](https://medium.com/@zeyadetman/improving-user-experience-with-optimistic-updates-a-simple-technique-to-implement-interactive-7bf103f7b34d)

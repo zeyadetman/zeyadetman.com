@@ -1,0 +1,109 @@
+---
+title: How I've been using Google Sheets as a personal assistant
+author: zeyadetman
+tags:
+  - technical
+comments: true
+layout: post
+date: "2020-05-30"
+---
+
+Hello, In this post I’ll share with you How I've been using Google Sheets to track some of important things, Replacing almost all other productivity apps. In the beginning I want to note that not all things will be interesting to you, but I think you’ll find inspiration to do your own, and this is the goal of this post btw.
+Not all following sheets created by me, and I’ll mention this in their sections.
+
+## Money (Savings and Expenses)
+
+![Money sample](https://i.imgur.com/DdZzm6n.png)
+
+There’s a bunch of mobile apps to track your savings and expenses, I tried most of them, but any was customized as i want, so I found a great Money Tracking sheet that you have to give it a [try from here.](https://docs.google.com/spreadsheets/d/1l9l5JH4b9g7zqKTlylqWIhHnfWlBJzP2vqj9ET9K_Ok)
+
+## Exchange Rate and Metals Tracking
+
+You may need to be updated about currency conversion to your local currency, or you may be interested in following metal prices like silver or gold, So instead of searching and memorize the prices, or getting another app, I created a 'cronjob' or a trigger to get the data I want, then update the target sheet. To do this, Google sheets Allows us to write scripts into sheets or any G-suite app, you’re writing basically javascript with some additional helpers to access G-suite things in easy direct way, like access sheets with name, edit them, things like that, to know more about App Script [click here](https://developers.google.com/apps-script).
+Okay, what I’ve done is adding a daily `USDtoEGP` exchange rate to a sheet — Thanks to [GOOGLEFINANCE](https://support.google.com/docs/answer/3093281) — , and in another sheet page getting the price of gold daily — I’ve not found a free api to do this so I scraped a website to work around this — in the next few lines I’ll explain how to do this in a super easy few lines of `gs` code.
+
+A sample for this sheet
+
+![usd to egp sample](https://i.imgur.com/8jVQ9gU.png)
+
+1. You have to create a google sheet to populate the data into it.
+2. Open your sheet then select tools > script editor. You’ll end up with something like this.
+
+   ![code editor](https://i.imgur.com/dketxDK.png)
+
+3. Here's my code to get the `USD to EGP` Exchange Rate from Google Finance
+
+```javascript
+function getUsdToEgpRate() {
+  const spreedSheet = SpreadsheetApp.openById(<sheetID>).getSheetByName('usdtoegp');
+  const today = new Date();
+  const todayFormatted = `${today.getFullYear()}, ${today.getMonth() + 1}, ${today.getDate()}`;
+  const row = [
+    today.toUTCString(),
+    1,
+    'USD',
+    'Equals',
+    `=REGEXREPLACE(
+      TO_TEXT(
+        index(
+          GOOGLEFINANCE(
+            "CURRENCY:USDEGP", "price", date(${todayFormatted})
+            ), 2, 2
+        )
+      ), "٫", "."
+    )`,
+    'EGP'
+  ];
+  spreedSheet.appendRow(row);
+}
+```
+
+I want to say two things here:
+first, To get `sheetID`, if your sheet url is `https://docs.google.com/spreadsheets/d/blabla/edit` then `blabla` is your `sheetID`. second, Why I used `REGEXREPLACE` to convert comma to dot to easily do calculations on its value.
+
+4. Try to run this code, It should work!
+5. To create a trigger to run this script as a cronjob, you'll see a timer icon called `triggers` click on it then do whatever you want.
+   Super Easy, Ha?
+
+### Metal tracker
+
+![gold price sample](https://i.imgur.com/SpZrXfR.png)
+
+For the Metal tracker, As I told you before I didn't find a free solution to get an instant price for gold, So I created a little script using [`puppeteer`](https://github.com/puppeteer/puppeteer) to scrape a website to get the data through api, then calling it in the script, and here's my final `gs` script:
+
+```javascript
+function goldPrice() {
+  const spreedSheet =
+    SpreadsheetApp.openById("<sheetID>").getSheetByName("goldprice");
+  const today = new Date();
+
+  const response = UrlFetchApp.fetch("<API_ENDPOINT>");
+  const price = JSON.parse(response.getContentText())["price"];
+
+  const row = [today.toUTCString(), 1, "Gram", "Equals", price];
+  spreedSheet.appendRow(row);
+}
+```
+
+You may notice that in the code above i didn't write the scraping code, the reason that I've a repository to just handle like stuff in an external place, you can write it in your own way, BTW I used [`Heroku`](http://heroku.com/) to deploy the scraping code that written in NodeJS.
+
+Whatever you want to do, You'll find a way in google sheets.
+
+## Jobs
+
+![Job tracking](https://i.imgur.com/QeEiBDI.png)
+
+Job tracking is another thing you may want to track in your life, you got the job or not, what was the offer, when you started, when you left, things like this will be cool to know what's your situation in your career, what're the campanies you know, ...etc. for this I found a [nice sheet to track this.](https://docs.google.com/spreadsheets/d/1eyJVRfGc5kGz5cfBYZpANosd4JRfWHc98BlD95Vsiog)
+Also there's a tricks to do more, you can connect this sheet with your gmail, and add a new column to the emails recieved from the company, or what you want, But I'm using Gmail labels for kinda stuff.
+
+## Twitter Archive
+
+![twitter archive sheet](https://i.imgur.com/I6K8wTi.png)
+
+If you're using Twitter to learn or getting updates/tricks/important tweets of specific field/topic to retrieve them again, you will need to search in your tweets, re-tweets, or likes one day, So I'm using `IFTTT` to fill a sheet from whatever i do on twitter. Here's what can you do. [Google sheet](https://ifttt.com/google_sheets) and [Twitter](https://ifttt.com/twitter).
+
+## IFTTT Things
+
+If you don't know `IFTTT` then you have to give it a try, it works in this way > if this then that, in more details words (whenever this happens, then do that), I'm using it to keep tracking of new phone contacts in a sheet, and a little other things as well.
+
+I didn't mention everything in this post, I want to inspire you how can you track most of your daily/occasionally stuff. And my sheet templates recommendations as well. I'll update the post whenever I found a good thing to say.

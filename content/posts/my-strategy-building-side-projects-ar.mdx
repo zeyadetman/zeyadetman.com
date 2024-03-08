@@ -1,0 +1,43 @@
+---
+title: A new strategy to build side projects
+date: "2022-04-16"
+lang: ar
+tags:
+  - technical
+  - fullstack
+  - software engineering
+layout: post
+author: zeyadetman
+comments: true
+isThread: true
+threadUrl: https://twitter.com/zeyadetman/status/1515342285789138958?s=20&t=6huBU26o6aCNDQrwsOKuaA
+---
+
+<div dir="rtl">
+انا اعتمدت flow كويس لما بعمل fullstack app من الصفر جربته مرتين وفى المرتين ال output طلع احسن واسرع من اى flow او process تانى جربتها. ده طبعًا لو هتعمل ال app لوحدك ك micro saas او side project.
+
+## Backend setup
+
+اول حاجة ببدأ بال backend:
+
+1.  بعمل [postman collection](https://www.postman.com/collection/) فيها كل ال APIs اللى هحتاجها well documented ومتقسمة جوا folders.
+2.  بكتب tests لل APIs دى فى postman عشان يبقى عندى تصور كامل لل scenarios.
+3.  بحدد ال technologies اللى ه implement بيها ال APIs.
+4.  بكتب ال schemas على حسب ال postman collection اللى عاملها وبعدين ب implement ال apis بنفس الاسماء وال unit tests من اللى كاتبه فى postman.
+5.  بعد ما بخلص كل ده، بعمل CI/CD.
+
+## Frontend setup
+
+بعد ما بخلص جزء ال backend بدخل على ال frontend:
+
+1. اول حاجة بعملها هو wireframe فيه ال user flow وبستخدم [balsamiq](https://balsamiq.com/) عشان اعمله.
+2. انا بفضّل استخدم ui framework مبنية على styled system وحاليًا بفضّل [chakra ui](https://github.com/chakra-ui/awesome-chakra-ui).
+3. بدخل على [figma community](https://www.figma.com/community/category/design-systems) واختار ديزاين سيستم مناسب للى هعمله.
+4. ممكن ابدل الخطوتين اللى قبل دول ب ui framework ال design system فيها كويس ومناسب زى carbon ui مثلًا.
+5. بجهز الديزاين سيستم وال components اللى هستخدمها وا follow ال wireframes.
+6. بشوف هستخدم انهى packages وبعدين ببدأ implementation.
+7. بخلص وبعمل CI/CD connected بالbackend.
+
+ساعات بستخدم [git submodules](https://github.blog/2016-02-01-working-with-submodules/) بيبقى ال root folder فيه ال data بتاعة ال app لو فى notes او كدة، وجواه الاتنين repos بتوع ال frontend وال backend
+
+</div>

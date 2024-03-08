@@ -11,7 +11,7 @@ export const routes: Route[] = [
   },
   {
     name: "Blog",
-    href: "/blog",
+    href: "/posts",
   },
   {
     name: "Gallery",
