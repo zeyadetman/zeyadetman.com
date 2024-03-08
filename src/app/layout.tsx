@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/app/components/layout/header";
 import { Footer } from "@/app/components/layout/footer";
-import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +24,6 @@ export default function RootLayout({
           <main className="flex min-h-[calc(100vh-18rem)] flex-col justify-between px-6 ">
             {children}
           </main>
-          <Analytics />
           <Footer />
         </div>
       </body>
