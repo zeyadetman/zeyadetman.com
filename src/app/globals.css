@@ -25,10 +25,6 @@
     @apply text-primary-content/75;
   }
 
-  .link {
-    @apply hover:text-primary-content/80;
-  }
-
   .container {
     @apply mx-auto max-w-[40rem] w-full;
   }
@@ -97,4 +93,9 @@
   filter: brightness(0.8);
   border-radius: var(--rounded-box);
   z-index: -1;
+}
+
+.prose .link,
+.link {
+  @apply hover:text-primary-content/80 text-primary-content;
 }

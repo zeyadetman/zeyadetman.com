@@ -7,7 +7,7 @@ interface FooterProps {}
 
 export const Footer = ({}: FooterProps) => {
   return (
-    <footer className="footer flex flex-wrap gap-2 items-center justify-between p-10">
+    <footer className="footer flex flex-wrap gap-2 items-center justify-between px-6 border-t-[1px] border-border">
       <aside>
         <Image
           src="/signature.webp"

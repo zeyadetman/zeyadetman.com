@@ -10,6 +10,11 @@ const config: Config = {
     container: {
       center: true,
     },
+    extend: {
+      colors: {
+        border: "#232323",
+      },
+    },
   },
   daisyui: {
     themes: [
@@ -36,8 +41,6 @@ const config: Config = {
           // "--rounded-badge": "1.9rem",
           // "--rounded-badge": "1.9rem",
           // "--rounded-box": "1rem",
-
-          // border color
         },
       },
     ],

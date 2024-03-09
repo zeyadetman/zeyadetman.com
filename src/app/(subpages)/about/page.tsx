@@ -9,7 +9,10 @@ export default function About() {
       <p className="text-sm">
         I’m Zeyad a software engineer from Egypt 🇪🇬, working as a Fullstack
         engineer (frontend heavily). My type is{" "}
-        <a href="" className="link">
+        <a
+          href="https://www.16personalities.com/intj-personality"
+          className="link"
+        >
           INTJ
         </a>{" "}
         Currently I spend most of my time learning Coding. <br />
