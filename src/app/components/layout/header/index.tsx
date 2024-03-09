@@ -3,20 +3,23 @@
 import { renderRoutes } from "@/app/components/layout/utils/renderRoutes";
 import { List } from "@phosphor-icons/react";
 import Image from "next/image";
+import Link from "next/link";
 
 export const Header = () => {
   return (
     <header className="mt-4 md:mt-8">
       <div className="navbar bg-base-100">
         <div className="flex-grow px-4 w-20 h-20">
-          <Image
-            src="/logo.png"
-            className="w-full rounded-md invert-[10%]"
-            alt="logo"
-            width={50}
-            height={50}
-            priority
-          />
+          <Link href="/">
+            <Image
+              src="/logo.png"
+              className="w-full rounded-md invert-[10%]"
+              alt="logo"
+              width={50}
+              height={50}
+              priority
+            />
+          </Link>
         </div>
 
         <div className="drawer drawer-end">
@@ -40,13 +43,13 @@ export const Header = () => {
               </nav>
             </div>
           </div>
-          <div className="drawer-side">
+          <div className="drawer-side z-10">
             <label
               htmlFor="nav-drawer"
               aria-label="close sidebar"
               className="drawer-overlay"
             />
-            <ul className="menu gap-1 p-4 w-80 min-h-full bg-base-200">
+            <ul className="menu gap-1 pt-9 p-4 w-80 min-h-full bg-base-200">
               {renderRoutes()}
             </ul>
           </div>
