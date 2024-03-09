@@ -57,7 +57,7 @@ export const ShowPhotos = ({ photos }: ShowPhotosProps) => {
             height={selectedImage?.height}
             key={selectedImage?.url}
             loader={myLoader}
-            className="min-w-10 rounded-md"
+            className="min-w-10 rounded-md mt-0"
           />
 
           <h1 className="text-sm text-center">{selectedImage?.description}</h1>
