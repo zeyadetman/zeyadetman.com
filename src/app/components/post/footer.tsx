@@ -13,9 +13,6 @@ export const PostFooter = ({ post }: PostFooterProps) => {
     <>
       <div className="flex justify-center gap-3 my-6">
         <button
-          // title={post.data.title}
-          // via={config.username}
-          // url={`${config.baseUrl}${router.asPath}`}
           key="twitter-share-button"
           className="btn btn-primary btn-md bg-blue-500 hover:bg-blue-600"
           onClick={() => {

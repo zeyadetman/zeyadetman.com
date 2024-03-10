@@ -97,5 +97,10 @@
 
 .prose .link,
 .link {
-  @apply hover:text-primary-content/80 text-primary-content;
+  @apply hover:text-primary-content/80 text-primary-content/70 w-fit break-words;
+}
+
+.prose .badge,
+.badge {
+  @apply uppercase text-xs bg-secondary-content text-primary rounded-md font-medium;
 }

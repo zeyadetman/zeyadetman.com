@@ -40,6 +40,36 @@ export const Post = defineDocumentType(() => ({
     description: {
       type: "string",
     },
+    tags: {
+      type: "list",
+      of: {
+        type: "string",
+      },
+    },
+    lang: {
+      type: "string",
+      default: "en",
+    },
+    comments: {
+      type: "boolean",
+      default: true,
+    },
+    author: {
+      type: "string",
+      default: "zeyadetman",
+    },
+    layout: {
+      type: "string",
+      default: "post",
+    },
+    isThread: {
+      type: "boolean",
+      default: false,
+    },
+    threadUrl: {
+      type: "string",
+      default: "",
+    },
     date: {
       type: "date",
       required: true,
