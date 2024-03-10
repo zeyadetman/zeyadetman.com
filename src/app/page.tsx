@@ -10,8 +10,8 @@ export default function Home() {
 
       <p className="text-sm">
         Welcome to my space on the internet, I’m Zeyad software engineer from
-        🇪🇬, I created this site to be a digital place to me, you will also find
-        some general thoughts (not-tech).
+        🇪🇬, I created this site to be a digital place to express my presence.
+        you will also find some general thoughts (not-tech).
         <br />
         <br />I have more than 6 years experience working as frontend engineer/
         fullstack engineer, So if you’re a student or fresh graduate and need an
