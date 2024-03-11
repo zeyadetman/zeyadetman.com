@@ -29,7 +29,8 @@ export default function Home() {
           my digital garden 🪴
         </a>
         . I share on it at short intervals, also I review the written notes from
-        time to time to update them either adding more details or updating them.
+        time to time to update them either adding more details or rephrasing
+        them.
         <br />
         <br />
         <i>النسخة العربية ستأتى قريبًا.</i>
