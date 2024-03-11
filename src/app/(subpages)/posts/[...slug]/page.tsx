@@ -66,12 +66,17 @@ export default async function PostPage({ params }: PostProps) {
 
   return (
     <article className={className}>
-      <h1 className="mb-12">
-        {post.title}
+      <div className="mb-12">
+        <h1
+          className="mb-0"
+          style={{ ...(post?.lang === "ar" ? { direction: "rtl" } : {}) }}
+        >
+          {post.title}
+        </h1>
         <time className="block mt-2 font-medium date-view text-xs">
           Published {format(new Date(post.date), "dd MMM yyyy")}
         </time>
-      </h1>
+      </div>
 
       <Mdx code={post.body.code} />
     </article>

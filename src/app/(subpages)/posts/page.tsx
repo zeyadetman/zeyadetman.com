@@ -30,12 +30,21 @@ export default function Blog({
             "text-primary-content text-[1rem] decoration-none my-0";
           const className =
             baseClassName +
-            (post?.lang === "ar" ? ` font-extrabold ${tajawal.className}` : ``);
+            (post?.lang === "ar"
+              ? ` w-fit rtl font-extrabold ${tajawal.className}`
+              : ``);
 
           return (
             <article key={post._id} className="card post-viewer">
               <Link href={post.slug} className="no-underline">
-                <h3 className={className}>{post.title}</h3>
+                <h3
+                  className={className}
+                  style={{
+                    ...(post?.lang === "ar" ? { direction: "rtl" } : {}),
+                  }}
+                >
+                  {post.title}
+                </h3>
                 <div className="flex justify-between">
                   {post.date && (
                     <p className="text-xs my-0">{formatDate(post.date)}</p>
