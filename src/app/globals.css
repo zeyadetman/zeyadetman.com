@@ -73,7 +73,7 @@
   }
 
   .full-article .date-view {
-    @apply text-secondary-content uppercase;
+    @apply text-secondary-content;
   }
 
   .modal-backdrop:focus-visible,

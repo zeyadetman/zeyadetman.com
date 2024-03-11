@@ -167,6 +167,27 @@ export default {
 
 ## النتيجة
 
+بس انت كدة عملت كل ال styles اللى محتاجينها لل button بعد كدة فى اى مكان عايز تستخدم فيه ال button بس بتعمله import من ال lib ومش مضطر لا تعمل component جديد بنفسك ولا تغير styles فى اكتر من مكان.
+
+```tsx
+import { Button, Center, VStack } from "@chakra-ui/react";
+
+export default function App() {
+  return (
+    <Center minH="100vh">
+      <VStack>
+        <Button>Hello</Button>
+        <Button variant="outline">Hello</Button>
+        <Button variant="ghost">Hello</Button>
+        <Button disabled>Hello</Button>
+      </VStack>
+    </Center>
+  );
+}
+```
+
+![result](/assets/result-mui-design-system-ar.jpeg)
+
 <iframe
   src="https://codesandbox.io/embed/design-system-7g4s85?fontsize=14&hidenavigation=1&theme=dark&view=preview"
   style={{
