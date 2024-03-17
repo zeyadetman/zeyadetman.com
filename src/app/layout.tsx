@@ -3,12 +3,18 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/app/components/layout/header";
 import { Footer } from "@/app/components/layout/footer";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Zeyad Etman",
   description: "Zeyad's Space on the internet.",
+};
+
+const Analytics = () => {
+  "use client";
+  return <VercelAnalytics />;
 };
 
 export default function RootLayout({
@@ -26,6 +32,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </div>
+        <Analytics />
       </body>
     </html>
   );
