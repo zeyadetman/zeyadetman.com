@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/app/components/layout/header";
 import { Footer } from "@/app/components/layout/footer";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,9 +13,14 @@ export const metadata: Metadata = {
   description: "Zeyad's Space on the internet.",
 };
 
-const Analytics = () => {
+const Vercel = () => {
   "use client";
-  return <VercelAnalytics />;
+  return (
+    <>
+      <VercelAnalytics />
+      <SpeedInsights />
+    </>
+  );
 };
 
 export default function RootLayout({
@@ -32,7 +38,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </div>
-        <Analytics />
+        <Vercel />
       </body>
     </html>
   );
