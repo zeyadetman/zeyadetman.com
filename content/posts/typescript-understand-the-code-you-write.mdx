@@ -197,13 +197,38 @@ type obj = { [key in keysOfObj]: key extends "id" ? number : string };
 // That's it
 ```
 
-_keep this in your mind for the mapped types section._
+_This called mapped types_
 
 ## Generics
 
-## Mapped Types
+Think about it as a function in javascript, if you have a type and you're repeating it with slight changes, then you probably need to use `generics`.
 
-## `as const`
+```ts
+interface BasicType<T> {
+  input: T;
+}
+
+const x: BasicType<string> = { input: "test" };
+const y: BasicType<number> = { input: "test" }; // wrong
+```
+
+```ts
+function basic(a, b) {
+  return { a, b };
+}
+
+function basic<A, B>(a, b) {
+  return { a, b };
+}
+
+function basic<A, B>(a: A, b: B): { a: A; b: B } {
+  return { a, b };
+}
+
+basic<string, number>("hello", 2);
+```
+
+we can still use `extends` with generics to give a powerful type.
 
 ## Typescript Coverage
 

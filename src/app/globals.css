@@ -25,6 +25,10 @@
     @apply text-primary-content/95;
   }
 
+  .full-article .prose pre {
+    background-color: #2b2b2b;
+  }
+
   .container {
     @apply mx-auto max-w-[40rem] w-full;
   }
@@ -63,10 +67,10 @@
     border: 1px solid var(--border);
   }
 
-  .full-article .mockup-code {
+  /* .full-article .mockup-code {
     @apply bg-[#a0a0a0] text-primary my-4;
     border-radius: var(--rounded-box);
-  }
+  } */
 
   .alert {
     @apply py-2 my-2;

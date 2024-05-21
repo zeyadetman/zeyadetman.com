@@ -1,8 +1,10 @@
 "use client";
-import { Mdx } from "@/app/components/post/mdx-components";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { srcery } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { CheckCircle, Info, Warning, XCircle } from "@phosphor-icons/react";
 import { MDXComponents } from "mdx/types";
 import Image from "next/image";
+import React from "react";
 
 const blockQuoteMapper = {
   "[alert]": {
@@ -26,6 +28,26 @@ const blockQuoteMapper = {
     className: "alert alert-warning",
   },
 };
+
+export function SyntaxHighlight({
+  className,
+  children,
+}: {
+  className?: string;
+  children: string;
+}) {
+  return (
+    <SyntaxHighlighter
+      language="typescript"
+      style={srcery}
+      PreTag={React.Fragment}
+      wrapLines
+      wrapLongLines
+    >
+      {children}
+    </SyntaxHighlighter>
+  );
+}
 
 export const components: MDXComponents = {
   Image: (props) => {
@@ -62,14 +84,10 @@ export const components: MDXComponents = {
       />
     );
   },
-  code: (props) => <code className="mockup-code">{props.children}</code>,
-  pre: (props) => (
-    <div className="mockup-code">
-      <pre>
-        <code>{props.children}</code>
-      </pre>
-    </div>
+  code: (props: any) => (
+    <SyntaxHighlight>{props.children as string}</SyntaxHighlight>
   ),
+  // pre: (props) => <pre>{props.children}</pre>,
   a: (props) => (
     <a className="link" {...props}>
       {props.children}
