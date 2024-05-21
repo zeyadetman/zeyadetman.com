@@ -22,7 +22,7 @@
   }
 
   .full-article .prose * {
-    @apply text-primary-content/75;
+    @apply text-primary-content/95;
   }
 
   .container {

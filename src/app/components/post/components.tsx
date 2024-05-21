@@ -1,4 +1,5 @@
 "use client";
+import { Mdx } from "@/app/components/post/mdx-components";
 import { CheckCircle, Info, Warning, XCircle } from "@phosphor-icons/react";
 import { MDXComponents } from "mdx/types";
 import Image from "next/image";
@@ -37,7 +38,7 @@ export const components: MDXComponents = {
         alt={props.alt || " "}
         src={props.src || ""}
         loader={myLoader}
-        className="w-full"
+        className="w-full mx-auto"
         {...props}
         width={400}
         height={20}
@@ -54,7 +55,7 @@ export const components: MDXComponents = {
         alt={props.alt || " "}
         src={props.src || ""}
         loader={myLoader}
-        className="w-full"
+        className="w-full mx-auto"
         {...props}
         width={400}
         height={20}

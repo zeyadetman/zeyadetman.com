@@ -1,0 +1,143 @@
+---
+title: TypeScript, Understanding the code you write
+slug: typeScript-understanding-the-code-you-write
+# isDraft: true
+date: "2024-05-24"
+tags:
+  - typescript
+  - javascript
+  - software engineering
+layout: post
+author: zeyadetman
+isDraft: true
+comments: true
+---
+
+TypeScript has given the frontend a powerful chance to deliver reliable and maintainable code. The more you correctly type your code, the more you fall into its strengths and importance. In this post, I'll mention some TypeScript tips that you may or may not know about.
+
+## How TypeScript works?
+
+The first thing you should know is **how TypeScript works**?
+
+<figure style={{ textAlign: "center" }}>
+  <img src="/assets/ts2js.png" width="300" style={{ margin: "0px auto" }} />
+  <figcaption>
+    [Source](https://gist.github.com/zeyadetman/e2435ca1e2e0fe78d3dc981250e42499)
+  </figcaption>
+</figure>
+
+Browsers are designed to only understand JavaScript, just as computers are designed to only understand zeros and ones. In the case of computers, we compile high-level code to machine code and then to zeros and ones so the computer can understand it. Similarly, we transpile or translate TypeScript code to JavaScript code to be understood by browsers and other engines that only know JavaScript.
+
+To do this, we may use the popular `tsc` tool, You can also check out the [awesome-typescript-compilers](https://github.com/JohnDeved/awesome-typescript-compilers?tab=readme-ov-file) repository to learn more about them.
+
+For example, code like this:
+
+```ts
+type animals = "cat" | "dog";
+const getAnimal = (animal: animals) => animal;
+getAnimal("cat");
+```
+
+Is translated to this JavaScript code, so browsers can understand it:
+
+```js
+const getAnimal = (animal) => animal;
+getAnimal("cat");
+```
+
+**Note: TypeScript code is eliminated in the transpiling process.**
+
+This leads us to an **important conclusion**: once you realize it, you'll notice a lot about TypeScript concepts and why they've been written in their particular way.
+
+**Conclusion: As TypeScript does not run on browsers, it only runs at compile time, not at runtime.**
+
+> **Compile time** is the time when your code is being built, before it runs and becomes interactive. **Run time** is when your code is running and interacting with the client.
+
+### Differences in Action
+
+Let's compare a typed language that checks types at runtime, like C#, with TypeScript, which checks types at compile time:
+
+#### Function overloading
+
+> Some JavaScript functions can be called in a variety of argument counts and types. For example, you might write a function to produce a `Date` that takes either a timestamp (one argument) or a month/day/year specification (three arguments).
+> [Resource](https://www.typescriptlang.org/docs/handbook/2/functions.html#function-overloads)
+
+In C#, we can achieve function overloading by declaring multiple function arguments and bodies. This is possible because C# checks the type of the function arguments at runtime and defines the function body accordingly:
+
+```c#
+void display() { ... }
+void display(int a) { ... }
+float display(double a) { ... }
+float display(int a, float b) { ... }
+```
+
+However, in TypeScript, we go to the runtime without types, without typescript itself, so there's no runtime type checks and then we can't assign multiple values to the same variable in javascript, or in other words we can't create multiple bodies for the same function.
+
+```ts
+function makeDate(timestamp: number): Date;
+function makeDate(m: number, d: number, y: number): Date;
+function makeDate(m: number, d: string, y: number): string;
+function makeDate(
+  mOrTimestamp: number,
+  d?: number | string,
+  y?: number
+): Date | string {
+  if (typeof d === "string") {
+    return "hello";
+  }
+
+  if (d !== undefined && y !== undefined) {
+    return new Date(y, mOrTimestamp, d);
+  } else {
+    return new Date(mOrTimestamp);
+  }
+}
+
+const d1 = makeDate(1234);
+const d2 = makeDate(5, 5, 5);
+```
+
+This will be compiled to this Javascript code:
+
+```js
+function makeDate(mOrTimestamp, d, y) {
+  if (typeof d === "string") {
+    return "hello";
+  }
+  if (d !== undefined && y !== undefined) {
+    return new Date(y, mOrTimestamp, d);
+  } else {
+    return new Date(mOrTimestamp);
+  }
+}
+
+const d1 = makeDate(1234);
+const d2 = makeDate(5, 5, 5);
+```
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/8fO2Uv0G_5Y?si=4ezE7zUgPDZY6amI"
+  title="YouTube video player"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowFullScreen
+></iframe>
+
+There's libraries can do runtime checks for javascript, one of the most popular libraries do this is [zod](https://zod.dev/) you can give it a try.
+
+## Narrowing (make it more specific)
+
+## `keyof` and `typeof`
+
+## `in` operator
+
+## Generics
+
+## Mapped Types
+
+## `as const`
+
+## Typescript Coverage

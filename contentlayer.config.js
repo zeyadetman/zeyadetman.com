@@ -70,6 +70,10 @@ export const Post = defineDocumentType(() => ({
       type: "boolean",
       default: false,
     },
+    isDraft: {
+      type: "boolean",
+      default: false,
+    },
     threadUrl: {
       type: "string",
       default: "",

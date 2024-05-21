@@ -3,14 +3,16 @@ import { allPosts } from "contentlayer/generated";
 interface Options {
   query?: string;
   sort?: "asc" | "desc";
+  isDraft?: boolean;
 }
 
 export const listPosts = (
   options: Options = {
     sort: "desc",
+    isDraft: false,
   }
 ) => {
-  let result = [...allPosts];
+  let result = [...allPosts.filter((post) => !post.isDraft)];
 
   if (options.query) {
     result = result.filter((post) =>
