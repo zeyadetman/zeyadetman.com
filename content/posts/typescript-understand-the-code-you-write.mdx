@@ -132,7 +132,72 @@ There's libraries can do runtime checks for javascript, one of the most popular 
 
 ## `keyof` and `typeof`
 
-## `in` operator
+- `keyof` from its name, used to "extract" a key of a TYPE, and since objects are the only datatype that contains keys, then `keyof` is used to extract key of an object in a **union** format
+
+```ts
+type obj = { [n: number]: string };
+type A = keyof obj; // number
+```
+
+- `typeof` from its name, used to return the `type` of a variable. simple!
+
+```ts
+let str = "Alia";
+type a = typeof str; // string
+
+const str2 = "Alia";
+type b = typeof str2; // "Alia"
+```
+
+**Important note: I used `let` here instead of `const`. If I used `const`, then the type would be the specific string value itself.**
+
+Let's merge both
+
+```ts
+const obj = {
+  id: 1,
+  name: "Alia",
+}; // javascript variable no types
+
+type typeOfObj = typeof obj; // type of the javascript object
+type keysOfObj = keyof typeOfObj; // id | name
+
+type keysOfObjOneLine = keyof typeof obj;
+```
+
+Notice here
+
+- `keyof` extracts keys of type (object).
+- `typeof` extracts the type of variable.
+
+_keep this in your mind for the mapped types section._
+
+## `in` operator and `extends`
+
+Similar to the previous section, `in` operator is kinda similar way you can use it to limit the key to be within a group of types
+
+```ts
+type keysOfObj = "id" | "name";
+type obj = { [key in keysOfObj]: string };
+
+// type obj = {
+//  id: string;
+//  name: string;
+// }
+```
+
+But we need to modify the code to fix the type for the `id` key to be `number` not `string`
+
+- `extends` consider it as `if else` of typescript.
+
+```ts
+type keysOfObj = "id" | "name";
+type obj = { [key in keysOfObj]: key extends "id" ? number : string };
+
+// That's it
+```
+
+_keep this in your mind for the mapped types section._
 
 ## Generics
 
@@ -141,3 +206,9 @@ There's libraries can do runtime checks for javascript, one of the most popular 
 ## `as const`
 
 ## Typescript Coverage
+
+In addition to adding TypeScript rules to your project, it's important to track TypeScript code coverage. Code coverage helps identify missing types for variables.
+
+You might think it's obvious if a variable has a type, but when using third-party libraries, classes, or functions, it's easy to miss some. Not everything, such as query parameters, will be tracked by the TypeScript coverage library, but it definitely helps.
+
+I suggest using [typescript-coverage-report](https://www.npmjs.com/package/typescript-coverage-report) for this purpose. If you know of a better option, feel free to share it in the comments below.

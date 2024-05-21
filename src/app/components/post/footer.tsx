@@ -32,7 +32,7 @@ export const PostFooter = ({ post }: PostFooterProps) => {
             className="btn btn-primary btn-md bg-black"
             onClick={() => {
               window.open(
-                `${config.githubRepo}/blob/main/posts/${post.slug}.mdx`,
+                `${config.githubRepo}/blob/main/content/${post.slug}.mdx`,
                 "_blank"
               );
             }}
