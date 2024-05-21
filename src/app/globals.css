@@ -27,6 +27,7 @@
 
   .full-article .prose pre {
     background-color: #2b2b2b;
+    direction: ltr;
   }
 
   .container {
