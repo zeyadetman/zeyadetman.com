@@ -1,0 +1,161 @@
+---
+title: Setup Feature flags in Nextjs App router without third parties
+slug: setup-feature-flags-in-nextjs-app-router-without-third-parties
+date: "2024-08-31"
+tags:
+  - typescript
+  - javascript
+  - software engineering
+layout: post
+author: zeyadetman
+comments: true
+---
+
+<figure style={{ textAlign: "center" }}>
+  <img
+    src="https://images.unsplash.com/photo-1625043094370-221909f669f5?q=80&w=2990&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    width="300"
+    style={{ margin: "0px auto", width: "100%", borderRadius: "10px" }}
+  />
+  <figcaption>
+    Photo by [British Library](https://unsplash.com/@britishlibrary) on
+    [Unsplash](https://unsplash.com/photos/green-trees-near-mountain-during-daytime-vk64RCZmNz0)
+  </figcaption>
+</figure>
+
+Hello, This is a post to discuss a way to setup the feature flags inside your nextjs project with app router without needing to use external library.
+
+## Note before implement
+
+important note here, this way is suitable only to the basic feature flags situations, this may need more work if you have a situations like A/B testing or more complicated situations.
+
+## The Action part
+
+First, you know we have two sides of our nextjs app, client side and server side. So handling feature flags should work on both sides as needed with loosing the benefits of the side.
+
+In the server side we need to set the feature flag before delievring the code to client.
+
+## Setup
+
+We need to hide/encapsulate the implementation from the clients/components that will use it. Why? to be easily replaceable if we need to do that in the future.
+
+let’s create a folder for feature flags
+
+```
+./src/flags
+├── index.ts
+└── utilsSSR.ts
+
+0 directories, 2 files
+```
+
+```ts
+// index.ts
+
+const CATS_FLAG_ENABLED = process.env.CATS_FLAG_ENABLED === "true";
+
+export const flags = {
+  catsEnabled: CATS_FLAG_ENABLED,
+};
+
+export const getFlag = (flag: keyof typeof flags) => {
+  return flags[flag];
+};
+```
+
+Now, this is easy to use in the client components
+
+```ts
+const isCatsFlagEnabled = getFlag("catsEnabled");
+```
+
+Another approach is using a wrapper component to handle the visibility of the components based on the feature flag, we can do this in a similar way
+
+```tsx
+const FeatureFlagWrapper = ({
+  flag,
+  children,
+}: {
+  flag: keyof typeof flags;
+  children: React.ReactNode;
+}) => {
+  const isFlagEnabled = getFlag(flag);
+  if (!isFlagEnabled) return null;
+
+  return children;
+};
+```
+
+And then you can use it like that
+
+```tsx
+// Example usage of FeatureFlagWrapper
+import { FeatureFlagWrapper } from "./flags";
+
+const MyComponent = () => (
+  <FeatureFlagWrapper flag="catsEnabled">
+    <div>This is a feature-flagged component!</div>
+  </FeatureFlagWrapper>
+);
+```
+
+Another approach to create a custom hook to get the flag value.
+
+Ok, great, this enough for the client part. let’s move to the server side part.
+
+In the server side we’ll use the middleware file to pass the value to the server side components and functions
+
+```tsx
+async function applyFlags(request: NextRequest, response: NextResponse) {
+ const flags: (keyof typeof flags)[] = ["catsEnabled"];
+
+ flags.forEach((flag) => {
+  const flagValue = getFlag(flag);
+  response.headers.set(`X-Flag-${flag}`, String(flagValue));
+ });
+
+  // Set cache control headers to prevent caching
+  response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+  response.headers.set('Pragma', 'no-cache');
+  response.headers.set('Expires', '0');
+}
+
+export async function middleware(request: NextRequest) {
+ const response = NextResponse.next();
+ await applyFlags(request, response);
+ ...
+
+ return response;
+}
+```
+
+Now, this will set the flag header in response in every request.
+
+In nextjs server component, we can use the `headers()` function provided by nextjs app
+
+```tsx
+// Page.tsx
+import { headers } from "next/headers";
+
+export default async function Page() {
+  const flagValue = headers().get("X-Flag-catsEnabled");
+  const isCatsEnabled = flagValue === "true";
+
+  return (
+    <div>{isCatsEnabled ? "Feature is enabled!" : "Feature is disabled!"}</div>
+  );
+}
+```
+
+## Limitations and security considerations
+
+- As we use response headers, ensure that there are no sensitive data provided as value, But if you want to use sensitive data ensure that you’re encrypted it and verify the value in the middleware.
+- While setting the feature flag in the response header it’ll not reflected immediately, it will reflect after the first request, so using `cookies()` with the `headers()` will be a good option.
+- It’s better to use a service dedicated to the feature flags as it will serve a better and more secured way to manage A/B testing, and further functionalities beyond the simple usage.
+- Avoid exposing internal logic, since the feature flag name is shown in the headers in the network panel or in the cookies section in the dev tools, ensure that the name doesn’t expose a feature that should be kept confidential.
+- Since the feature flag will be sent in headers, this will increase the http response size, specially if you’re using multiple flags, then try to keep the header size as small as possible.
+- Consider including a fallback mechanism for situations where the feature flag values cannot be retrieved, to ensure a robust user experience.
+
+Finally, I hope you find this post useful and helpful.
+
+_Published on [Medium](https://medium.com/@zeyadetman/setup-feature-flags-in-nextjs-app-router-without-third-parties-44d3bc9ae540)_
