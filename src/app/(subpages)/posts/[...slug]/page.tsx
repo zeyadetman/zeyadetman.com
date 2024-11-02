@@ -42,12 +42,20 @@ export async function generateMetadata({
       siteName: "Zeyad Etman",
       images: [
         {
-          url: `http://localhost:3000/api/og?title=${post.title}&url=${config.baseUrl}/posts/${post.slugAsParams}&date=${post.date}`, // Dynamic og route
+          url: `http://localhost:3000/api/og?title=${post.title}&url=${
+            config.baseUrl
+          }/posts/${post.slugAsParams}&date=${post.date}&isRtl=${
+            post.lang === "ar"
+          }`, // Dynamic og route
           width: 800,
           height: 600,
         },
         {
-          url: `http://localhost:3000/api/og?title=${post.title}&url=${config.baseUrl}/posts/${post.slugAsParams}&date=${post.date}`, // Dynamic og route
+          url: `http://localhost:3000/api/og?title=${post.title}&url=${
+            config.baseUrl
+          }/posts/${post.slugAsParams}&date=${post.date}&isRtl=${
+            post.lang === "ar"
+          }`, // Dynamic og route
           width: 1800,
           height: 1600,
           alt: post.title,
