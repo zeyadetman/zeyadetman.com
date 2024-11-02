@@ -3,12 +3,14 @@ import { config } from "@/config";
 import { GithubLogo, TwitterLogo } from "@phosphor-icons/react";
 import Giscus from "@giscus/react";
 import { Post } from "contentlayer/generated";
+import { useTheme } from "next-themes";
 
 interface PostFooterProps {
   post: Post;
 }
 
 export const PostFooter = ({ post }: PostFooterProps) => {
+  const { theme } = useTheme();
   return (
     <>
       <div className="flex justify-center gap-3 my-6">
@@ -53,7 +55,7 @@ export const PostFooter = ({ post }: PostFooterProps) => {
         reactionsEnabled="1"
         emitMetadata="1"
         inputPosition="top"
-        theme={"dark_dimmed"}
+        theme={theme === "dark" ? "dark_dimmed" : "light"}
         lang="en"
         loading="lazy"
       />
