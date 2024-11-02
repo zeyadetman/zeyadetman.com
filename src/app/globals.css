@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --border: #232323;
+  --border: #e0e0e0;
+}
+
+[data-theme="dark"] {
+  --border: #333;
 }
 
 @layer base {
@@ -13,6 +17,10 @@
 
   input::placeholder {
     color: var(--pc);
+  }
+
+  a {
+    @apply link;
   }
 }
 
@@ -55,7 +63,7 @@
 
   .page-header h1,
   .page-header .prose h1 {
-    @apply text-primary-content;
+    @apply text-accent;
   }
 
   .post-viewer {
@@ -102,10 +110,18 @@
 
 .prose .link,
 .link {
-  @apply hover:text-primary-content/80 text-primary-content/70 w-fit break-words;
+  @apply hover:text-accent text-primary-content/70 w-fit break-words;
 }
 
 .prose .badge,
 .badge {
   @apply uppercase text-xs bg-secondary-content text-primary rounded-md font-medium;
+}
+
+.signature {
+  filter: invert(0.2);
+}
+
+[data-theme="dark"] .signature {
+  filter: invert(0.8);
 }

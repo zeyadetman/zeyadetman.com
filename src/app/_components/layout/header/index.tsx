@@ -1,6 +1,7 @@
 "use client";
 
-import { renderRoutes } from "@/app/components/layout/utils/renderRoutes";
+import { renderRoutes } from "@/app/_components/layout/utils/renderRoutes";
+import { ThemeSwitcher } from "@/app/_components/theme-switcher/theme-switcher";
 import { List } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,14 +10,14 @@ export const Header = () => {
   return (
     <header className="mt-4 md:mt-8">
       <div className="navbar bg-base-100">
-        <div className="flex-grow px-4 w-20 h-20">
+        <div className="flex-grow px-4 w-24 h-24">
           <Link href="/">
             <Image
               src="/logo.png"
               className="w-full rounded-md invert-[10%]"
               alt="logo"
-              width={50}
-              height={50}
+              width={164}
+              height={164}
               priority
             />
           </Link>
@@ -40,6 +41,7 @@ export const Header = () => {
                 <ul className="menu menu-horizontal px-1 gap-1">
                   {renderRoutes()}
                 </ul>
+                <ThemeSwitcher />
               </nav>
             </div>
           </div>
@@ -52,6 +54,7 @@ export const Header = () => {
             <ul className="menu gap-1 pt-9 p-4 w-80 min-h-full bg-base-200">
               {renderRoutes()}
             </ul>
+            <ThemeSwitcher />
           </div>
         </div>
       </div>

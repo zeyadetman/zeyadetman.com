@@ -1,4 +1,4 @@
-import { PostFooter } from "@/app/components/post/footer";
+import { PostFooter } from "@/app/_components/post/footer";
 import { allPosts } from "contentlayer/generated";
 import { notFound } from "next/navigation";
 

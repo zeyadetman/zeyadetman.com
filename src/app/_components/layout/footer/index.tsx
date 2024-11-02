@@ -1,6 +1,6 @@
 "use client";
 
-import { renderSocials } from "@/app/components/layout/utils/renderSocials";
+import { renderSocials } from "@/app/_components/layout/utils/renderSocials";
 import Image from "next/image";
 
 export const Footer = () => {
@@ -9,7 +9,7 @@ export const Footer = () => {
       <aside>
         <Image
           src="/signature.webp"
-          className="invert-[70%]"
+          className="signature"
           alt="Signature"
           width={100}
           height={100}

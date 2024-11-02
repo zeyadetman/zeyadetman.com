@@ -1,4 +1,4 @@
-import { ShowPhotos } from "@/app/components/gallery/showPhotos";
+import { ShowPhotos } from "@/app/_components/gallery/showPhotos";
 import { Redis } from "@upstash/redis";
 import Image from "next/image";
 

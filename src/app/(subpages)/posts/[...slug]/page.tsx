@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { allPosts } from "contentlayer/generated";
 
 import { Metadata } from "next";
-import { Mdx } from "@/app/components/post/mdx-components";
+import { Mdx } from "@/app/_components/post/mdx-components";
 import { format } from "date-fns";
 import { Tajawal } from "next/font/google";
 

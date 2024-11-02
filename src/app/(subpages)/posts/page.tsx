@@ -1,4 +1,4 @@
-import { SearchPostsInput } from "@/app/components/post/search";
+import { SearchPostsInput } from "@/app/_components/post/search";
 import { listPosts } from "@/lib/listPosts";
 import { formatDate } from "@/utils/date";
 import { Tajawal } from "next/font/google";
