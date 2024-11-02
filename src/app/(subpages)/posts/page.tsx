@@ -36,7 +36,7 @@ export default function Blog({
 
           return (
             <article key={post._id} className="card post-viewer">
-              <Link href={post.slug} className="no-underline">
+              <Link href={post.slug} className="no-underline w-full">
                 <h3
                   className={className}
                   style={{
