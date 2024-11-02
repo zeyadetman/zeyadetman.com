@@ -1,4 +1,4 @@
-import { socials } from "@/app/components/layout/config/socials";
+import { socials } from "@/app/_components/layout/config/socials";
 
 export const renderSocials = () => {
   return socials.map((social) => (

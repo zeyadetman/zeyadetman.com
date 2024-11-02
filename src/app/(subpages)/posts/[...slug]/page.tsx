@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { allPosts } from "contentlayer/generated";
 
 import { Metadata } from "next";
-import { Mdx } from "@/app/components/post/mdx-components";
+import { Mdx } from "@/app/_components/post/mdx-components";
 import { format } from "date-fns";
 import { Tajawal } from "next/font/google";
 
@@ -48,7 +48,7 @@ export async function generateStaticParams(): Promise<PostProps["params"][]> {
 
 const tajawal = Tajawal({
   subsets: ["arabic"],
-  weight: ["400"],
+  weight: ["400", "500", "700"],
   variable: "--font-ibm-plex-sans-arabic",
 });
 
@@ -57,7 +57,7 @@ export default async function PostPage({ params }: PostProps) {
 
   const className =
     post?.lang === "ar"
-      ? `py-6 prose dark:prose-invert ${tajawal.className}`
+      ? `py-6 prose dark:prose-invert font-medium ${tajawal.className}`
       : `py-6 prose dark:prose-invert`;
 
   if (!post) {

@@ -1,4 +1,4 @@
-import { routes } from "@/app/components/layout/config/routes";
+import { routes } from "@/app/_components/layout/config/routes";
 import { ArrowSquareOut } from "@phosphor-icons/react";
 import Link from "next/link";
 

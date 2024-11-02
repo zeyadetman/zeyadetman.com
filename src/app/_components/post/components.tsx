@@ -60,10 +60,10 @@ export const components: MDXComponents = {
         alt={props.alt || " "}
         src={props.src || ""}
         loader={myLoader}
-        className="w-full mx-auto"
+        className={`w-full mx-auto ${props.className}`}
         {...props}
-        width={400}
-        height={20}
+        width={props.width || 400}
+        height={props.height || 20}
       />
     );
   },

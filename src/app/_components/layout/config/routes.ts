@@ -1,4 +1,4 @@
-import { Route } from "@/app/components/layout/interface";
+import { Route } from "@/app/_components/layout/interface";
 
 export const routes: Route[] = [
   {

@@ -1,6 +1,6 @@
 "use client";
 import { useMDXComponent } from "next-contentlayer/hooks";
-import { components } from "@/app/components/post/components";
+import { components } from "@/app/_components/post/components";
 
 interface MdxProps {
   code: string;
