@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { Mdx } from "@/app/_components/post/mdx-components";
 import { format } from "date-fns";
 import { Tajawal } from "next/font/google";
+import { config } from "@/config";
 
 interface PostProps {
   params: {
@@ -33,8 +34,28 @@ export async function generateMetadata({
   }
 
   return {
-    title: "Zeyad Etman | " + post.title,
     description: post.description,
+    openGraph: {
+      title: "Zeyad Etman | " + post.title,
+      description: post.title,
+      url: `${config.baseUrl}/posts/${post.slugAsParams}`,
+      siteName: "Zeyad Etman",
+      images: [
+        {
+          url: `http://localhost:3000/api/og?title=${post.title}&url=${config.baseUrl}/posts/${post.slugAsParams}&date=${post.date}`, // Dynamic og route
+          width: 800,
+          height: 600,
+        },
+        {
+          url: `http://localhost:3000/api/og?title=${post.title}&url=${config.baseUrl}/posts/${post.slugAsParams}&date=${post.date}`, // Dynamic og route
+          width: 1800,
+          height: 1600,
+          alt: post.title,
+        },
+      ],
+      locale: "en_US",
+      type: "article",
+    },
   };
 }
 
