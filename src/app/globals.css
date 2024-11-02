@@ -4,6 +4,7 @@
 
 :root {
   --border: #e0e0e0;
+  --snow: #fbfbfb;
 }
 
 [data-theme="dark"] {
@@ -34,6 +35,11 @@
   }
 
   .full-article .prose pre {
+    @apply bg-[var(--snow)];
+    direction: ltr;
+  }
+
+  [data-theme="dark"] .full-article .prose pre {
     background-color: #2b2b2b;
     direction: ltr;
   }

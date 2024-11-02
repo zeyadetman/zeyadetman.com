@@ -29,7 +29,7 @@ export const PostFooter = ({ post }: PostFooterProps) => {
         <div>
           <button
             key="github-edit-button"
-            className="btn btn-primary btn-md bg-black"
+            className="btn btn-primary btn-md dark:bg-black light:bg-primary-content light:text-primary light:hover:text-primary-content"
             onClick={() => {
               window.open(
                 `${config.githubRepo}/blob/main/content/${post.slug}.mdx`,
