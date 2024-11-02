@@ -9,8 +9,9 @@ export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
   const postTitle = searchParams.get("title");
   const url = searchParams.get("url");
+  const isRtl = searchParams.get("isRtl");
+  const date = searchParams.get("date");
 
-  // inter font
   const font = fetch(
     "https://cdn.jsdelivr.net/fontsource/fonts/geist-mono@latest/latin-400-normal.ttf"
   ).then((res) => res.arrayBuffer());
@@ -42,7 +43,7 @@ export async function GET(req: NextRequest) {
             color: "#F56E0F",
           }}
         >
-          By Zeyad on {format(new Date(), "dd MMM yyyy")}
+          By Zeyad on {format(new Date(date || ""), "dd MMM yyyy")}
         </p>
         <p
           style={{
@@ -51,9 +52,19 @@ export async function GET(req: NextRequest) {
             lineHeight: 1.2,
             fontFamily: "Geist Mono",
             fontStyle: "normal",
-            textAlign: "left",
             color: "#C6C6C6",
+            ...(isRtl === "true"
+              ? {
+                  direction: "rtl",
+                  textAlign: "right",
+                  writingDirection: "rtl",
+                }
+              : {
+                  direction: "ltr",
+                  textAlign: "left",
+                }),
           }}
+          {...(isRtl === "true" ? { dir: "rtl" } : { dir: "ltr" })}
         >
           {postTitle}
         </p>
