@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const tajawal = Tajawal({
   subsets: ["arabic"],
-  weight: ["400"],
+  weight: ["400", "500", "700"],
   variable: "--font-ibm-plex-sans-arabic",
 });
 
@@ -45,12 +45,14 @@ export default function Blog({
                 >
                   {post.title}
                 </h3>
-                <div className="flex justify-between">
+                <div className="flex justify-start items-center gap-1">
                   {post.date && (
                     <p className="text-xs my-0">{formatDate(post.date)}</p>
                   )}
                   {post.lang === "ar" && (
-                    <span className="badge">{post.lang}</span>
+                    <span className={`badge ${tajawal.className}`}>
+                      بالعربي
+                    </span>
                   )}
                 </div>
               </Link>
