@@ -51,10 +51,10 @@ export const Header = () => {
               aria-label="close sidebar"
               className="drawer-overlay"
             />
-            <ul className="menu gap-1 pt-9 p-4 w-80 min-h-full bg-base-200">
+            <ul className="menu gap-1 pt-9 p-4 w-64 min-h-full bg-base-200">
+              <ThemeSwitcher />
               {renderRoutes()}
             </ul>
-            <ThemeSwitcher />
           </div>
         </div>
       </div>

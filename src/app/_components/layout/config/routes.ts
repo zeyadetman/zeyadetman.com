@@ -6,10 +6,6 @@ export const routes: Route[] = [
     href: "/",
   },
   {
-    name: "About",
-    href: "/about",
-  },
-  {
     name: "Blog",
     href: "/posts",
   },

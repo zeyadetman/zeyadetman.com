@@ -45,11 +45,11 @@
   }
 
   .container {
-    @apply mx-auto max-w-[40rem] w-full;
+    @apply mx-auto max-w-[60rem] w-full;
   }
 
   .page-container {
-    @apply flex flex-col gap-8 mt-10 prose;
+    @apply flex flex-col gap-8 mt-10 prose w-full;
   }
 
   .page-header {
