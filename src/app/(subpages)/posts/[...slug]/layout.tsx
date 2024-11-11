@@ -1,5 +1,6 @@
+import { getBlogPosts } from "@/app/(subpages)/posts/listPosts";
 import { PostFooter } from "@/app/_components/post/footer";
-import { allPosts } from "contentlayer/generated";
+
 import { notFound } from "next/navigation";
 
 interface PostProps {
@@ -10,7 +11,7 @@ interface PostProps {
 
 async function getPostFromParams(params: PostProps["params"]) {
   const slug = params?.slug?.join("/");
-  const post = allPosts.find((post) => post.slugAsParams === slug);
+  const post = getBlogPosts().find((post) => post.slug === slug);
 
   if (!post) {
     null;

@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export const Header = () => {
   return (
-    <header className="mt-4 md:mt-8">
+    <header className="mt-4 md:mt-8" suppressHydrationWarning>
       <div className="navbar bg-base-100">
         <div className="flex-grow px-4 w-24 h-24">
           <Link href="/">
