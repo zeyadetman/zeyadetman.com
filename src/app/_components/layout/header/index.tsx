@@ -37,7 +37,10 @@ export const Header = () => {
                 </label>
               </div>
 
-              <nav className="flex-none hidden md:flex">
+              <nav
+                className="flex-none hidden md:flex"
+                suppressHydrationWarning
+              >
                 <ul className="menu menu-horizontal px-1 gap-1">
                   {renderRoutes()}
                 </ul>

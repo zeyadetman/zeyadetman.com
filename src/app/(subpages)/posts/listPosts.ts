@@ -1,58 +1,70 @@
 import fs from "fs";
+import { compileMDX } from "next-mdx-remote/rsc";
 import path from "path";
+import remarkGfm from "remark-gfm";
+import { CodeEditorLive } from "@/app/_components/code-editor";
 
 type Metadata = {
   title: string;
   date: string;
   summary: string;
   image?: string;
+  slug?: string;
   lang?: string;
+  isDraft?: boolean;
 };
-
-function parseFrontmatter(fileContent: string) {
-  let frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
-  let match = frontmatterRegex.exec(fileContent);
-  let frontMatterBlock = match![1];
-  let content = fileContent.replace(frontmatterRegex, "").trim();
-  let frontMatterLines = frontMatterBlock.trim().split("\n");
-  let metadata: Partial<Metadata> = {};
-
-  frontMatterLines.forEach((line) => {
-    let [key, ...valueArr] = line.split(": ");
-    let value = valueArr.join(": ").trim();
-    value = value.replace(/^['"](.*)['"]$/, "$1"); // Remove quotes
-    metadata[key.trim() as keyof Metadata] = value;
-  });
-
-  return { metadata: metadata as Metadata, content };
-}
 
 function getMDXFiles(dir: string) {
   return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
 }
 
-function readMDXFile(filePath: string) {
+async function readMDXFile(filePath: string) {
   let rawContent = fs.readFileSync(filePath, "utf-8");
-  return parseFrontmatter(rawContent);
-}
-
-function getMDXData(dir: string) {
-  let mdxFiles = getMDXFiles(dir);
-  return mdxFiles.map((file) => {
-    let { metadata, content } = readMDXFile(path.join(dir, file));
-    let slug = path.basename(file, path.extname(file));
-
-    return {
-      metadata,
-      slug,
-      content,
-    };
+  const { content, frontmatter } = await compileMDX({
+    source: rawContent,
+    options: {
+      parseFrontmatter: true,
+      mdxOptions: { remarkPlugins: [remarkGfm] },
+    },
+    components: {
+      CodeEditorLive,
+    },
   });
+
+  return {
+    content,
+    metadata: frontmatter as Metadata,
+    rawContent,
+  };
 }
 
-export function getBlogPosts(props?: { query: string }) {
-  const mdxData = getMDXData(
-    path.join(process.cwd(), "src", "app", "(subpages)", "posts", "posts")
+async function getMDXData(dir: string) {
+  let mdxFiles = getMDXFiles(dir);
+  return await Promise.all(
+    mdxFiles.map(async (file) => {
+      let { metadata, content, rawContent } = await readMDXFile(
+        path.join(dir, file)
+      );
+      let slug = metadata.slug || path.basename(file, path.extname(file));
+
+      return {
+        metadata,
+        slug,
+        content,
+        rawContent,
+      };
+    })
+  );
+}
+
+export async function getBlogPosts(props?: {
+  query: string;
+  includeDrafts?: boolean;
+}) {
+  const mdxData = (
+    await getMDXData(
+      path.join(process.cwd(), "src", "app", "(subpages)", "posts", "posts")
+    )
   ).sort((a, b) => {
     if (a.metadata.date && b.metadata.date) {
       return (
@@ -63,51 +75,19 @@ export function getBlogPosts(props?: { query: string }) {
     return 0;
   });
 
+  let finalData = [
+    ...mdxData.filter((post) => props?.includeDrafts || !post.metadata.isDraft),
+  ];
+
   if (props?.query) {
-    return (
-      mdxData.filter((post) =>
-        post.content
+    finalData = [
+      ...(mdxData.filter((post) =>
+        post.rawContent
           .toLowerCase()
           .includes((props.query as string).toLowerCase())
-      ) || []
-    );
-  } else {
-    return mdxData;
-  }
-}
-
-export function formatDate(date: string, includeRelative = false) {
-  let currentDate = new Date();
-  if (!date.includes("T")) {
-    date = `${date}T00:00:00`;
-  }
-  let targetDate = new Date(date);
-
-  let yearsAgo = currentDate.getFullYear() - targetDate.getFullYear();
-  let monthsAgo = currentDate.getMonth() - targetDate.getMonth();
-  let daysAgo = currentDate.getDate() - targetDate.getDate();
-
-  let formattedDate = "";
-
-  if (yearsAgo > 0) {
-    formattedDate = `${yearsAgo}y ago`;
-  } else if (monthsAgo > 0) {
-    formattedDate = `${monthsAgo}mo ago`;
-  } else if (daysAgo > 0) {
-    formattedDate = `${daysAgo}d ago`;
-  } else {
-    formattedDate = "Today";
+      ) || []),
+    ];
   }
 
-  let fullDate = targetDate.toLocaleString("en-us", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-
-  if (!includeRelative) {
-    return fullDate;
-  }
-
-  return `${fullDate} (${formattedDate})`;
+  return finalData;
 }

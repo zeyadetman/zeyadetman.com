@@ -11,11 +11,12 @@ const tajawal = Tajawal({
   variable: "--font-ibm-plex-sans-arabic",
 });
 
-export default function Blog({
+export default async function Blog({
   searchParams,
 }: {
   searchParams: { [key: string]: string | undefined };
 }) {
+  const posts = await getBlogPosts({ query: searchParams.q || "" });
   return (
     <div className="page-container">
       <div className="page-header">
@@ -26,7 +27,7 @@ export default function Blog({
       <SearchPostsInput />
 
       <ul className="menu p-0 mt-0">
-        {getBlogPosts({ query: searchParams.q || "" }).map((post) => {
+        {posts.map((post) => {
           const baseClassName =
             "text-primary-content text-[1rem] decoration-none my-0";
           const className =

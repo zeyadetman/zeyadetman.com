@@ -2,10 +2,12 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import React from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { srcery } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import Image from "next/image";
 import { MDXComponents } from "mdx/types";
 import { MdxBlockquote } from "@/app/_components/mdx-components/blockquote";
 import { MdxImage } from "@/app/_components/mdx-components/image";
+import { CustomMdxProvider } from "@/app/_components/mdx-components/mdx-provider";
+import { serialize } from "next-mdx-remote/serialize";
+import remarkGfm from "remark-gfm";
 
 export function SyntaxHighlight({
   className,
@@ -49,11 +51,18 @@ let components: MDXComponents = {
   blockquote: MdxBlockquote,
 };
 
-export const MDX = (props: any) => {
-  return (
-    <MDXRemote
-      {...props}
-      components={{ ...components, ...(props.components || {}) }}
-    />
-  );
+export const MDX = async (props: any) => {
+  // const mdxSource = await serialize(props.source, {
+  //   mdxOptions: { remarkPlugins: [remarkGfm] },
+  //   parseFrontmatter: true,
+  // });
+
+  return props.source;
+  // <CustomMdxProvider>
+  //   <MDXRemote
+  //     {...props}
+  //     components={{ ...components, ...(props.components || {}) }}
+  //     // source={mdxSource}
+  //   />
+  // </CustomMdxProvider>
 };
