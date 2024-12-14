@@ -19,7 +19,9 @@ export const PostFooter = ({ post }: PostFooterProps) => {
           className="btn btn-primary btn-md bg-blue-500 hover:bg-blue-600"
           onClick={() => {
             window.open(
-              `https://twitter.com/intent/tweet?text=${post.metadata.title}&url=${config.baseUrl}/posts/${post.slug}`,
+              `https://twitter.com/intent/tweet?text=${
+                post.metadata.title
+              }&url=${config.baseUrl}/posts/${post.metadata.slug || post.slug}`,
               "_blank"
             );
           }}
@@ -34,7 +36,11 @@ export const PostFooter = ({ post }: PostFooterProps) => {
             className="btn btn-primary btn-md dark:bg-black light:bg-primary-content light:text-primary light:hover:text-primary-content"
             onClick={() => {
               window.open(
-                `${config.githubRepo}/blob/main/content/${post.slug}.mdx`,
+                `${
+                  config.githubRepo
+                }/blob/main/src/app/(subpages)/posts/posts/${
+                  post.metadata.slug || post.slug
+                }.mdx`,
                 "_blank"
               );
             }}
