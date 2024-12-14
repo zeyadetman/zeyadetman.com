@@ -30,7 +30,7 @@ To do this, we may use the popular `tsc` tool, You can also check out the [aweso
 
 For example, code like this:
 
-```ts
+```typescript
 type animals = "cat" | "dog";
 const getAnimal = (animal: animals) => animal;
 getAnimal("cat");
@@ -71,7 +71,7 @@ float display(int a, float b) { ... }
 
 However, in TypeScript, we go to the runtime without types, without typescript itself, so there's no runtime type checks and then we can't assign multiple values to the same variable in javascript, or in other words we can't create multiple bodies for the same function.
 
-```ts
+```typescript
 function makeDate(timestamp: number): Date;
 function makeDate(m: number, d: number, y: number): Date;
 function makeDate(m: number, d: string, y: number): string;
@@ -114,9 +114,9 @@ const d2 = makeDate(5, 5, 5);
 ```
 
 <iframe
-  width="560"
-  style={{maxWidth: "100%"}}
-  height="315"
+  width="2060"
+  style={{ maxWidth: "100%", aspectRatio: "2/6", borderRadius: '4px' }}
+  height="415"
   src="https://www.youtube.com/embed/8fO2Uv0G_5Y?si=4ezE7zUgPDZY6amI"
   title="YouTube video player"
   frameBorder="0"
@@ -133,14 +133,14 @@ There's libraries can do runtime checks for javascript, one of the most popular 
 
 - `keyof` from its name, used to "extract" a key of a TYPE, and since objects are the only datatype that contains keys, then `keyof` is used to extract key of an object in a **union** format
 
-```ts
+```typescript
 type obj = { [n: number]: string };
 type A = keyof obj; // number
 ```
 
 - `typeof` from its name, used to return the `type` of a variable. simple!
 
-```ts
+```typescript
 let str = "Alia";
 type a = typeof str; // string
 
@@ -152,7 +152,7 @@ type b = typeof str2; // "Alia"
 
 Let's merge both
 
-```ts
+```typescript
 const obj = {
   id: 1,
   name: "Alia",
@@ -175,7 +175,7 @@ _keep this in your mind for the mapped types section._
 
 Similar to the previous section, `in` operator is kinda similar way you can use it to limit the key to be within a group of types
 
-```ts
+```typescript
 type keysOfObj = "id" | "name";
 type obj = { [key in keysOfObj]: string };
 
@@ -189,7 +189,7 @@ But we need to modify the code to fix the type for the `id` key to be `number` n
 
 - `extends` consider it as `if else` of typescript.
 
-```ts
+```typescript
 type keysOfObj = "id" | "name";
 type obj = { [key in keysOfObj]: key extends "id" ? number : string };
 
@@ -202,7 +202,7 @@ _This called mapped types_
 
 Think about it as a function in javascript, if you have a type and you're repeating it with slight changes, then you probably need to use `generics`.
 
-```ts
+```typescript
 interface BasicType<T> {
   input: T;
 }
@@ -211,7 +211,7 @@ const x: BasicType<string> = { input: "test" };
 const y: BasicType<number> = { input: "test" }; // wrong
 ```
 
-```ts
+```typescript
 function basic(a, b) {
   return { a, b };
 }

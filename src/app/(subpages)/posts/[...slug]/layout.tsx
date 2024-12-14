@@ -1,5 +1,6 @@
 import { PostFooter } from "@/app/_components/post/footer";
-import { allPosts } from "contentlayer/generated";
+import { getBlogPosts } from "@/lib/listPosts";
+
 import { notFound } from "next/navigation";
 
 interface PostProps {
@@ -10,7 +11,7 @@ interface PostProps {
 
 async function getPostFromParams(params: PostProps["params"]) {
   const slug = params?.slug?.join("/");
-  const post = allPosts.find((post) => post.slugAsParams === slug);
+  const post = (await getBlogPosts()).find((post) => post.slug === slug);
 
   if (!post) {
     null;
@@ -33,7 +34,7 @@ export default async function PostLayout({
   }
 
   return (
-    <article className="full-article">
+    <article className="full-article w-full mx-auto">
       {children}
 
       <PostFooter post={post} />

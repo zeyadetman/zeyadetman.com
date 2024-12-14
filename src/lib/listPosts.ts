@@ -1,42 +1,86 @@
-import { allPosts } from "contentlayer/generated";
+import fs from "fs";
+import { compileMDX } from "next-mdx-remote/rsc";
+import path from "path";
+import remarkGfm from "remark-gfm";
+import { Metadata } from "@/app/(subpages)/posts/interfaces";
+import { components } from "@/app/_components/mdx-components/components";
+import { ssrComponents } from "@/app/_components/mdx-components/ssr-components";
 
-interface Options {
-  query?: string;
-  sort?: "asc" | "desc";
-  isDraft?: boolean;
+function getMDXFiles(dir: string) {
+  return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
 }
 
-export const listPosts = (
-  options: Options = {
-    sort: "desc",
-    isDraft: false,
-  }
-) => {
-  let result = [...allPosts.filter((post) => !post.isDraft)];
+async function readMDXFile(filePath: string) {
+  let rawContent = fs.readFileSync(filePath, "utf-8");
+  const { content, frontmatter } = await compileMDX({
+    source: rawContent,
+    options: {
+      parseFrontmatter: true,
+      mdxOptions: { remarkPlugins: [remarkGfm] },
+    },
+    components: {
+      ...components,
+      ...ssrComponents,
+    },
+  });
 
-  if (options.query) {
-    result = result.filter((post) =>
-      post.body?.raw
-        .toLowerCase()
-        .includes((options.query as string).toLowerCase())
-    );
+  return {
+    content,
+    metadata: frontmatter as Metadata,
+    rawContent,
+  };
+}
+
+async function getMDXData(dir: string) {
+  let mdxFiles = getMDXFiles(dir);
+  return await Promise.all(
+    mdxFiles.map(async (file) => {
+      let { metadata, content, rawContent } = await readMDXFile(
+        path.join(dir, file)
+      );
+      let slug = metadata.slug || path.basename(file, path.extname(file));
+
+      return {
+        metadata,
+        slug,
+        content,
+        rawContent,
+      };
+    })
+  );
+}
+
+export async function getBlogPosts(props?: {
+  query: string;
+  includeDrafts?: boolean;
+}) {
+  const mdxData = (
+    await getMDXData(
+      path.join(process.cwd(), "src", "app", "(subpages)", "posts", "posts")
+    )
+  ).sort((a, b) => {
+    if (a.metadata.date && b.metadata.date) {
+      return (
+        new Date(b.metadata.date).valueOf() -
+        new Date(a.metadata.date).valueOf()
+      );
+    }
+    return 0;
+  });
+
+  let finalData = [
+    ...mdxData.filter((post) => props?.includeDrafts || !post.metadata.isDraft),
+  ];
+
+  if (props?.query) {
+    finalData = [
+      ...(mdxData.filter((post) =>
+        post.rawContent
+          .toLowerCase()
+          .includes((props.query as string).toLowerCase())
+      ) || []),
+    ];
   }
 
-  if (options.sort === "asc") {
-    result.sort((a, b) => {
-      if (a.date && b.date) {
-        return new Date(a.date).valueOf() - new Date(b.date).valueOf();
-      }
-      return 0;
-    });
-  } else {
-    result.sort((a, b) => {
-      if (a.date && b.date) {
-        return new Date(b.date).valueOf() - new Date(a.date).valueOf();
-      }
-      return 0;
-    });
-  }
-
-  return result;
-};
+  return finalData;
+}

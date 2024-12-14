@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export const Header = () => {
   return (
-    <header className="mt-4 md:mt-8">
+    <header className="mt-4 md:mt-8" suppressHydrationWarning>
       <div className="navbar bg-base-100">
         <div className="flex-grow px-4 w-24 h-24">
           <Link href="/">
@@ -37,7 +37,10 @@ export const Header = () => {
                 </label>
               </div>
 
-              <nav className="flex-none hidden md:flex">
+              <nav
+                className="flex-none hidden md:flex"
+                suppressHydrationWarning
+              >
                 <ul className="menu menu-horizontal px-1 gap-1">
                   {renderRoutes()}
                 </ul>
