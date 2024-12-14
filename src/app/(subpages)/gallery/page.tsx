@@ -1,6 +1,5 @@
 import { ShowPhotos } from "@/app/_components/gallery/showPhotos";
 import { Redis } from "@upstash/redis";
-import Image from "next/image";
 
 const fetchPhotos = async () => {
   const res = await fetch("https://api.unsplash.com/users/zeyadetman/photos", {
