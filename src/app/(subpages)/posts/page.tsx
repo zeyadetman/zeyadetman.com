@@ -1,5 +1,5 @@
-import { getBlogPosts } from "@/app/(subpages)/posts/listPosts";
 import { SearchPostsInput } from "@/app/_components/post/search";
+import { getBlogPosts } from "@/lib/listPosts";
 import { formatDate } from "@/utils/date";
 import { Tajawal } from "next/font/google";
 import Link from "next/link";

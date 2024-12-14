@@ -2,9 +2,9 @@ import fs from "fs";
 import { compileMDX } from "next-mdx-remote/rsc";
 import path from "path";
 import remarkGfm from "remark-gfm";
-import { CodeEditorLive } from "@/app/_components/code-editor";
-import { JSXElementConstructor, ReactElement } from "react";
 import { Metadata } from "@/app/(subpages)/posts/interfaces";
+import { components } from "@/app/_components/mdx-components/components";
+import { ssrComponents } from "@/app/_components/mdx-components/ssr-components";
 
 function getMDXFiles(dir: string) {
   return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
@@ -19,7 +19,8 @@ async function readMDXFile(filePath: string) {
       mdxOptions: { remarkPlugins: [remarkGfm] },
     },
     components: {
-      CodeEditorLive,
+      ...components,
+      ...ssrComponents,
     },
   });
 

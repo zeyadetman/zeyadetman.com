@@ -35,7 +35,7 @@ A sample for this sheet
 
 ```javascript
 function getUsdToEgpRate() {
-  const spreedSheet = SpreadsheetApp.openById(<sheetID>).getSheetByName('usdtoegp');
+  const spreedSheet = SpreadsheetApp.openById("SHEET_ID").getSheetByName('usdtoegp');
   const today = new Date();
   const todayFormatted = `${today.getFullYear()}, ${today.getMonth() + 1}, ${today.getDate()}`;
   const row = [

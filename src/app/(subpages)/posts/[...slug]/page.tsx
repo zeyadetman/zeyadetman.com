@@ -3,8 +3,9 @@ import { Metadata } from "next";
 import { format } from "date-fns";
 import { Tajawal } from "next/font/google";
 import { config } from "@/config";
-import { getBlogPosts } from "@/app/(subpages)/posts/listPosts";
-import { MDX } from "@/app/_components/mdx-components/mdx";
+
+import { MDX } from "@/app/_components/mdx-components/mdxSSR";
+import { getBlogPosts } from "@/lib/listPosts";
 
 interface PostProps {
   params: {
@@ -85,8 +86,8 @@ export default async function PostPage({ params }: PostProps) {
 
   const className =
     post?.metadata.lang === "ar"
-      ? `py-6 prose dark:prose-invert font-medium ${tajawal.className}`
-      : `py-6 prose dark:prose-invert`;
+      ? `py-6 prose dark:prose-invert mx-auto font-medium ${tajawal.className}`
+      : `py-6 prose dark:prose-invert mx-auto`;
 
   if (!post) {
     notFound();

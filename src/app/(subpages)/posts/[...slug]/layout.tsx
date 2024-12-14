@@ -1,5 +1,5 @@
-import { getBlogPosts } from "@/app/(subpages)/posts/listPosts";
 import { PostFooter } from "@/app/_components/post/footer";
+import { getBlogPosts } from "@/lib/listPosts";
 
 import { notFound } from "next/navigation";
 
@@ -34,7 +34,7 @@ export default async function PostLayout({
   }
 
   return (
-    <article className="full-article">
+    <article className="full-article w-full mx-auto">
       {children}
 
       <PostFooter post={post} />

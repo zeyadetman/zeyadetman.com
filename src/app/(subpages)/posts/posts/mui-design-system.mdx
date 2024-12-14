@@ -45,7 +45,7 @@ In each folder we created `index.ts` file to export all from it.
 
 open the `theme/index.ts` to import our `foundations` and `components` that structure our theme
 
-```ts
+```typescript
 import { components } from "theme/components";
 import { foundations } from "./foundations";
 import { createTheme, ThemeOptions } from "@mui/material";
@@ -70,7 +70,7 @@ We need to customize the `theme` colors for example, it called `palette` and its
 
 So here's our `theme/foundations/palette.ts`
 
-```ts
+```typescript
 import { PaletteOptions } from "@mui/material";
 
 export const palette: PaletteOptions = {
@@ -92,7 +92,7 @@ And because we've used the correct Interface so the editor will help us continue
 **The Question** will be, What if I need to add a new color schema.
 **The Answer** is Simple as this
 
-```ts
+```typescript
 declare module "@mui/material/styles" {
   export interface PaletteOptions {
     blue?: PaletteColorOptions;
@@ -113,7 +113,7 @@ But let's create the `components` object that will be exported inside the `creat
 
 and it's simple as this `theme/components/index.ts`
 
-```ts
+```typescript
 import { Components } from "@mui/material";
 
 export const components: Components = {};
@@ -125,7 +125,7 @@ after that TS will help you writing your components.
 
 First thing, let's create our type for the `MuiButton` component theme, open the `theme/components/button.ts`
 
-```ts
+```typescript
 type muiButton = {
   defaultProps?: ComponentsProps["MuiButton"];
   styleOverrides?: ComponentsOverrides<Theme>["MuiButton"];
@@ -139,7 +139,7 @@ We got it from the `.d.ts` file located in the mui package files inside the `nod
 
 After that let's create our custom theme for `MuiButton`
 
-```ts
+```typescript
 declare module "@mui/material/Button" {
   export interface ButtonPropsVariantOverrides {
     isActive: true;

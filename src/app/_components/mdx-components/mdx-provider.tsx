@@ -1,4 +1,5 @@
 "use client";
+
 import { CodeEditorLive } from "@/app/_components/code-editor";
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { MDXProvider } from "@mdx-js/react";
