@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface ShowPhotosProps {
   photos: any[];
@@ -25,7 +25,7 @@ export const ShowPhotos = ({ photos }: ShowPhotosProps) => {
             height={photo.height}
             key={photo.url}
             loader={myLoader}
-            className="min-w-[10rem] w-[12rem] cursor-pointer rounded-md"
+            className="w-[12rem] cursor-pointer rounded-md"
             onClick={() => {
               setSelectedImage(photo);
               // @ts-ignore
@@ -42,7 +42,7 @@ export const ShowPhotos = ({ photos }: ShowPhotosProps) => {
   };
 
   return (
-    <div className="columns-2 sm:columns-2 md:columns-2 lg:columns-4 gap-4 space-y-4 p-4">
+    <div className="columns-1 mx-auto sm:columns-2 md:columns-3 lg:columns-4 gap-2 space-y-3 p-3 list-photos">
       {listPhotos(photos)}
 
       <dialog

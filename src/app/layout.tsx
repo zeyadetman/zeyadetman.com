@@ -37,7 +37,7 @@ export default function RootLayout({
           <ProgressBarProvider>
             <div className="container">
               <Header />
-              <main className="flex min-h-[calc(100vh-20rem)] max-w-[60rem] items-center flex-col justify-between px-6 ">
+              <main className="flex min-h-[calc(100vh-20rem)] max-w-3xl mx-auto items-center flex-col justify-between px-6 ">
                 {children}
               </main>
               <Footer />

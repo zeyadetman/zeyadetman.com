@@ -30,12 +30,18 @@
     @apply text-secondary-content;
   }
 
+  .page-container
+    .list-photos
+    :where(img):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    @apply m-0;
+  }
+
   .full-article .prose * {
     @apply text-primary-content/95;
   }
 
   .container {
-    @apply mx-auto max-w-[60rem] w-full;
+    @apply mx-auto max-w-6xl w-full;
   }
 
   .prose pre {
@@ -106,6 +112,10 @@
 .prose .link,
 .link {
   @apply hover:text-accent text-primary-content/70 w-fit break-words;
+}
+
+.container .page-container {
+  @apply !max-w-4xl mx-auto;
 }
 
 .prose .badge,
