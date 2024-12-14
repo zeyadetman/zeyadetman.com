@@ -3,16 +3,8 @@ import { compileMDX } from "next-mdx-remote/rsc";
 import path from "path";
 import remarkGfm from "remark-gfm";
 import { CodeEditorLive } from "@/app/_components/code-editor";
-
-type Metadata = {
-  title: string;
-  date: string;
-  summary: string;
-  image?: string;
-  slug?: string;
-  lang?: string;
-  isDraft?: boolean;
-};
+import { JSXElementConstructor, ReactElement } from "react";
+import { Metadata } from "@/app/(subpages)/posts/interfaces";
 
 function getMDXFiles(dir: string) {
   return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
