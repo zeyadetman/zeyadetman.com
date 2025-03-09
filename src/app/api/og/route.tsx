@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
         process.env.OG_IMAGE_GENERATOR
       }?title=${postTitle}&url=${url}&date=${format(
         new Date(date || ""),
-        "dd MMM yyyy"
+        isRtl ? "yyyy MMM dd" : "dd MMM yyyy"
       )}&isRtl=${isRtl}`
     )
   ).blob();
