@@ -21,9 +21,9 @@ export const socials = [
     href: "https://stackoverflow.com/users/5721245/zeyad-etman",
     icon: StackOverflowLogo,
   },
-  {
-    name: "Youtube",
-    href: "https://www.youtube.com/@zeyadetman",
-    icon: YoutubeLogo,
-  },
+  // {
+  //   name: "Youtube",
+  //   href: "https://www.youtube.com/@zeyadetman",
+  //   icon: YoutubeLogo,
+  // },
 ];

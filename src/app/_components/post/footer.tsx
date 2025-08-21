@@ -52,7 +52,7 @@ export const PostFooter = ({ post }: PostFooterProps) => {
       </div>
 
       <Giscus
-        repo="zeyadetman/zeyadetman.com"
+        repo="zeyadetman/zeyadnotes.dev"
         repoId="MDEwOlJlcG9zaXRvcnk0MDU4NjIyODk="
         category="Announcements"
         categoryId="DIC_kwDOGDD3kc4COmmU"

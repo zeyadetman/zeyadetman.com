@@ -36,10 +36,10 @@ export async function generateMetadata({
   return {
     description: post.metadata.title,
     openGraph: {
-      title: "Zeyad Etman | " + post.metadata.title,
+      title: "Zeyad | " + post.metadata.title,
       description: post.metadata.title,
       url: `${config.baseUrl}/posts/${post.slug}`,
-      siteName: "Zeyad Etman",
+      siteName: "Zeyad",
       images: [
         {
           url: `${config.baseUrl}/api/og?title=${post.metadata.title}&url=${

@@ -11,7 +11,7 @@ import ProgressBarProvider from "@/app/_components/providers/progress-bar-provid
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Zeyad Etman",
+  title: "Zeyad Notes",
   description: "Zeyad's Space on the internet.",
 };
 

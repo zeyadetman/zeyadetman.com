@@ -1,7 +1,7 @@
 ---
 title: How I built my portfolio using NextJS, Typescript, and Chakra UI
 date: "2021-10-24"
-author: zeyadetman
+author: zeyadelmarsafy
 tags:
   - programming
   - javascript
@@ -15,7 +15,7 @@ layout: post
 
 In this post I’ll go with you in a detailed way on how i created my blog/portfolio from scratch using NextJS and Chakra UI, from creating the pages and posts markdown files to displaying them as html files, And how I handled newsletter service, and deploying the project on Vercel, Handling custom domains. So this post will good for you if you want to know more about anything that I’ve implemented here on my blog.
 
-**[Here's the source code for this site.](https://github.com/zeyadetman/zeyadetman.com)**
+**[Here's the source code for this site.](https://github.com/zeyadetman/zeyadnotes.dev)**
 
 ## NextJS + Typescript + Chakra UI
 
@@ -308,7 +308,7 @@ So first thing we need to do is generating the `rss.xml` file, so we can list yo
 
 To generate the `rss.xml` I used [`feed`](https://www.npmjs.com/package/feed) in `generateRSSFeed()` located here `libs/feed.ts` and calling it in a `getStaticProps()` function located in `pages/posts/index.tsx` to re-generate that file in build time.
 
-After building and deploying the code I got this url https://www.zeyadetman.com/rss.xml with all posts metadata, Heading to https://www.getrevue.co/app/integrations/rss, And add the production url to `ADD A FEED` input. This will reflect in the issues page on getrevue account.
+After building and deploying the code I got this url https://www.zeyadnotes.dev/rss.xml with all posts metadata, Heading to https://www.getrevue.co/app/integrations/rss, And add the production url to `ADD A FEED` input. This will reflect in the issues page on getrevue account.
 
 I highly recommend enabling Show newsletter on Twitter profile https://www.getrevue.co/app/integrations/twitter.
 
@@ -378,7 +378,7 @@ I'll keep this blog updated whenver I add a new feature to the blog. Just subscr
 ### Here's some resources that helped me:
 
 - [Custom Domains](https://vercel.com/docs/concepts/projects/custom-domains#): This helps me link my godaddy custom domain to vercel deployment.
-- [How to make your custom domain secure with SSL](http://help.getrevue.co/en/articles/4465817-how-to-make-your-custom-domain-secure-with-ssl): This helps me creating `https://feed.zeyadetman.com` and added it to getrevue custom domain.
+- [How to make your custom domain secure with SSL](http://help.getrevue.co/en/articles/4465817-how-to-make-your-custom-domain-secure-with-ssl): This helps me creating `https://feed.zeyadnotes.dev` and added it to getrevue custom domain.
 - [How I Added an RSS Feed to My Next.js Site](https://ashleemboyer.com/how-i-added-an-rss-feed-to-my-nextjs-site): This helped me generating the rss.xml page.
 - [How to Set up GoDaddy Domain with Vercel](https://kswanie21.medium.com/how-to-set-up-godaddy-domain-with-vercel-f42430ed4f6).
 

@@ -20,12 +20,12 @@ export default function Home() {
           a 30mins with me
         </a>
         . If you want to work with me, let’s contact via{" "}
-        <a className="link" href="mailto:zeyadetman.com">
+        <a className="link" href="mailto:zeyadnotes.dev">
           email.
         </a>
         <br />
         <br />I write tech notes/bookmarks that may be helpful on{" "}
-        <a className="link" href="https://notes.zeyadetman.com">
+        <a className="link" href="https://notes.zeyadnotes.dev">
           my digital garden 🪴
         </a>
         . I share on it at short intervals, also I review the written notes from

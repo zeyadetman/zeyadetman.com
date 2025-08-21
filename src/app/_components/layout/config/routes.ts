@@ -9,13 +9,13 @@ export const routes: Route[] = [
     name: "Blog",
     href: "/posts",
   },
-  {
-    name: "Gallery",
-    href: "/gallery",
-  },
+  // {
+  //   name: "Gallery",
+  //   href: "/gallery",
+  // },
   {
     name: "Notes",
-    href: "https://notes.zeyadetman.com",
+    href: "https://notes.zeyadnotes.dev",
     isExternal: true,
   },
 ];
