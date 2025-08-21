@@ -1,5 +1,5 @@
-import { ShowPhotos } from "@/app/_components/gallery/showPhotos";
 import { Redis } from "@upstash/redis";
+import { redirect } from "next/navigation";
 
 const fetchPhotos = async () => {
   const res = await fetch("https://api.unsplash.com/users/zeyadetman/photos", {
@@ -35,16 +35,17 @@ const getPhotos = async () => {
 };
 
 export default async function Gallery() {
-  const photos = await getPhotos();
+  return redirect("/");
+  // const photos = await getPhotos();
 
-  return (
-    <div className="page-container">
-      <div className="page-header">
-        <h1>Gallery</h1>
-        <h2>Photos.</h2>
-      </div>
+  // return (
+  //   <div className="page-container">
+  //     <div className="page-header">
+  //       <h1>Gallery</h1>
+  //       <h2>Photos.</h2>
+  //     </div>
 
-      <ShowPhotos photos={photos} />
-    </div>
-  );
+  //     <ShowPhotos photos={photos} />
+  //   </div>
+  // );
 }
