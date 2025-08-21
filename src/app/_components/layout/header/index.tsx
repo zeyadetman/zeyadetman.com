@@ -10,14 +10,14 @@ export const Header = () => {
   return (
     <header className="mt-4 md:mt-8" suppressHydrationWarning>
       <div className="navbar bg-base-100">
-        <div className="flex-grow px-4 w-24 h-24">
+        <div className="flex-grow px-4 w-36 h-36">
           <Link href="/">
             <Image
               src="/logo.png"
               className="w-full rounded-md invert-[10%]"
               alt="logo"
-              width={164}
-              height={164}
+              width={200}
+              height={200}
               priority
             />
           </Link>
